@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bank Switching 101 — Jamie's Finance</title>
+  <script>if(localStorage.getItem('jf-theme')==='dark')document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"DM Serif Display"', 'Georgia', 'serif'],
+            sans:    ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #F8F8F8; color: #141414; -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4 { font-family: 'DM Serif Display', Georgia, serif; letter-spacing: -0.03em; }
+
+    :root { --ink: #141414; --ink-60: rgba(20,20,20,0.60); --ink-40: rgba(20,20,20,0.40); --ink-10: rgba(20,20,20,0.08); --surface: #F8F8F8; --card: #ffffff; }
+    html.dark { --ink: #F0F0F0; --ink-60: rgba(240,240,240,0.55); --ink-40: rgba(240,240,240,0.38); --ink-10: rgba(255,255,255,0.07); --surface: #111111; --card: #1E1E1E; }
+    html.dark body  { background: #111111; color: #F0F0F0; }
+    html.dark .bg-white   { background: #1E1E1E !important; }
+    html.dark .section-alt { background: #161616 !important; }
+    html.dark .card-base   { background: #1E1E1E !important; box-shadow: 0 2px 12px rgba(0,0,0,0.30) !important; }
+    html.dark .toc-link    { color: rgba(240,240,240,0.50) !important; border-color: rgba(255,255,255,0.07) !important; }
+    html.dark .toc-link:hover { color: #F0F0F0 !important; border-color: rgba(255,255,255,0.18) !important; }
+    html.dark .bank-row:hover { background: rgba(255,255,255,0.04) !important; }
+    html.dark .bank-row { border-color: rgba(255,255,255,0.07) !important; }
+    html.dark .bank-row:first-child { border-color: rgba(255,255,255,0.10) !important; }
+    html.dark .pill-live  { background: rgba(255,255,255,0.10) !important; color: #E0E0E0 !important; border-color: rgba(255,255,255,0.16) !important; }
+    html.dark .pill-soon  { background: rgba(255,255,255,0.05) !important; color: rgba(240,240,240,0.40) !important; border-color: rgba(255,255,255,0.08) !important; }
+    html.dark .badge-pill  { background: rgba(255,255,255,0.07) !important; color: rgba(240,240,240,0.55) !important; border-color: rgba(255,255,255,0.10) !important; }
+    html.dark .faq-item    { border-color: rgba(255,255,255,0.08) !important; }
+    html.dark .faq-btn     { color: #F0F0F0; }
+    html.dark .disclaimer  { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.09) !important; }
+    html.dark .divider     { border-color: rgba(255,255,255,0.07) !important; }
+    html.dark #navbar-guide { background: rgba(17,17,17,0.92); }
+    html.dark #theme-toggle { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.12) !important; }
+    html.dark .footer-bar  { background: #0A0A0A !important; border-color: rgba(255,255,255,0.06) !important; }
+    html.dark .hero-section { background: #1A1A1A !important; }
+    html.dark .contact-card { background: #1A1A1A !important; }
+    html.dark .step-num    { background: rgba(255,255,255,0.08) !important; color: #D0D0D0 !important; }
+    html.dark [style*="#141414"]:not(body) { color: #F0F0F0 !important; }
+    html.dark .back-link   { color: rgba(240,240,240,0.40); }
+    html.dark .back-link:hover { color: rgba(240,240,240,0.88); }
+    html.dark .amount-badge { background: #2A2A2A !important; color: #E0E0E0 !important; }
+    html.dark .toc-num { color: rgba(240,240,240,0.22) !important; }
+
+    /* ── Theme toggle ────────────────────────────────── */
+    .theme-sun  { display: none; } .theme-moon { display: block; }
+    html.dark .theme-sun  { display: block; } html.dark .theme-moon { display: none; }
+    #theme-toggle { transition: background 0.20s ease, transform 0.20s ease; }
+    #theme-toggle:hover { transform: scale(1.10); }
+
+    /* ── Back link ───────────────────────────────────── */
+    .back-link { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; font-weight: 500; color: rgba(20,20,20,0.40); text-decoration: none; transition: color 0.18s ease; }
+    .back-link:hover { color: rgba(20,20,20,0.90); }
+
+    /* ── TOC ─────────────────────────────────────────── */
+    .toc-link { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); color: rgba(20,20,20,0.55); font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: all 0.18s ease; }
+    .toc-link:hover { color: #141414; border-color: rgba(0,0,0,0.20); background: rgba(0,0,0,0.03); }
+
+    /* ── Bank row ────────────────────────────────────── */
+    .bank-row { display: grid; grid-template-columns: 1.5fr 1fr 2fr; gap: 1rem; align-items: center; padding: 1.125rem 1.25rem; border-bottom: 1px solid rgba(0,0,0,0.07); transition: background 0.15s ease; }
+    .bank-row:hover { background: rgba(0,0,0,0.025); }
+    .bank-row:first-child { border-top: 1px solid rgba(0,0,0,0.10); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(20,20,20,0.40); padding-top: 0.875rem; padding-bottom: 0.875rem; }
+    .bank-row:first-child:hover { background: transparent; }
+
+    /* ── Amount badge ────────────────────────────────── */
+    .amount-badge { display: inline-flex; align-items: center; font-family: 'DM Serif Display', Georgia, serif; font-size: 1.25rem; background: #F0F0F0; color: #141414; padding: 0.2rem 0.75rem; border-radius: 8px; letter-spacing: -0.02em; }
+
+    /* ── Step number ─────────────────────────────────── */
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 50%; background: rgba(0,0,0,0.07); font-size: 0.8125rem; font-weight: 700; color: rgba(20,20,20,0.55); flex-shrink: 0; }
+
+    /* ── FAQ ─────────────────────────────────────────── */
+    .faq-item { border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .faq-btn  { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.375rem 0; background: none; border: none; cursor: pointer; font-family: 'DM Serif Display', Georgia, serif; font-size: 1.125rem; letter-spacing: -0.02em; color: #141414; text-align: left; }
+    .faq-body { overflow: hidden; max-height: 0; transition: max-height 0.35s cubic-bezier(0.22,1,0.36,1), padding 0.25s ease; }
+    .faq-body.open { max-height: 400px; padding-bottom: 1.25rem; }
+    .faq-icon { flex-shrink: 0; transition: transform 0.28s ease; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* ── Pill badges ─────────────────────────────────── */
+    .badge-pill { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid rgba(0,0,0,0.10); background: rgba(0,0,0,0.05); color: rgba(20,20,20,0.50); }
+
+    /* ── Reveal ──────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.08s; } .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; } .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* ── Grain ───────────────────────────────────────── */
+    .grain::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; }
+
+    /* ── Prose ───────────────────────────────────────── */
+    .prose-body { color: rgba(20,20,20,0.62); line-height: 1.8; font-size: 1.0625rem; }
+    html.dark .prose-body { color: rgba(240,240,240,0.55); }
+    .prose-body strong { color: var(--ink); font-weight: 600; }
+    .prose-body a { color: #141414; text-decoration: underline; text-underline-offset: 3px; transition: opacity 0.15s; }
+    .prose-body a:hover { opacity: 0.65; }
+    html.dark .prose-body a { color: #D0D0D0; }
+
+    /* ── Callout box ─────────────────────────────────── */
+    .callout { border-left: 3px solid rgba(0,0,0,0.18); padding: 1rem 1.25rem; border-radius: 0 10px 10px 0; background: rgba(0,0,0,0.04); }
+    html.dark .callout { border-left-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.05); }
+
+    /* ── Section heading ─────────────────────────────── */
+    .section-heading { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .section-heading::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08); }
+    html.dark .section-heading::after { background: rgba(255,255,255,0.07); }
+  </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+  <!-- ── Nav ──────────────────────────────────────────── -->
+  <nav id="navbar-guide" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: transparent;">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"
+          class="w-9 h-9 flex items-center justify-center rounded-xl"
+          style="background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12);">
+          <svg class="theme-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="theme-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C0C0C0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <a href="../index.html" class="font-display text-lg leading-none" style="color: #141414;">Jamie's Finance</a>
+      </div>
+      <a href="../index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to home
+      </a>
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════ -->
+  <section class="hero-section bg-white relative overflow-hidden grain pt-32 pb-20 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="reveal flex flex-wrap items-center gap-3 mb-8">
+        <span class="badge-pill">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Free Guide
+        </span>
+        <span class="badge-pill">Updated August 2025</span>
+        <span class="badge-pill">By @jamiesfinance</span>
+      </div>
+      <h1 class="reveal font-display text-6xl sm:text-7xl md:text-[6rem] leading-none mb-6" style="color: #141414;">
+        Bank<br /><span style="color: #555555;">Switching</span><br />101
+      </h1>
+      <p class="reveal text-xl max-w-2xl prose-body mb-10" style="font-size: 1.125rem;">
+        A comprehensive guide to earning free cash by switching bank accounts in 2025. Learn exactly how to do it safely, legally, and repeatedly.
+      </p>
+      <!-- Quick stats -->
+      <div class="reveal flex flex-wrap gap-6">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background: #141414;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.8 3.6 4 .6-2.9 2.8.7 4L8 10.5l-3.6 2 .7-4L2.2 5.7l4-.6L8 1.5Z" fill="white"/></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold" style="color: #141414;">Up to £175</p>
+            <p class="text-xs" style="color: rgba(20,20,20,0.45);">per switch</p>
+          </div>
+        </div>
+        <div class="w-px self-stretch" style="background: rgba(0,0,0,0.09);"></div>
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background: #141414;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="white" stroke-width="1.4"/><path d="M5 4V3a3 3 0 0 1 6 0v1" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold" style="color: #141414;">100% Free</p>
+            <p class="text-xs" style="color: rgba(20,20,20,0.45);">no cost to you</p>
+          </div>
+        </div>
+        <div class="w-px self-stretch" style="background: rgba(0,0,0,0.09);"></div>
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background: #141414;">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2Zm0 3v4l3 1.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <p class="text-xs font-bold" style="color: #141414;">~20 minutes</p>
+            <p class="text-xs" style="color: rgba(20,20,20,0.45);">to set up</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       DISCLAIMER
+  ════════════════════════════════════════════════════ -->
+  <div class="px-6 py-6" style="background: #F8F8F8;">
+    <div class="max-w-4xl mx-auto">
+      <div class="disclaimer rounded-2xl p-5" style="background: rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.08);">
+        <p class="text-sm" style="color: rgba(20,20,20,0.55); line-height: 1.7;">
+          <strong style="color: rgba(20,20,20,0.70);">Disclaimer &amp; Affiliate Disclosure.</strong>
+          This guide is for informational and educational purposes only. I am not a financial advisor, and the content provided does not constitute financial advice. Offers, terms, and details from banks can change at any time — always double-check with the bank directly before making any decisions. Some links in this guide may be affiliate or referral links, meaning I may receive a small reward at no extra cost to you. I only recommend products I genuinely believe offer value.
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════
+       TABLE OF CONTENTS
+  ════════════════════════════════════════════════════ -->
+  <section class="py-14 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="text-xs font-bold uppercase tracking-widest" style="color: rgba(20,20,20,0.35);">Contents</span>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <a href="#what-is" class="toc-link reveal">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">01</span>
+            What is a bank switch offer?
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#direct-debits" class="toc-link reveal reveal-delay-1">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">02</span>
+            Setting up direct debits
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#offers" class="toc-link reveal reveal-delay-2">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">03</span>
+            Current offers (Aug 2025)
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#dummy-account" class="toc-link reveal reveal-delay-3">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">04</span>
+            The dummy account strategy
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#cashback" class="toc-link reveal">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">05</span>
+            Extra cashback apps
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#credit-score" class="toc-link reveal reveal-delay-1">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">06</span>
+            Credit score impact
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#tax" class="toc-link reveal reveal-delay-2">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">07</span>
+            Tax implications
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#faq" class="toc-link reveal reveal-delay-3">
+          <span class="flex items-center gap-3">
+            <span class="toc-num font-display text-2xl" style="color: rgba(20,20,20,0.15);">08</span>
+            FAQ
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       01 — WHAT IS A BANK SWITCH OFFER
+  ════════════════════════════════════════════════════ -->
+  <section id="what-is" class="section-alt py-20 px-6" style="background: #F8F8F8;">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">01</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">What is a bank switch offer?</h2>
+      </div>
+      <div class="grid md:grid-cols-5 gap-10 items-start">
+        <div class="md:col-span-3 space-y-5 reveal">
+          <p class="prose-body">A bank switch offer is a high street bank's way of <strong>incentivising you with cash or other freebies</strong> to move your main bank account over to them.</p>
+          <p class="prose-body">This remains profitable for the banks because new customers generate additional revenue through deposits, credit products, and transactional fees. They make a profit even while giving you <strong>sometimes up to £310 worth of rewards</strong>.</p>
+          <p class="prose-body">There's no specific clause stating you need to switch your <em>main</em> bank account — which is why the smart move is to create a <strong>burner (dummy) account</strong> that exists solely for the purpose of switching.</p>
+          <div class="callout">
+            <p class="text-sm font-semibold" style="color: #141414;">Golden Rule</p>
+            <p class="text-sm prose-body mt-1">Lenders love seeing a long-standing bank account on your credit report. <strong>Never switch away from your oldest bank account.</strong></p>
+          </div>
+        </div>
+        <div class="md:col-span-2 reveal reveal-delay-2">
+          <div class="card-base bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+            <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color: rgba(20,20,20,0.40);">How it works</p>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="step-num mt-0.5">1</span>
+                <p class="text-sm prose-body">Open a free dummy account (Chase Bank is ideal)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="step-num mt-0.5">2</span>
+                <p class="text-sm prose-body">Apply for the bank's switch offer online or in-app</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="step-num mt-0.5">3</span>
+                <p class="text-sm prose-body">Complete the switch requirements (pay in, direct debits, etc.)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="step-num mt-0.5">4</span>
+                <p class="text-sm prose-body">Receive your cash reward — usually within 30 days</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="step-num mt-0.5">5</span>
+                <p class="text-sm prose-body">Repeat with the next offer using a new dummy account</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       02 — DIRECT DEBITS
+  ════════════════════════════════════════════════════ -->
+  <section id="direct-debits" class="py-20 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">02</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">Direct debits — what &amp; how</h2>
+      </div>
+      <div class="space-y-6 reveal">
+        <p class="prose-body">Most bank switch offers require you to have <strong>active direct debits</strong> on the account you're switching from, because that signals it's a real, functioning current account. A direct debit is an automatic payment that allows a company to take money directly from your account on a regular basis — think gym memberships, phone bills, credit card repayments.</p>
+        <p class="prose-body">You could redirect existing direct debits to your dummy account — but if you'd prefer to keep your main account untouched, here are <strong>three easy ones to set up</strong>:</p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-5 mt-8">
+        <div class="card-base bg-white rounded-2xl p-6 reveal" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background: rgba(0,0,0,0.05);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2Z" stroke="#333" stroke-width="1.5"/><path d="M10 6v5l3 2" stroke="#333" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">Moneybox</h3>
+          <p class="text-sm prose-body">A savings app — top up your savings pot for as little as <strong>£2/week</strong>. This money goes directly into your own savings, so it's essentially free.</p>
+          <span class="mt-3 inline-block text-xs font-semibold" style="color: rgba(20,20,20,0.40);">Effectively free</span>
+        </div>
+        <div class="card-base bg-white rounded-2xl p-6 reveal reveal-delay-1" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background: rgba(0,0,0,0.05);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="11" rx="2" stroke="#333" stroke-width="1.5"/><path d="M7 5V4a3 3 0 0 1 6 0v1" stroke="#333" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">30p Newsletter</h3>
+          <p class="text-sm prose-body">Pay as little as <strong>30p via direct debit</strong> for a newsletter at <a href="https://www.30pence.co.uk" target="_blank" rel="noopener">30pence.co.uk</a>. You can also do 60p or 80p for multiple direct debits.</p>
+          <span class="mt-3 inline-block text-xs font-semibold" style="color: rgba(20,20,20,0.40);">From 30p/month</span>
+        </div>
+        <div class="card-base bg-white rounded-2xl p-6 reveal reveal-delay-2" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style="background: rgba(0,0,0,0.05);">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 7l7-4 7 4v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="#333" stroke-width="1.5"/><path d="M8 17v-6h4v6" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">PayPal</h3>
+          <p class="text-sm prose-body">Top up your PayPal balance with as little as <strong>£10</strong>. Once the first payment is taken, the direct debit is active. Doesn't need to be recurring.</p>
+          <span class="mt-3 inline-block text-xs font-semibold" style="color: rgba(20,20,20,0.40);">One-off payment</span>
+        </div>
+      </div>
+
+      <div class="callout mt-8 reveal">
+        <p class="text-sm font-semibold" style="color: #141414;">Important</p>
+        <p class="text-sm prose-body mt-1">Before initiating any bank switch offer that requires direct debits, <strong>ensure the first payments have already been taken out</strong> from the account. Direct debits need to be active — not just set up — to count.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       03 — CURRENT OFFERS TABLE
+  ════════════════════════════════════════════════════ -->
+  <section id="offers" class="section-alt py-20 px-6" style="background: #F8F8F8;">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">03</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">Current offers</h2>
+      </div>
+      <p class="prose-body mb-8 reveal">As of <strong>1st August 2025</strong>. Terms and conditions can change at any time — always check the bank's website directly before initiating a switch.</p>
+
+      <div class="card-base bg-white rounded-2xl overflow-hidden reveal" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+        <!-- Header -->
+        <div class="bank-row" style="background: rgba(0,0,0,0.025);">
+          <span>Bank</span>
+          <span>Reward</span>
+          <span>Key Requirements</span>
+        </div>
+
+        <!-- Monzo -->
+        <div class="bank-row">
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">Monzo</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.40);">No switch required</p>
+          </div>
+          <div><span class="amount-badge">£10</span></div>
+          <p class="text-sm prose-body">Download Monzo, sign up using a friend link, and make a card payment within 30 days. <a href="https://join.monzo.com/c/vhwscvhb" target="_blank" rel="noopener">My friend link →</a></p>
+        </div>
+
+        <!-- NatWest -->
+        <div class="bank-row">
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">NatWest</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.40);">Can't do RBS too (same group)</p>
+          </div>
+          <div><span class="amount-badge">£175</span></div>
+          <p class="text-sm prose-body">Open a Reward or Select account. Switch in a non-NatWest/RBS/Ulster account online or via app. Pay in £1,250+ and log in to mobile banking within 60 days.</p>
+        </div>
+
+        <!-- First Direct -->
+        <div class="bank-row">
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">First Direct</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.40);">Stack with cashback apps</p>
+          </div>
+          <div><span class="amount-badge">£175</span></div>
+          <p class="text-sm prose-body">Open account in-app. Switch in with 2+ direct debits/standing orders in 45 days. Pay in £1,000+ and make 5+ debit card payments in 45 days. Paid by the 20th of the following month.</p>
+        </div>
+
+        <!-- Barclays -->
+        <div class="bank-row">
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">Barclays</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.40);">Join Blue Rewards required</p>
+          </div>
+          <div><span class="amount-badge">£175</span></div>
+          <p class="text-sm prose-body">Open a sole account via the Barclays app. Switch in with 2+ direct debits (by 28 Aug, within 30 days). Join Blue Rewards (£5/month, pay in £800+). Deposit £1,500 within 30 days. Paid within 28 working days.</p>
+        </div>
+
+        <!-- TSB -->
+        <div class="bank-row">
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">TSB</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.40);">+ £15/month bonus available</p>
+          </div>
+          <div><span class="amount-badge">£100</span></div>
+          <p class="text-sm prose-body">Open account online, in-app, or in branch. By 22 Sep: switch from another bank, make 5+ debit card purchases, log into the app. Receive £100 between 6–12 Oct. Also earn £15/month for 6 months if you make 20+ debit card transactions each month.</p>
+        </div>
+
+        <!-- NatWest £125 -->
+        <div class="bank-row">
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">NatWest</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.40);">Separate offer</p>
+          </div>
+          <div><span class="amount-badge">£125</span></div>
+          <p class="text-sm prose-body">Open a NatWest Reward or Select account. Switch in a non-NatWest/RBS/Ulster account. Pay in £1,250+ and log in to mobile banking within 60 days. Get £125 within 30 days.</p>
+        </div>
+
+      </div>
+
+      <p class="text-xs mt-4 prose-body reveal" style="font-size: 0.8125rem;">Ts&Cs apply. Go to each bank's website to read full terms. Conditions can change at any time.</p>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       04 — DUMMY ACCOUNT
+  ════════════════════════════════════════════════════ -->
+  <section id="dummy-account" class="py-20 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">04</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">The dummy account strategy</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div class="space-y-5 reveal">
+          <p class="prose-body"><strong>You should never switch your main bank account</strong> — this carries much worse credit score implications. Instead, create a dummy account that exists solely for the purpose of switching.</p>
+          <p class="prose-body"><strong>Chase Bank</strong> is the best option for this. You can create additional accounts in seconds — each gets a unique sort code and account number that you can use for switching.</p>
+          <div class="callout">
+            <p class="text-sm font-semibold" style="color: #141414;">Important Chase note</p>
+            <p class="text-sm prose-body mt-1">Always keep at least <strong>2 accounts open within Chase</strong>. Switching away your only Chase account closes your entire Chase profile — and they won't let you reopen it. Switching additional Chase accounts does <em>not</em> cancel your debit card.</p>
+          </div>
+          <p class="prose-body">Simply tap <strong>'Add +'</strong> in the Chase app to create a new account. This generates a fresh sort code and account number instantly. You can input the same debit card details into each switch offer too.</p>
+          <a href="https://vm.tiktok.com/ZNd92EF2v/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold" style="background: #141414; color: white; text-decoration: none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 3.3A4.5 4.5 0 0 1 15 0h-3.4v16.4a2.6 2.6 0 0 1-2.6 2.3 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 2.6-2.6c.26 0 .5.04.74.1V10a6 6 0 0 0-.74-.05 6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6V8.1a8 8 0 0 0 4.6 1.5V6.2a4.5 4.5 0 0 1-3.04-2.9Z"/></svg>
+            Watch the Chase tutorial on TikTok
+          </a>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="card-base bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+            <p class="text-xs font-bold uppercase tracking-widest mb-5" style="color: rgba(20,20,20,0.40);">Step-by-step in Chase</p>
+            <div class="space-y-5">
+              <div class="flex items-start gap-4">
+                <span class="step-num mt-0.5 flex-shrink-0">1</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color: #141414;">Open Chase app</p>
+                  <p class="text-sm prose-body mt-0.5">Make sure you already have an existing Chase account open before doing anything.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <span class="step-num mt-0.5 flex-shrink-0">2</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color: #141414;">Tap 'Add +'</p>
+                  <p class="text-sm prose-body mt-0.5">This creates a brand new current account with a unique sort code and account number in seconds.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <span class="step-num mt-0.5 flex-shrink-0">3</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color: #141414;">Set up direct debits</p>
+                  <p class="text-sm prose-body mt-0.5">Use the new sort code/account to set up your direct debits (Moneybox, 30p newsletter, or PayPal).</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <span class="step-num mt-0.5 flex-shrink-0">4</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color: #141414;">Initiate the switch</p>
+                  <p class="text-sm prose-body mt-0.5">Once direct debits are active, initiate the switch using this account as the "outgoing" account.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <span class="step-num mt-0.5 flex-shrink-0">5</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color: #141414;">Collect your reward</p>
+                  <p class="text-sm prose-body mt-0.5">Once the switch completes and you meet all requirements, your cash reward is paid automatically.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       05 — CASHBACK APPS
+  ════════════════════════════════════════════════════ -->
+  <section id="cashback" class="section-alt py-20 px-6" style="background: #F8F8F8;">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">05</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">Stack with cashback apps</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="space-y-5 reveal">
+          <p class="prose-body">If you have <strong>Quidco</strong> or <strong>TopCashback</strong>, you can earn <em>additional</em> cashback on top of the bank's own switch incentive when you initiate the switch through their app. It's entirely free to join both.</p>
+          <p class="prose-body">To get cashback on your bank switch: create a free account on Quidco or TopCashback, search for the bank, click through their app to the bank's website, and <strong>start the switch from there</strong>.</p>
+          <div class="callout">
+            <p class="text-sm font-semibold" style="color: #141414;">Critical — Enable tracking</p>
+            <p class="text-sm prose-body mt-1">Make sure <strong>cookies and tracking are enabled</strong> in your browser so the cashback apps can attribute your switch correctly. Without this, the cashback won't be tracked.</p>
+          </div>
+        </div>
+        <div class="space-y-4 reveal reveal-delay-1">
+          <div class="card-base bg-white rounded-2xl p-5" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-display text-lg" style="color: #141414;">Quidco</h3>
+              <span class="badge-pill" style="background: rgba(0,0,0,0.07);">Free to join</span>
+            </div>
+            <p class="text-sm prose-body mb-4">Earn cashback on top of your bank switch incentive. Sign up using a friend link for a bonus.</p>
+            <a href="https://quidco.com/raf/14386425/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold" style="color: #141414; text-decoration: none;">
+              Join with Jamie's link →
+            </a>
+          </div>
+          <div class="card-base bg-white rounded-2xl p-5" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-display text-lg" style="color: #141414;">TopCashback</h3>
+              <span class="badge-pill" style="background: rgba(0,0,0,0.07);">Free to join</span>
+            </div>
+            <p class="text-sm prose-body mb-4">Stack additional cashback on bank switches. Use the referral link for a sign-up bonus.</p>
+            <a href="https://www.topcashback.co.uk/ref/jamieschmidt1/" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-sm font-semibold" style="color: #141414; text-decoration: none;">
+              Join with Jamie's link →
+            </a>
+          </div>
+          <p class="text-xs prose-body" style="font-size: 0.8125rem;">Affiliate links — Ts&Cs apply. I may receive a small reward at no cost to you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       06 — CREDIT SCORE
+  ════════════════════════════════════════════════════ -->
+  <section id="credit-score" class="py-20 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">06</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">Credit score impact</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="space-y-5 reveal">
+          <p class="prose-body">Switching bank accounts, opening new accounts, and closing old ones <strong>does have an impact on your credit score</strong>. It's important to go in with eyes open.</p>
+          <p class="prose-body">From personal experience: I've completed <strong>14 bank switch offers</strong>, 5 student account offers, opened 3 new credit products, and 20+ banking products over the past year — and my credit score is still higher than it was last year, because I've been building credit with credit builder cards alongside switching.</p>
+          <p class="prose-body">Scared of the impact? Stick to <strong>1–2 bank switches per year</strong>. You're typically limited to one switch per UK banking group anyway, so there's no need to rush.</p>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="card-base bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+            <p class="text-xs font-bold uppercase tracking-widest mb-5" style="color: rgba(20,20,20,0.40);">Avoid bank switching if you're…</p>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <svg class="flex-shrink-0 mt-1" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#141414" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="#141414" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="text-sm prose-body">Planning to apply for a <strong>mortgage within 2 years</strong> — the account activity can affect affordability assessments.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <svg class="flex-shrink-0 mt-1" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#141414" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="#141414" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="text-sm prose-body">Trying to build your credit score for <strong>premium credit cards</strong> (like Amex) — do the switches after you've opened credit products.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <svg class="flex-shrink-0 mt-1" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#141414" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="#141414" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <p class="text-sm prose-body"><strong>Unable to accurately track accounts</strong> — you need to be organised enough to close or consolidate them once the incentive is paid.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       07 — TAX
+  ════════════════════════════════════════════════════ -->
+  <section id="tax" class="section-alt py-20 px-6" style="background: #F8F8F8;">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">07</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">Tax implications</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div class="space-y-5 reveal">
+          <p class="prose-body"><strong>There are no tax implications to bank switch offers for the recipient.</strong> This is confirmed by HMRC directly.</p>
+          <div class="callout">
+            <p class="text-sm font-semibold" style="color: #141414;">HMRC Manual CG13027</p>
+            <p class="text-sm prose-body mt-2 italic">"In general, ordinary retail customers purchasing goods, investments or services at arm's length will not be liable to Income or Capital Gains Tax in respect of any commission, discounts or cashbacks received by them."</p>
+          </div>
+          <p class="prose-body">This also applies to freebies from switch offers — taste cards, hotel credit, rail cards, gift cards. They're all classed as incentive or cashback income and are therefore <strong>not taxable</strong>.</p>
+        </div>
+        <div class="space-y-5 reveal reveal-delay-1">
+          <div class="card-base bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07);">
+            <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color: rgba(20,20,20,0.40);">The one exception</p>
+            <p class="text-sm prose-body mb-4">You <em>are</em> potentially liable for tax if you <strong>refer someone and personally receive a bonus</strong> for that referral. For example, referring friends to Monzo — that income contributes towards your <strong>£1,000/year trading allowance</strong>.</p>
+            <p class="text-sm prose-body">For most people, this is nothing to worry about. If you sign up to Monzo using a friend's link, you (the referee) do not pay any tax.</p>
+          </div>
+          <div class="callout">
+            <p class="text-sm prose-body">When in doubt, check <a href="https://www.gov.uk/hmrc" target="_blank" rel="noopener">HMRC.gov.uk</a> directly or consult a qualified accountant. This guide is for educational purposes only.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       08 — FAQ
+  ════════════════════════════════════════════════════ -->
+  <section id="faq" class="py-20 px-6 bg-white">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">08</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">Frequently asked questions</h2>
+      </div>
+      <div class="space-y-0 reveal">
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            Can I do the same bank switch offer again?
+            <svg class="faq-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p class="prose-body text-sm">Typically you can only do one bank switch per bank or banking group. In some cases they'll allow you to switch back for an incentive reward, but usually only after a few years. Some have reported being able to get multiple Lloyds incentives using a different email address and phone number — I would <strong>not recommend attempting this</strong>, as it could be seen as fraud.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            Can I run multiple switches at the same time?
+            <svg class="faq-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p class="prose-body text-sm">Yes — create 2 dummy accounts on Chase and initiate switches from each. Just make sure any prerequisites (like direct debits) are active on both accounts before initiating. That said, I personally prefer to <strong>complete one switch fully before starting the next</strong>. It keeps things organised and you can use the completed account as the "outgoing" account for the next switch.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            What do I do with the account once I've received the incentive?
+            <svg class="faq-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p class="prose-body text-sm">You can either close it, or use it as the "outgoing" account for your next switch — which is often the better option, because your direct debits will already be active on it. If you're completely done with all switches, initiate a bank switch back into your main current account to tidy everything up.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-btn" onclick="toggleFaq(this)">
+            I've been waiting 10+ working days and haven't received my incentive — what do I do?
+            <svg class="faq-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <div class="faq-body">
+            <p class="prose-body text-sm">First, check the switch offer's terms and conditions — some banks pay out on specific calendar dates rather than within a set number of days. If you're still unsure, most of these banks have a live chat feature in their app and can provide you with an update on your switch and incentive progress. Don't panic — it usually just takes a bit longer than expected.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       CONTACT
+  ════════════════════════════════════════════════════ -->
+  <section class="section-alt py-20 px-6" style="background: #F8F8F8;">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading reveal">
+        <span class="font-display text-xs tracking-widest uppercase" style="color: rgba(20,20,20,0.35);">Get in touch</span>
+        <h2 class="font-display text-3xl sm:text-4xl" style="color: #141414;">Contact Jamie</h2>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-5 reveal">
+        <a href="https://www.tiktok.com/@jamiesfinance" target="_blank" rel="noopener" class="contact-card card-base bg-white rounded-2xl p-6 flex flex-col items-center text-center gap-3" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07); text-decoration: none;">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: #141414;">
+            <svg width="18" height="20" viewBox="0 0 24 24" fill="white"><path d="M19.6 3.3A4.5 4.5 0 0 1 15 0h-3.4v16.4a2.6 2.6 0 0 1-2.6 2.3 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 2.6-2.6c.26 0 .5.04.74.1V10a6 6 0 0 0-.74-.05 6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6V8.1a8 8 0 0 0 4.6 1.5V6.2a4.5 4.5 0 0 1-3.04-2.9Z"/></svg>
+          </div>
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">TikTok</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.45);">@jamiesfinance</p>
+          </div>
+        </a>
+        <a href="https://wa.me/447404284953" target="_blank" rel="noopener" class="contact-card card-base bg-white rounded-2xl p-6 flex flex-col items-center text-center gap-3" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07); text-decoration: none;">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: #141414;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.47 14.38c-.28-.14-1.65-.81-1.9-.9-.26-.09-.44-.14-.63.14-.19.28-.71.9-.87 1.08-.16.18-.32.2-.6.07-.28-.14-1.18-.44-2.25-1.4-.83-.74-1.39-1.66-1.55-1.94-.16-.28-.02-.43.12-.57.13-.12.28-.32.42-.48.14-.16.19-.28.28-.46.09-.18.05-.34-.02-.48-.07-.14-.63-1.52-.86-2.08-.23-.54-.46-.47-.63-.48-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.97.95-.97 2.31 0 1.36.99 2.67 1.13 2.86.14.18 1.95 2.98 4.72 4.18.66.28 1.17.45 1.57.58.66.21 1.26.18 1.73.11.53-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.18-.53-.32Z"/><path d="M12 0C5.37 0 0 5.37 0 12c0 2.12.55 4.11 1.52 5.83L0 24l6.35-1.66A11.95 11.95 0 0 0 12 24c6.63 0 12-5.37 12-12S18.63 0 12 0Zm0 21.8a9.8 9.8 0 0 1-5-1.37l-.36-.21-3.77.99 1-3.68-.23-.38A9.8 9.8 0 0 1 2.2 12c0-5.41 4.4-9.8 9.8-9.8s9.8 4.39 9.8 9.8-4.39 9.8-9.8 9.8Z"/></svg>
+          </div>
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">WhatsApp</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.45);">Bank switching queries only</p>
+          </div>
+        </a>
+        <a href="mailto:jamiesfinance@gmail.com" class="contact-card card-base bg-white rounded-2xl p-6 flex flex-col items-center text-center gap-3" style="box-shadow: 0 2px 12px rgba(0,0,0,0.07); text-decoration: none;">
+          <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: #141414;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7h16v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7Z" stroke="white" stroke-width="1.6"/><path d="M4 7l8 8 8-8" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <p class="font-semibold text-sm" style="color: #141414;">Email</p>
+            <p class="text-xs mt-0.5" style="color: rgba(20,20,20,0.45);">jamiesfinance@gmail.com</p>
+          </div>
+        </a>
+      </div>
+      <p class="text-xs mt-5 text-center prose-body reveal" style="font-size: 0.8125rem;">WhatsApp is for bank switching and similar enquiries only. I aim to reply within 24 hours.</p>
+    </div>
+  </section>
+
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <div class="footer-bar py-10 px-6 border-t" style="background: #F8F8F8; border-color: rgba(0,0,0,0.08);">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <a href="../index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Jamie's Finance
+      </a>
+      <p class="text-xs text-center" style="color: rgba(20,20,20,0.30);">© 2025 Jamie's Finance — Educational use only. Not financial advice.</p>
+    </div>
+  </div>
+
+
+  <script>
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('jf-theme', isDark ? 'dark' : 'light');
+      applyNavBg();
+    }
+
+    const navbar = document.getElementById('navbar-guide');
+    function applyNavBg() {
+      const dark = document.documentElement.classList.contains('dark');
+      if (window.scrollY > 40) {
+        navbar.style.background     = dark ? 'rgba(17,17,17,0.92)' : 'rgba(255,255,255,0.92)';
+        navbar.style.backdropFilter = 'blur(16px)';
+        navbar.style.borderBottom   = '1px solid rgba(0,0,0,0.07)';
+        navbar.style.boxShadow      = '0 2px 16px rgba(0,0,0,0.06)';
+      } else {
+        navbar.style.background     = 'transparent';
+        navbar.style.backdropFilter = '';
+        navbar.style.borderBottom   = '';
+        navbar.style.boxShadow      = '';
+      }
+    }
+    window.addEventListener('scroll', applyNavBg, { passive: true });
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const body = item.querySelector('.faq-body');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-body').classList.remove('open');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        body.classList.add('open');
+      }
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
