@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mortgage Calculator — Jamie's Finance</title>
+  <script>if(localStorage.getItem('jf-theme')==='dark')document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { fontFamily: { display: ['"DM Serif Display"','Georgia','serif'], sans: ['Inter','system-ui','sans-serif'] } } }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #F8F8F8; color: #141414; -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,h4 { font-family: 'DM Serif Display', Georgia, serif; letter-spacing: -0.03em; }
+
+    /* ── CSS Variables ───────────────────────────────── */
+    :root {
+      --bg: #F8F8F8; --card: #ffffff; --ink: #141414;
+      --ink-60: rgba(20,20,20,0.60); --ink-40: rgba(20,20,20,0.40);
+      --ink-10: rgba(20,20,20,0.07); --border: rgba(0,0,0,0.09);
+      --shadow: 0 2px 12px rgba(0,0,0,0.07); --accent: #141414;
+    }
+    html.dark {
+      --bg: #111111; --card: #1E1E1E; --ink: #F0F0F0;
+      --ink-60: rgba(240,240,240,0.55); --ink-40: rgba(240,240,240,0.38);
+      --ink-10: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.08);
+      --shadow: 0 2px 16px rgba(0,0,0,0.30); --accent: #D0D0D0;
+    }
+    html.dark body { background: #111111; color: #F0F0F0; }
+    html.dark .bg-white { background: #1E1E1E !important; }
+    html.dark .section-alt { background: #161616 !important; }
+    html.dark #navbar { background: rgba(17,17,17,0.93); }
+    html.dark #theme-toggle { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.12) !important; }
+    html.dark .back-link { color: rgba(240,240,240,0.40); }
+    html.dark .back-link:hover { color: rgba(240,240,240,0.88); }
+    html.dark .hero-section { background: #1A1A1A !important; }
+    html.dark [style*="color: #141414"] { color: #F0F0F0 !important; }
+
+    /* ── Theme toggle ────────────────────────────────── */
+    .theme-sun { display: none; } .theme-moon { display: block; }
+    html.dark .theme-sun { display: block; } html.dark .theme-moon { display: none; }
+    #theme-toggle { transition: background .2s, transform .2s; }
+    #theme-toggle:hover { transform: scale(1.1); }
+
+    /* ── Back link ───────────────────────────────────── */
+    .back-link { display: inline-flex; align-items: center; gap: .375rem; font-size: .875rem; font-weight: 500; color: rgba(20,20,20,.40); text-decoration: none; transition: color .18s; }
+    .back-link:hover { color: rgba(20,20,20,.90); }
+
+    /* ── Input fields ────────────────────────────────── */
+    .input-wrap {
+      display: flex; align-items: center;
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--ink-10); }
+    .input-wrap.error { border-color: #E05252; }
+    .input-prefix, .input-suffix {
+      padding: 0 .75rem; font-size: .9375rem; font-weight: 600;
+      color: var(--ink-40); background: var(--ink-10); align-self: stretch;
+      display: flex; align-items: center; flex-shrink: 0;
+    }
+    .num-field {
+      flex: 1; border: none; outline: none; background: transparent;
+      padding: .75rem 1rem; font-size: .9375rem; color: var(--ink);
+      font-family: 'Inter', sans-serif; -moz-appearance: textfield;
+    }
+    .num-field::-webkit-inner-spin-button, .num-field::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .field-label { font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-40); margin-bottom: .5rem; }
+    .field-error { font-size: .75rem; color: #E05252; margin-top: .35rem; display: none; }
+    .field-group.has-error .field-error { display: block; }
+    .field-group.has-error .input-wrap { border-color: #E05252; }
+
+    /* ── Range sliders ───────────────────────────────── */
+    input[type=range] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 5px; border-radius: 3px; outline: none; cursor: pointer;
+      background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct,50%), var(--border) var(--pct,50%), var(--border) 100%);
+      margin-top: .5rem;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--card); border: 2px solid var(--accent);
+      cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.18);
+      transition: transform .15s, box-shadow .15s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); box-shadow: 0 3px 12px rgba(0,0,0,.24); }
+    input[type=range]::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--accent);
+      background: var(--card); cursor: pointer;
+    }
+
+    /* ── Repayment toggle ────────────────────────────── */
+    .toggle-group { display: grid; grid-template-columns: 1fr 1fr; background: var(--ink-10); border-radius: 12px; padding: 4px; gap: 4px; }
+    .toggle-btn {
+      padding: .6rem 1rem; border-radius: 9px; border: none; background: transparent;
+      font-size: .875rem; font-weight: 600; color: var(--ink-60); cursor: pointer;
+      transition: all .2s;
+    }
+    .toggle-btn.active { background: var(--card); color: var(--ink); box-shadow: 0 1px 6px rgba(0,0,0,.12); }
+    html.dark .toggle-btn.active { box-shadow: 0 1px 6px rgba(0,0,0,.40); }
+
+    /* ── Result cards ────────────────────────────────── */
+    .result-card {
+      background: var(--card); border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .result-card.featured { background: var(--ink); }
+    .result-card.featured .rc-label { color: rgba(255,255,255,.50); }
+    .result-card.featured .rc-value { color: #fff; }
+    html.dark .result-card.featured { background: #E8E8E8; }
+    html.dark .result-card.featured .rc-label { color: rgba(20,20,20,.50); }
+    html.dark .result-card.featured .rc-value { color: #141414; }
+    .rc-label { font-size: .6875rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-40); margin-bottom: .5rem; }
+    .rc-value { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.875rem; letter-spacing: -.03em; line-height: 1; color: var(--ink); }
+    .rc-sub { font-size: .75rem; color: var(--ink-40); margin-top: .35rem; }
+
+    /* ── Breakdown bar ───────────────────────────────── */
+    .breakdown-bar-track { height: 10px; border-radius: 9999px; background: var(--ink-10); overflow: hidden; display: flex; }
+    .breakdown-bar-principal { background: var(--ink-40); transition: width .6s ease; }
+    .breakdown-bar-interest  { background: var(--ink);     transition: width .6s ease; flex: 1; }
+
+    /* ── Overpayment impact panel ────────────────────── */
+    .impact-panel { border: 1.5px solid var(--border); border-radius: 16px; padding: 1.25rem 1.5rem; }
+
+    /* ── Amortisation table ──────────────────────────── */
+    .amort-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+    .amort-table th { font-size: .6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-40); padding: .75rem 1rem; text-align: right; border-bottom: 1.5px solid var(--border); white-space: nowrap; }
+    .amort-table th:first-child { text-align: left; }
+    .amort-table td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); text-align: right; }
+    .amort-table td:first-child { text-align: left; font-weight: 600; }
+    .amort-table tbody tr:hover { background: var(--ink-10); }
+    .amort-table tbody tr:last-child td { border-bottom: none; font-weight: 600; }
+
+    /* ── Table tabs ──────────────────────────────────── */
+    .tab-btn { padding: .5rem 1.25rem; border-radius: 8px; border: 1.5px solid var(--border); background: transparent; font-size: .8125rem; font-weight: 600; color: var(--ink-60); cursor: pointer; transition: all .18s; }
+    .tab-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    html.dark .tab-btn.active { background: #D0D0D0; color: #111; border-color: #D0D0D0; }
+
+    /* ── Utility buttons ─────────────────────────────── */
+    .btn-outline { display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.25rem; border-radius: 9999px; border: 1.5px solid var(--border); background: transparent; font-size: .8125rem; font-weight: 600; color: var(--ink-60); cursor: pointer; transition: all .18s; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--ink); }
+    .btn-dark { display: inline-flex; align-items: center; gap: .4rem; padding: .6rem 1.25rem; border-radius: 9999px; border: none; background: var(--ink); color: #fff; font-size: .8125rem; font-weight: 600; cursor: pointer; transition: opacity .18s; }
+    html.dark .btn-dark { background: #D0D0D0; color: #111; }
+    .btn-dark:hover { opacity: .8; }
+
+    /* ── Pagination ──────────────────────────────────── */
+    .page-btn { width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; border: 1.5px solid var(--border); background: transparent; font-size: .8125rem; font-weight: 600; color: var(--ink-60); cursor: pointer; transition: all .15s; }
+    .page-btn:hover { border-color: var(--accent); color: var(--ink); }
+    .page-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    html.dark .page-btn.active { background: #D0D0D0; color: #111; border-color: #D0D0D0; }
+    .page-btn:disabled { opacity: .3; cursor: not-allowed; }
+
+    /* ── Callout ─────────────────────────────────────── */
+    .callout { border-left: 3px solid var(--border); padding: .875rem 1.125rem; border-radius: 0 10px 10px 0; background: var(--ink-10); }
+
+    /* ── Reveal ──────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1{transition-delay:.07s} .d2{transition-delay:.14s} .d3{transition-delay:.21s} .d4{transition-delay:.28s}
+
+    /* ── Grain ───────────────────────────────────────── */
+    .grain::after { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; }
+  </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+  <!-- ── Nav ──────────────────────────────────────────── -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: transparent;">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"
+          class="w-9 h-9 flex items-center justify-center rounded-xl"
+          style="background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12);">
+          <svg class="theme-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="theme-sun"  width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C0C0C0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <a href="../index.html" class="font-display text-lg leading-none" style="color: #141414;">Jamie's Finance</a>
+      </div>
+      <a href="index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All tools
+      </a>
+    </div>
+  </nav>
+
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero-section bg-white relative overflow-hidden grain pt-32 pb-16 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="reveal inline-flex mb-6">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest"
+              style="background: rgba(0,0,0,0.06); color: #333; border: 1px solid rgba(0,0,0,0.12);">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Free Tool
+        </span>
+      </div>
+      <h1 class="reveal font-display text-5xl sm:text-6xl md:text-[5rem] leading-none mb-5" style="color: #141414;">
+        Mortgage<br /><span style="color: #555;">Calculator</span>
+      </h1>
+      <p class="reveal text-lg max-w-xl mx-auto" style="color: rgba(20,20,20,0.55); line-height: 1.7;">
+        Calculate monthly payments, total interest, and see your full amortisation schedule. Includes overpayment modelling and CSV export.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ── Calculator ───────────────────────────────────── -->
+  <section class="py-12 px-6" style="background: #F8F8F8;">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="grid lg:grid-cols-[480px_1fr] gap-8 items-start">
+
+        <!-- ══════════════════════════════════════
+             INPUTS PANEL
+        ══════════════════════════════════════ -->
+        <div class="bg-white rounded-3xl overflow-hidden" style="box-shadow: var(--shadow);">
+
+          <!-- Header -->
+          <div class="px-7 pt-7 pb-5 flex items-center justify-between" style="border-bottom: 1px solid rgba(0,0,0,0.07);">
+            <h2 class="font-display text-2xl" style="color: #141414;">Mortgage Details</h2>
+            <button onclick="resetCalculator()" class="btn-outline !py-1.5 !px-3">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 0 1 10.5-4M14 8a6 6 0 0 1-10.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 4h2V2M4 12H2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Reset
+            </button>
+          </div>
+
+          <div class="p-7 space-y-6">
+
+            <!-- Property Price -->
+            <div class="field-group" id="fg-price">
+              <div class="field-label">Property Price</div>
+              <div class="input-wrap">
+                <span class="input-prefix">£</span>
+                <input type="number" class="num-field" id="inp-price" value="300000" min="1" max="9999999" step="1000" oninput="onPriceChange()" />
+              </div>
+              <div class="field-error" id="err-price">Please enter a valid property price.</div>
+            </div>
+
+            <!-- Deposit row -->
+            <div class="grid grid-cols-2 gap-4">
+              <div class="field-group" id="fg-deposit">
+                <div class="field-label">Deposit Amount</div>
+                <div class="input-wrap">
+                  <span class="input-prefix">£</span>
+                  <input type="number" class="num-field" id="inp-deposit" value="60000" min="0" step="1000" oninput="onDepositAmtChange()" />
+                </div>
+                <div class="field-error" id="err-deposit">Must be less than property price.</div>
+              </div>
+              <div class="field-group" id="fg-dep-pct">
+                <div class="field-label">Deposit %</div>
+                <div class="input-wrap">
+                  <input type="number" class="num-field" id="inp-dep-pct" value="20" min="0" max="99" step="0.1" oninput="onDepositPctChange()" />
+                  <span class="input-suffix">%</span>
+                </div>
+                <div class="field-error" id="err-dep-pct">Must be 0–99%.</div>
+              </div>
+            </div>
+
+            <!-- Loan amount display -->
+            <div class="callout flex items-center justify-between">
+              <span class="text-sm font-semibold" style="color: var(--ink-60);">Loan Amount</span>
+              <span class="font-display text-2xl" style="color: #141414;" id="display-loan">£240,000</span>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.07);" />
+
+            <!-- Mortgage Term -->
+            <div class="field-group" id="fg-term">
+              <div class="flex items-center justify-between mb-1">
+                <div class="field-label" style="margin-bottom:0;">Mortgage Term</div>
+                <span class="font-display text-2xl" style="color: #141414;" id="display-term">25 years</span>
+              </div>
+              <input type="range" id="slider-term" min="1" max="40" step="1" value="25" oninput="onTermSlider()" />
+              <div class="flex justify-between mt-1.5">
+                <span class="text-xs" style="color: var(--ink-40);">1 yr</span>
+                <span class="text-xs" style="color: var(--ink-40);">40 yrs</span>
+              </div>
+            </div>
+
+            <!-- Interest Rate -->
+            <div class="field-group" id="fg-rate">
+              <div class="flex items-center justify-between mb-1">
+                <div class="field-label" style="margin-bottom:0;">Annual Interest Rate</div>
+                <div class="input-wrap" style="width: 110px;">
+                  <input type="number" class="num-field" id="inp-rate" value="4.5" min="0.01" max="25" step="0.05" oninput="onRateInput()" style="padding: .5rem .75rem; font-size: 1.125rem;" />
+                  <span class="input-suffix">%</span>
+                </div>
+              </div>
+              <input type="range" id="slider-rate" min="0.1" max="15" step="0.05" value="4.5" oninput="onRateSlider()" />
+              <div class="flex justify-between mt-1.5">
+                <span class="text-xs" style="color: var(--ink-40);">0.1%</span>
+                <span class="text-xs" style="color: var(--ink-40);">15%</span>
+              </div>
+              <div class="field-error" id="err-rate">Rate must be between 0.01% and 25%.</div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.07);" />
+
+            <!-- Repayment type -->
+            <div>
+              <div class="field-label">Repayment Type</div>
+              <div class="toggle-group">
+                <button class="toggle-btn active" id="btn-repayment"    onclick="setRepaymentType('repayment')">Repayment</button>
+                <button class="toggle-btn"         id="btn-interest-only" onclick="setRepaymentType('interest-only')">Interest Only</button>
+              </div>
+              <p id="interest-only-note" class="text-xs mt-2 hidden" style="color: var(--ink-40);">
+                With interest-only, you pay only the interest each month. The full loan amount is owed at the end of the term.
+              </p>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid rgba(0,0,0,0.07);" />
+
+            <!-- Optional: Overpayment -->
+            <div class="field-group" id="fg-overpay">
+              <div class="field-label">Monthly Overpayment <span style="color: var(--ink-40); font-weight: 400; text-transform: none; letter-spacing: 0;">(optional)</span></div>
+              <div class="input-wrap">
+                <span class="input-prefix">£</span>
+                <input type="number" class="num-field" id="inp-overpay" value="0" min="0" step="50" placeholder="0" oninput="recalculate()" />
+              </div>
+            </div>
+
+            <!-- Optional: Start date -->
+            <div>
+              <div class="field-label">Mortgage Start Date <span style="color: var(--ink-40); font-weight: 400; text-transform: none; letter-spacing: 0;">(optional)</span></div>
+              <div class="input-wrap">
+                <input type="date" class="num-field" id="inp-start-date" oninput="recalculate()"
+                  style="color: var(--ink);" />
+              </div>
+            </div>
+
+          </div><!-- end p-7 -->
+        </div><!-- end inputs panel -->
+
+
+        <!-- ══════════════════════════════════════
+             RESULTS PANEL
+        ══════════════════════════════════════ -->
+        <div class="space-y-6" id="results-panel">
+
+          <!-- Main stats grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="result-card featured col-span-2 sm:col-span-1">
+              <div class="rc-label">Monthly Payment</div>
+              <div class="rc-value" id="out-monthly">—</div>
+              <div class="rc-sub" id="out-monthly-sub"></div>
+            </div>
+            <div class="result-card">
+              <div class="rc-label">Loan Amount</div>
+              <div class="rc-value" id="out-loan">—</div>
+            </div>
+            <div class="result-card">
+              <div class="rc-label">Total Interest</div>
+              <div class="rc-value" id="out-interest">—</div>
+            </div>
+            <div class="result-card">
+              <div class="rc-label">Total Paid</div>
+              <div class="rc-value" id="out-total">—</div>
+            </div>
+            <div class="result-card">
+              <div class="rc-label">Mortgage End Date</div>
+              <div class="rc-value" style="font-size: 1.375rem;" id="out-end-date">—</div>
+              <div class="rc-sub" id="out-end-sub"></div>
+            </div>
+            <div class="result-card">
+              <div class="rc-label">LTV Ratio</div>
+              <div class="rc-value" id="out-ltv">—</div>
+              <div class="rc-sub" id="out-ltv-sub"></div>
+            </div>
+          </div>
+
+          <!-- Principal vs Interest breakdown -->
+          <div class="bg-white rounded-2xl p-6" style="box-shadow: var(--shadow);">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-widest" style="color: var(--ink-40);">Breakdown</span>
+              <div class="flex gap-5 text-xs" style="color: var(--ink-40);">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-7 h-2 rounded-full inline-block" style="background: var(--ink-40);"></span>Principal
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <span class="w-7 h-2 rounded-full inline-block" style="background: var(--ink);"></span>Interest
+                </span>
+              </div>
+            </div>
+            <div class="breakdown-bar-track mb-3">
+              <div class="breakdown-bar-principal" id="bar-principal" style="width: 60%;"></div>
+              <div class="breakdown-bar-interest"  id="bar-interest"></div>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm" style="color: var(--ink-40);" id="bar-principal-label">—</span>
+              <span class="text-sm" style="color: var(--ink-40);" id="bar-interest-label">—</span>
+            </div>
+          </div>
+
+          <!-- Overpayment impact (shown when overpayment > 0) -->
+          <div class="impact-panel hidden" id="overpayment-panel">
+            <div class="flex items-center gap-2 mb-4">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 13h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <span class="text-xs font-bold uppercase tracking-widest" style="color: var(--ink-40);">Overpayment Impact</span>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <div class="rc-label">Interest Saved</div>
+                <div class="font-display text-2xl" style="color: #141414; letter-spacing: -.03em;" id="out-interest-saved">—</div>
+              </div>
+              <div>
+                <div class="rc-label">Time Saved</div>
+                <div class="font-display text-2xl" style="color: #141414; letter-spacing: -.03em;" id="out-time-saved">—</div>
+              </div>
+              <div>
+                <div class="rc-label">New End Date</div>
+                <div class="font-display text-xl" style="color: #141414; letter-spacing: -.03em;" id="out-new-end-date">—</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interest-only end note -->
+          <div class="callout hidden" id="io-end-panel">
+            <p class="text-sm font-semibold" style="color: var(--ink);">Interest-Only Note</p>
+            <p class="text-sm mt-1" style="color: var(--ink-60); line-height: 1.7;">
+              At the end of the term you will still owe <strong id="io-balloon">£0</strong> (the full loan amount). You'll need a repayment strategy — such as savings, investments, or selling the property — to repay this.
+            </p>
+          </div>
+
+        </div><!-- end results panel -->
+      </div><!-- end grid -->
+    </div><!-- end max-w -->
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       AMORTISATION TABLE
+  ════════════════════════════════════════════════════ -->
+  <section class="section-alt py-12 px-6" style="background: #F8F8F8;">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="bg-white rounded-3xl overflow-hidden" style="box-shadow: var(--shadow);">
+        <div class="px-7 pt-7 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4" style="border-bottom: 1px solid rgba(0,0,0,0.07);">
+          <div>
+            <h2 class="font-display text-2xl" style="color: #141414;">Amortisation Schedule</h2>
+            <p class="text-sm mt-1" style="color: var(--ink-40);" id="amort-subtitle">Full breakdown of every payment</p>
+          </div>
+          <div class="flex flex-wrap gap-3 items-center">
+            <!-- View tabs -->
+            <div class="flex gap-2">
+              <button class="tab-btn active" id="tab-yearly"  onclick="setAmortView('yearly')">Yearly</button>
+              <button class="tab-btn"         id="tab-monthly" onclick="setAmortView('monthly')">Monthly</button>
+            </div>
+            <!-- CSV download -->
+            <button class="btn-dark" onclick="downloadCSV()">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 13h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Download CSV
+            </button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+          <table class="amort-table">
+            <thead id="amort-thead"></thead>
+            <tbody id="amort-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Pagination (monthly view only) -->
+        <div id="pagination" class="hidden px-7 py-4 flex items-center justify-between gap-4" style="border-top: 1px solid rgba(0,0,0,0.07);">
+          <span class="text-xs" style="color: var(--ink-40);" id="pagination-info"></span>
+          <div class="flex items-center gap-1.5" id="pagination-btns"></div>
+        </div>
+
+      </div><!-- end card -->
+    </div>
+  </section>
+
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <div class="py-10 px-6 border-t" style="background: #F8F8F8; border-color: rgba(0,0,0,0.08);">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        All tools
+      </a>
+      <p class="text-xs text-center" style="color: rgba(20,20,20,0.30);">© 2025 Jamie's Finance — Educational use only. Not financial advice.</p>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════════════════ -->
+  <script>
+
+    // ══════════════════════════════════════════════════════
+    //  CALC ENGINE  — pure functions, no DOM access
+    // ══════════════════════════════════════════════════════
+    const CalcEngine = {
+
+      /**
+       * Standard amortising loan formula (repayment mortgage):
+       *   M = P × r(1+r)^n / ((1+r)^n − 1)
+       *   P = loan principal
+       *   r = monthly interest rate  (annual rate / 12 / 100)
+       *   n = total number of monthly payments  (years × 12)
+       */
+      monthlyRepayment(P, annualRate, years) {
+        if (P <= 0 || annualRate <= 0 || years <= 0) return 0;
+        const r = annualRate / 100 / 12;
+        const n = years * 12;
+        if (r === 0) return P / n;                      // edge case: 0% rate
+        return P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+      },
+
+      /**
+       * Interest-only mortgage: borrower pays only monthly interest.
+       *   M = P × r
+       * The full principal (P) is owed as a balloon payment at term end.
+       */
+      monthlyInterestOnly(P, annualRate) {
+        if (P <= 0 || annualRate <= 0) return 0;
+        const r = annualRate / 100 / 12;
+        return P * r;
+      },
+
+      /**
+       * Build full month-by-month amortisation schedule.
+       * Supports optional monthly overpayments, which reduce principal
+       * faster and may terminate the loan before the full term.
+       *
+       * Returns array of row objects:
+       *   { month, date, payment, interest, principal, overpayment, balance }
+       */
+      buildSchedule(P, annualRate, years, monthlyPayment, overpayment, isInterestOnly, startDate) {
+        const r          = annualRate / 100 / 12;
+        const maxMonths  = years * 12;
+        const schedule   = [];
+        let balance      = P;
+        let currentDate  = startDate ? new Date(startDate) : null;
+        if (currentDate) currentDate.setDate(1); // normalise to 1st of month
+
+        for (let month = 1; month <= maxMonths; month++) {
+          if (balance < 0.005) break; // fully repaid
+
+          const interestCharge = balance * r;
+          let principal, payment, extra;
+
+          if (isInterestOnly) {
+            // Interest-only: payment = interest; overpayment reduces principal
+            extra     = Math.min(overpayment, balance);
+            principal = extra;
+            payment   = interestCharge + extra;
+          } else {
+            // Repayment: monthly payment reduces principal
+            const scheduledPrincipal = monthlyPayment - interestCharge;
+            extra     = Math.min(overpayment, Math.max(0, balance - scheduledPrincipal));
+            principal = Math.min(scheduledPrincipal + extra, balance);
+            payment   = interestCharge + principal;
+          }
+
+          balance = Math.max(0, balance - principal);
+
+          // Advance date by 1 month if start date was provided
+          let rowDate = null;
+          if (currentDate) {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            rowDate = new Date(currentDate);
+          }
+
+          schedule.push({
+            month,
+            date:        rowDate,
+            payment:     round2(payment),
+            interest:    round2(interestCharge),
+            principal:   round2(principal),
+            overpayment: round2(extra),
+            balance:     round2(balance),
+          });
+        }
+        return schedule;
+      },
+
+      /**
+       * Summarise monthly schedule into one row per calendar year.
+       * Keeps the balance at end of each year and totals payments/interest/principal.
+       */
+      summariseByYear(schedule) {
+        const map = {};
+        schedule.forEach(row => {
+          const yr = Math.ceil(row.month / 12);
+          if (!map[yr]) map[yr] = { year: yr, months: 0, payment: 0, interest: 0, principal: 0, overpayment: 0, balance: 0, endDate: null };
+          map[yr].months      += 1;
+          map[yr].payment     += row.payment;
+          map[yr].interest    += row.interest;
+          map[yr].principal   += row.principal;
+          map[yr].overpayment += row.overpayment;
+          map[yr].balance      = row.balance;
+          map[yr].endDate      = row.date;
+        });
+        return Object.values(map).map(r => ({
+          ...r,
+          payment:     round2(r.payment),
+          interest:    round2(r.interest),
+          principal:   round2(r.principal),
+          overpayment: round2(r.overpayment),
+        }));
+      },
+
+      /**
+       * Compare a baseline schedule (no overpayment) against an overpayment
+       * schedule to calculate interest saved and months saved.
+       */
+      overpaymentSavings(P, annualRate, years, monthlyPayment, overpayment, isInterestOnly, startDate) {
+        const base = this.buildSchedule(P, annualRate, years, monthlyPayment, 0,           isInterestOnly, startDate);
+        const over = this.buildSchedule(P, annualRate, years, monthlyPayment, overpayment, isInterestOnly, startDate);
+        const baseInterest = base.reduce((s, r) => s + r.interest, 0);
+        const overInterest = over.reduce((s, r) => s + r.interest, 0);
+        return {
+          interestSaved: round2(baseInterest - overInterest),
+          monthsSaved:   base.length - over.length,
+          newEndDate:    over.length > 0 ? over[over.length - 1].date : null,
+          newMonths:     over.length,
+        };
+      },
+    };
+
+    // ── Helper ───────────────────────────────────────────
+    function round2(n) { return Math.round(n * 100) / 100; }
+
+    function fmtGBP(n, decimals = 0) {
+      if (isNaN(n) || n === null) return '—';
+      return '£' + n.toLocaleString('en-GB', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
+    function fmtDate(d) {
+      if (!d) return null;
+      return d.toLocaleString('en-GB', { month: 'short', year: 'numeric' });
+    }
+
+    function fmtMonths(m) {
+      if (m <= 0) return '0 months';
+      const yrs = Math.floor(m / 12);
+      const mos = m % 12;
+      const parts = [];
+      if (yrs > 0) parts.push(yrs + ' yr' + (yrs > 1 ? 's' : ''));
+      if (mos > 0) parts.push(mos + ' mo' + (mos > 1 ? 's' : ''));
+      return parts.join(' ');
+    }
+
+
+    // ══════════════════════════════════════════════════════
+    //  STATE — single source of truth
+    // ══════════════════════════════════════════════════════
+    const defaults = {
+      price: 300000, deposit: 60000, depPct: 20,
+      term: 25, rate: 4.5, type: 'repayment',
+      overpay: 0, startDate: '',
+    };
+    const state = { ...defaults };
+
+    // Amortisation view state
+    let amortView   = 'yearly';   // 'yearly' | 'monthly'
+    let currentPage = 0;
+    const PAGE_SIZE = 24;         // 2 years of monthly rows per page
+
+    // Cached full monthly schedule for CSV export
+    let cachedSchedule = [];
+
+
+    // ══════════════════════════════════════════════════════
+    //  INPUT HANDLERS
+    // ══════════════════════════════════════════════════════
+
+    function onPriceChange() {
+      const v = parseFloat(document.getElementById('inp-price').value);
+      if (isNaN(v) || v <= 0) { showError('fg-price', 'err-price'); return; }
+      clearError('fg-price');
+      state.price   = v;
+      state.deposit = round2(v * state.depPct / 100);
+      document.getElementById('inp-deposit').value = Math.round(state.deposit);
+      recalculate();
+    }
+
+    function onDepositAmtChange() {
+      const v = parseFloat(document.getElementById('inp-deposit').value);
+      if (isNaN(v) || v < 0 || v >= state.price) { showError('fg-deposit', 'err-deposit'); return; }
+      clearError('fg-deposit');
+      state.deposit = v;
+      state.depPct  = round2(v / state.price * 100);
+      document.getElementById('inp-dep-pct').value = state.depPct.toFixed(1);
+      recalculate();
+    }
+
+    function onDepositPctChange() {
+      const v = parseFloat(document.getElementById('inp-dep-pct').value);
+      if (isNaN(v) || v < 0 || v >= 100) { showError('fg-dep-pct', 'err-dep-pct'); return; }
+      clearError('fg-dep-pct');
+      state.depPct  = v;
+      state.deposit = round2(state.price * v / 100);
+      document.getElementById('inp-deposit').value = Math.round(state.deposit);
+      recalculate();
+    }
+
+    function onTermSlider() {
+      const v = parseInt(document.getElementById('slider-term').value);
+      state.term = v;
+      document.getElementById('display-term').textContent = v + (v === 1 ? ' year' : ' years');
+      updateTrack('slider-term', 1, 40);
+      recalculate();
+    }
+
+    function onRateSlider() {
+      const v = parseFloat(document.getElementById('slider-rate').value);
+      state.rate = v;
+      document.getElementById('inp-rate').value = v.toFixed(2);
+      updateTrack('slider-rate', 0.1, 15);
+      recalculate();
+    }
+
+    function onRateInput() {
+      const v = parseFloat(document.getElementById('inp-rate').value);
+      if (isNaN(v) || v < 0.01 || v > 25) { showError('fg-rate', 'err-rate'); return; }
+      clearError('fg-rate');
+      state.rate = v;
+      const sliderVal = Math.min(15, Math.max(0.1, v));
+      document.getElementById('slider-rate').value = sliderVal;
+      updateTrack('slider-rate', 0.1, 15);
+      recalculate();
+    }
+
+    function setRepaymentType(type) {
+      state.type = type;
+      document.getElementById('btn-repayment').classList.toggle('active',    type === 'repayment');
+      document.getElementById('btn-interest-only').classList.toggle('active', type === 'interest-only');
+      document.getElementById('interest-only-note').classList.toggle('hidden', type !== 'interest-only');
+      recalculate();
+    }
+
+    function updateTrack(id, min, max) {
+      const el  = document.getElementById(id);
+      const pct = ((parseFloat(el.value) - min) / (max - min) * 100).toFixed(1);
+      el.style.setProperty('--pct', pct + '%');
+    }
+
+    function showError(groupId, errId) {
+      document.getElementById(groupId).classList.add('has-error');
+    }
+
+    function clearError(groupId) {
+      document.getElementById(groupId).classList.remove('has-error');
+    }
+
+
+    // ══════════════════════════════════════════════════════
+    //  CORE RECALCULATE — reads state, runs CalcEngine, renders
+    // ══════════════════════════════════════════════════════
+    function recalculate() {
+      const P          = state.price - state.deposit;
+      const rate       = parseFloat(document.getElementById('inp-rate').value) || state.rate;
+      const term       = parseInt(document.getElementById('slider-term').value) || state.term;
+      const overpay    = Math.max(0, parseFloat(document.getElementById('inp-overpay').value) || 0);
+      const isIO       = state.type === 'interest-only';
+      const startDate  = document.getElementById('inp-start-date').value || '';
+
+      if (P <= 0 || rate <= 0 || term <= 0) return;
+
+      // ── Calculate base monthly payment ──────────────────
+      const monthlyPmt = isIO
+        ? CalcEngine.monthlyInterestOnly(P, rate)
+        : CalcEngine.monthlyRepayment(P, rate, term);
+
+      // ── Build base amortisation schedule ────────────────
+      cachedSchedule = CalcEngine.buildSchedule(P, rate, term, monthlyPmt, overpay, isIO, startDate || null);
+
+      const totalPaid     = cachedSchedule.reduce((s, r) => s + r.payment,  0);
+      const totalInterest = cachedSchedule.reduce((s, r) => s + r.interest, 0);
+      const lastRow       = cachedSchedule[cachedSchedule.length - 1];
+      const actualMonths  = cachedSchedule.length;
+
+      // ── LTV ─────────────────────────────────────────────
+      const ltv = round2(P / state.price * 100);
+
+      // ── Render results ──────────────────────────────────
+      document.getElementById('display-loan').textContent = fmtGBP(P);
+
+      set('out-monthly',   fmtGBP(monthlyPmt, 2));
+      set('out-monthly-sub', isIO ? 'Interest only' : 'Repayment');
+      set('out-loan',      fmtGBP(P));
+      set('out-interest',  fmtGBP(totalInterest));
+      set('out-total',     fmtGBP(round2(totalPaid)));
+      set('out-ltv',       ltv.toFixed(1) + '%');
+      set('out-ltv-sub',   ltv <= 60 ? 'Excellent LTV' : ltv <= 75 ? 'Good LTV' : ltv <= 90 ? 'Standard LTV' : 'High LTV');
+
+      // End date
+      if (lastRow && lastRow.date) {
+        set('out-end-date', fmtDate(lastRow.date));
+        set('out-end-sub',  fmtMonths(actualMonths) + ' term');
+      } else {
+        const endMonthsFromNow = actualMonths;
+        const approxEnd = new Date();
+        approxEnd.setMonth(approxEnd.getMonth() + endMonthsFromNow);
+        set('out-end-date', fmtDate(approxEnd));
+        set('out-end-sub',  fmtMonths(actualMonths) + ' term');
+      }
+
+      // Breakdown bar
+      const pctPrincipal = totalPaid > 0 ? round2(P / totalPaid * 100) : 50;
+      document.getElementById('bar-principal').style.width = pctPrincipal + '%';
+      set('bar-principal-label', fmtGBP(P) + ' principal (' + pctPrincipal.toFixed(0) + '%)');
+      set('bar-interest-label',  fmtGBP(round2(totalInterest)) + ' interest (' + (100 - pctPrincipal).toFixed(0) + '%)');
+
+      // Interest-only balloon note
+      const ioPanel = document.getElementById('io-end-panel');
+      if (isIO) {
+        ioPanel.classList.remove('hidden');
+        set('io-balloon', fmtGBP(P));
+      } else {
+        ioPanel.classList.add('hidden');
+      }
+
+      // Overpayment impact
+      const opPanel = document.getElementById('overpayment-panel');
+      if (overpay > 0) {
+        opPanel.classList.remove('hidden');
+        const savings = CalcEngine.overpaymentSavings(P, rate, term, monthlyPmt, overpay, isIO, startDate || null);
+        set('out-interest-saved', fmtGBP(savings.interestSaved));
+        set('out-time-saved',     fmtMonths(savings.monthsSaved));
+        set('out-new-end-date',   savings.newEndDate ? fmtDate(savings.newEndDate) : fmtMonths(savings.newMonths));
+      } else {
+        opPanel.classList.add('hidden');
+      }
+
+      // Re-render table
+      renderTable();
+    }
+
+    function set(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+
+
+    // ══════════════════════════════════════════════════════
+    //  AMORTISATION TABLE
+    // ══════════════════════════════════════════════════════
+    function setAmortView(view) {
+      amortView = view;
+      currentPage = 0;
+      document.getElementById('tab-yearly').classList.toggle('active',  view === 'yearly');
+      document.getElementById('tab-monthly').classList.toggle('active', view === 'monthly');
+      renderTable();
+    }
+
+    function renderTable() {
+      if (amortView === 'yearly') renderYearly();
+      else                        renderMonthly();
+    }
+
+    function renderYearly() {
+      const yearly = CalcEngine.summariseByYear(cachedSchedule);
+      const hasDate  = yearly.length > 0 && yearly[0].endDate;
+      const hasOverpay = yearly.some(r => r.overpayment > 0);
+
+      // Header
+      let th = `<tr>
+        <th style="text-align:left;">Year</th>
+        ${hasDate ? '<th>Period</th>' : ''}
+        <th>Annual Payment</th>
+        <th>Interest</th>
+        <th>Principal</th>
+        ${hasOverpay ? '<th>Overpayment</th>' : ''}
+        <th>Balance</th>
+      </tr>`;
+      document.getElementById('amort-thead').innerHTML = th;
+
+      // Body
+      let rows = yearly.map(r => `
+        <tr>
+          <td>Year ${r.year}</td>
+          ${hasDate ? `<td style="text-align:right;">${r.endDate ? fmtDate(r.endDate) : '—'}</td>` : ''}
+          <td>${fmtGBP(r.payment, 2)}</td>
+          <td>${fmtGBP(r.interest, 2)}</td>
+          <td>${fmtGBP(r.principal, 2)}</td>
+          ${hasOverpay ? `<td>${fmtGBP(r.overpayment, 2)}</td>` : ''}
+          <td>${fmtGBP(r.balance, 2)}</td>
+        </tr>`).join('');
+
+      // Totals row
+      const totPmt  = yearly.reduce((s, r) => s + r.payment,  0);
+      const totInt  = yearly.reduce((s, r) => s + r.interest, 0);
+      const totPrin = yearly.reduce((s, r) => s + r.principal,0);
+      const totOver = yearly.reduce((s, r) => s + r.overpayment, 0);
+      rows += `
+        <tr style="font-weight:700;">
+          <td>Total</td>
+          ${hasDate ? '<td></td>' : ''}
+          <td>${fmtGBP(round2(totPmt), 2)}</td>
+          <td>${fmtGBP(round2(totInt), 2)}</td>
+          <td>${fmtGBP(round2(totPrin), 2)}</td>
+          ${hasOverpay ? `<td>${fmtGBP(round2(totOver), 2)}</td>` : ''}
+          <td>${fmtGBP(0, 2)}</td>
+        </tr>`;
+
+      document.getElementById('amort-tbody').innerHTML = rows;
+      document.getElementById('pagination').classList.add('hidden');
+      document.getElementById('amort-subtitle').textContent =
+        `${yearly.length} year${yearly.length !== 1 ? 's' : ''} · ${cachedSchedule.length} payments`;
+    }
+
+    function renderMonthly() {
+      const schedule   = cachedSchedule;
+      const hasDate    = schedule.length > 0 && schedule[0].date;
+      const hasOverpay = schedule.some(r => r.overpayment > 0);
+      const totalPages = Math.ceil(schedule.length / PAGE_SIZE);
+      currentPage      = Math.min(currentPage, totalPages - 1);
+      const slice      = schedule.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
+
+      // Header
+      let th = `<tr>
+        <th style="text-align:left;">Month</th>
+        ${hasDate ? '<th>Date</th>' : ''}
+        <th>Payment</th>
+        <th>Interest</th>
+        <th>Principal</th>
+        ${hasOverpay ? '<th>Overpayment</th>' : ''}
+        <th>Balance</th>
+      </tr>`;
+      document.getElementById('amort-thead').innerHTML = th;
+
+      // Body
+      const rows = slice.map(r => `
+        <tr>
+          <td>${r.month}</td>
+          ${hasDate ? `<td style="text-align:right;">${r.date ? fmtDate(r.date) : '—'}</td>` : ''}
+          <td>${fmtGBP(r.payment, 2)}</td>
+          <td>${fmtGBP(r.interest, 2)}</td>
+          <td>${fmtGBP(r.principal, 2)}</td>
+          ${hasOverpay ? `<td>${fmtGBP(r.overpayment, 2)}</td>` : ''}
+          <td>${fmtGBP(r.balance, 2)}</td>
+        </tr>`).join('');
+
+      document.getElementById('amort-tbody').innerHTML = rows;
+
+      // Pagination
+      const pg = document.getElementById('pagination');
+      if (totalPages > 1) {
+        pg.classList.remove('hidden');
+        document.getElementById('pagination-info').textContent =
+          `Showing months ${currentPage * PAGE_SIZE + 1}–${Math.min((currentPage + 1) * PAGE_SIZE, schedule.length)} of ${schedule.length}`;
+
+        // Build page buttons (show first, last, current ±1)
+        let btns = '';
+        btns += `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 0 ? 'disabled' : ''}>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M7 2L3 6l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>`;
+        const visPages = new Set([0, totalPages-1, currentPage-1, currentPage, currentPage+1].filter(p => p >= 0 && p < totalPages));
+        let prev = -1;
+        Array.from(visPages).sort((a,b)=>a-b).forEach(p => {
+          if (prev >= 0 && p > prev + 1) btns += `<span class="text-xs" style="color:var(--ink-40);padding:0 .25rem">…</span>`;
+          btns += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goPage(${p})">${p + 1}</button>`;
+          prev = p;
+        });
+        btns += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages-1 ? 'disabled' : ''}>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5 2l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>`;
+        document.getElementById('pagination-btns').innerHTML = btns;
+      } else {
+        pg.classList.add('hidden');
+      }
+
+      document.getElementById('amort-subtitle').textContent =
+        `${schedule.length} monthly payments`;
+    }
+
+    function goPage(p) {
+      currentPage = p;
+      renderMonthly();
+    }
+
+
+    // ══════════════════════════════════════════════════════
+    //  CSV EXPORT
+    // ══════════════════════════════════════════════════════
+    function downloadCSV() {
+      if (cachedSchedule.length === 0) return;
+
+      const P          = state.price - state.deposit;
+      const rate       = parseFloat(document.getElementById('inp-rate').value);
+      const term       = parseInt(document.getElementById('slider-term').value);
+      const overpay    = parseFloat(document.getElementById('inp-overpay').value) || 0;
+      const isIO       = state.type === 'interest-only';
+      const monthlyPmt = isIO ? CalcEngine.monthlyInterestOnly(P, rate) : CalcEngine.monthlyRepayment(P, rate, term);
+      const totalInt   = cachedSchedule.reduce((s, r) => s + r.interest, 0);
+      const totalPaid  = cachedSchedule.reduce((s, r) => s + r.payment,  0);
+
+      const hasDate    = cachedSchedule.length > 0 && cachedSchedule[0].date;
+      const hasOverpay = overpay > 0;
+
+      // Summary section
+      let csv = 'MORTGAGE CALCULATOR — JAMIE\'S FINANCE\r\n';
+      csv += 'Educational purposes only. Not financial advice.\r\n\r\n';
+      csv += 'SUMMARY\r\n';
+      csv += `Property Price,${fmtGBP(state.price)}\r\n`;
+      csv += `Deposit,${fmtGBP(state.deposit)} (${state.depPct.toFixed(1)}%)\r\n`;
+      csv += `Loan Amount,${fmtGBP(P)}\r\n`;
+      csv += `Mortgage Term,${term} years\r\n`;
+      csv += `Interest Rate,${rate}%\r\n`;
+      csv += `Repayment Type,${isIO ? 'Interest Only' : 'Repayment'}\r\n`;
+      csv += `Monthly Payment,${fmtGBP(monthlyPmt, 2)}\r\n`;
+      csv += `Total Interest,${fmtGBP(round2(totalInt))}\r\n`;
+      csv += `Total Paid,${fmtGBP(round2(totalPaid))}\r\n`;
+      if (overpay > 0) {
+        const savings = CalcEngine.overpaymentSavings(P, rate, term, monthlyPmt, overpay, isIO, null);
+        csv += `Monthly Overpayment,${fmtGBP(overpay)}\r\n`;
+        csv += `Interest Saved,${fmtGBP(savings.interestSaved)}\r\n`;
+        csv += `Months Saved,${savings.monthsSaved}\r\n`;
+      }
+      csv += '\r\nMONTHLY AMORTISATION SCHEDULE\r\n';
+
+      // Headers
+      const cols = ['Month', hasDate ? 'Date' : null, 'Payment (£)', 'Interest (£)', 'Principal (£)', hasOverpay ? 'Overpayment (£)' : null, 'Balance (£)'].filter(Boolean);
+      csv += cols.join(',') + '\r\n';
+
+      // Rows
+      cachedSchedule.forEach(r => {
+        const row = [
+          r.month,
+          hasDate ? (r.date ? fmtDate(r.date) : '') : null,
+          r.payment.toFixed(2),
+          r.interest.toFixed(2),
+          r.principal.toFixed(2),
+          hasOverpay ? r.overpayment.toFixed(2) : null,
+          r.balance.toFixed(2),
+        ].filter(v => v !== null);
+        csv += row.join(',') + '\r\n';
+      });
+
+      // Trigger download
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'mortgage-schedule.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+
+    // ══════════════════════════════════════════════════════
+    //  RESET
+    // ══════════════════════════════════════════════════════
+    function resetCalculator() {
+      Object.assign(state, defaults);
+      document.getElementById('inp-price').value      = defaults.price;
+      document.getElementById('inp-deposit').value    = defaults.deposit;
+      document.getElementById('inp-dep-pct').value    = defaults.depPct;
+      document.getElementById('slider-term').value    = defaults.term;
+      document.getElementById('inp-rate').value       = defaults.rate;
+      document.getElementById('slider-rate').value    = defaults.rate;
+      document.getElementById('inp-overpay').value    = 0;
+      document.getElementById('inp-start-date').value = '';
+      document.getElementById('display-term').textContent = defaults.term + ' years';
+      setRepaymentType('repayment');
+      updateTrack('slider-term', 1, 40);
+      updateTrack('slider-rate', 0.1, 15);
+      document.querySelectorAll('.field-group').forEach(g => g.classList.remove('has-error'));
+      recalculate();
+    }
+
+
+    // ══════════════════════════════════════════════════════
+    //  THEME & NAV
+    // ══════════════════════════════════════════════════════
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('jf-theme', isDark ? 'dark' : 'light');
+      applyNavBg();
+    }
+
+    const navbar = document.getElementById('navbar');
+    function applyNavBg() {
+      const dark = document.documentElement.classList.contains('dark');
+      if (window.scrollY > 40) {
+        navbar.style.background     = dark ? 'rgba(17,17,17,0.92)' : 'rgba(248,248,248,0.92)';
+        navbar.style.backdropFilter = 'blur(16px)';
+        navbar.style.borderBottom   = '1px solid rgba(0,0,0,0.07)';
+        navbar.style.boxShadow      = '0 2px 16px rgba(0,0,0,0.07)';
+      } else {
+        navbar.style.background     = 'transparent';
+        navbar.style.backdropFilter = '';
+        navbar.style.borderBottom   = '';
+        navbar.style.boxShadow      = '';
+      }
+    }
+    window.addEventListener('scroll', applyNavBg, { passive: true });
+
+
+    // ══════════════════════════════════════════════════════
+    //  INIT
+    // ══════════════════════════════════════════════════════
+    // Set today's date as default start date
+    document.getElementById('inp-start-date').value = new Date().toISOString().split('T')[0];
+
+    // Sync initial slider tracks
+    updateTrack('slider-term', 1, 40);
+    updateTrack('slider-rate', 0.1, 15);
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Initial calculation
+    recalculate();
+
+  </script>
+</body>
+</html>
