@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Tools &amp; Calculators — Jamie's Finance</title>
+  <script>if(localStorage.getItem('jf-theme')==='dark')document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"DM Serif Display"', 'Georgia', 'serif'],
+            sans:    ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #F8F8F8;
+      color: #141414;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; letter-spacing: -0.03em; }
+
+    :root { --color-ink: 20 20 20; --color-surface: 248 248 248; }
+    html.dark { --color-ink: 240 240 240; --color-surface: 24 24 24; }
+
+    /* ── Dark mode ───────────────────────────────────── */
+    html.dark body  { background-color: #111111; color: #F0F0F0; }
+    html.dark .bg-white { background-color: #1E1E1E !important; }
+    html.dark [style*="#141414"] { color: #F0F0F0 !important; }
+    html.dark .text-ink\/60 { color: rgba(240,240,240,0.55) !important; }
+    html.dark .text-ink\/40 { color: rgba(240,240,240,0.38) !important; }
+    html.dark .hero-section { background-color: #1A1A1A !important; }
+    html.dark .tool-card { background-color: #1E1E1E !important; box-shadow: 0 2px 8px rgba(0,0,0,0.30) !important; }
+    html.dark .tool-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.40) !important; }
+    html.dark .tool-card .icon-wrap { background: rgba(255,255,255,0.07) !important; }
+    html.dark .tool-card.active .icon-wrap { background: rgba(255,255,255,0.14) !important; }
+    html.dark .tool-card.placeholder { opacity: 0.45 !important; }
+    html.dark .badge-pill { background: rgba(255,255,255,0.07) !important; color: rgba(240,240,240,0.55) !important; border-color: rgba(255,255,255,0.10) !important; }
+    html.dark .badge-pill.live { background: rgba(255,255,255,0.10) !important; color: #D0D0D0 !important; border-color: rgba(255,255,255,0.18) !important; }
+    html.dark .divider { border-color: rgba(255,255,255,0.07) !important; }
+    html.dark .back-link { color: rgba(240,240,240,0.40); }
+    html.dark .back-link:hover { color: rgba(240,240,240,0.85); }
+    html.dark #navbar-tools { background: rgba(17,17,17,0.92); }
+    html.dark #theme-toggle { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.12) !important; }
+    html.dark .footer-bar { background: #0A0A0A !important; border-color: rgba(255,255,255,0.06) !important; }
+
+    /* ── Theme toggle ────────────────────────────────── */
+    .theme-sun  { display: none; }
+    .theme-moon { display: block; }
+    html.dark .theme-sun  { display: block; }
+    html.dark .theme-moon { display: none; }
+    #theme-toggle { transition: background 0.20s ease, transform 0.20s ease; }
+    #theme-toggle:hover { transform: scale(1.10); }
+
+    /* ── Tool cards ──────────────────────────────────── */
+    .tool-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .tool-card.active { cursor: pointer; }
+    .tool-card.active:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .tool-card.placeholder {
+      cursor: not-allowed;
+      opacity: 0.50;
+    }
+    .tool-card .icon-wrap {
+      width: 3rem; height: 3rem;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.05);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+      flex-shrink: 0;
+    }
+    .tool-card.active .icon-wrap { background: #141414; }
+    .tool-card.active .icon-wrap svg { stroke: #ffffff !important; }
+
+    /* ── Badge pill ──────────────────────────────────── */
+    .badge-pill {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(0,0,0,0.10);
+      background: rgba(0,0,0,0.05);
+      color: rgba(20,20,20,0.45);
+    }
+    .badge-pill.live {
+      background: rgba(0,0,0,0.08);
+      color: rgba(20,20,20,0.75);
+      border-color: rgba(0,0,0,0.15);
+    }
+
+    /* ── Back link ───────────────────────────────────── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      font-size: 0.875rem; font-weight: 500;
+      color: rgba(20,20,20,0.40);
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    .back-link:hover { color: rgba(20,20,20,0.90); }
+
+    /* ── Grain ───────────────────────────────────────── */
+    .grain::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ── Reveal ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.07s; }
+    .reveal-delay-2 { transition-delay: 0.14s; }
+    .reveal-delay-3 { transition-delay: 0.21s; }
+    .reveal-delay-4 { transition-delay: 0.28s; }
+    .reveal-delay-5 { transition-delay: 0.35s; }
+    .reveal-delay-6 { transition-delay: 0.42s; }
+    .reveal-delay-7 { transition-delay: 0.49s; }
+    .reveal-delay-8 { transition-delay: 0.56s; }
+  </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+  <!-- ── Nav ──────────────────────────────────────────── -->
+  <nav id="navbar-tools" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: transparent;">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+
+      <div class="flex items-center gap-3">
+        <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"
+          class="w-9 h-9 flex items-center justify-center rounded-xl"
+          style="background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12);">
+          <svg class="theme-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#444444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="theme-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C0C0C0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </button>
+        <a href="../index.html" class="font-display text-lg leading-none" style="color: #141414;">Jamie's Finance</a>
+      </div>
+
+      <a href="../index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to home
+      </a>
+    </div>
+  </nav>
+
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="hero-section bg-white relative overflow-hidden grain pt-32 pb-16 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="reveal inline-flex mb-6">
+        <span class="badge-pill live">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Free Tools
+        </span>
+      </div>
+      <h1 class="reveal font-display text-5xl sm:text-6xl md:text-[4.5rem] leading-none mb-6" style="color: #141414;">
+        Tools &amp;<br /><span style="color: #555555;">Calculators</span>
+      </h1>
+      <p class="reveal text-lg max-w-xl mx-auto" style="color: rgba(20,20,20,0.55); line-height: 1.7;">
+        Free, interactive tools to help you understand your money. No sign-up required — just open and use.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ── Tools grid ───────────────────────────────────── -->
+  <section class="py-16 px-6" style="background: #F8F8F8;">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Section label -->
+      <div class="flex items-center gap-4 mb-10">
+        <span class="text-xs font-bold uppercase tracking-widest" style="color: rgba(20,20,20,0.35);">All Tools</span>
+        <div class="flex-1 border-t" style="border-color: rgba(0,0,0,0.08);"></div>
+        <span class="text-xs font-semibold" style="color: rgba(20,20,20,0.35);">1 live · 7 coming soon</span>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- ── LIVE: Compound Interest Calculator ─────── -->
+        <a href="compound-interest.html" class="tool-card active reveal">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <polyline points="2,16 7,10 11,13 18,5" stroke="#333333" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="18" cy="5" r="2" fill="#333333"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill live">Live</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">Compound Interest</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">See how your money grows over time with our interactive compound interest calculator.</p>
+          <div class="mt-5 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide" style="color: #141414;">
+            Open tool
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
+
+        <!-- ── PLACEHOLDER 2: Budget Planner ─────────── -->
+        <div class="tool-card placeholder reveal reveal-delay-1">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="16" height="16" rx="2" stroke="#333333" stroke-width="1.7"/>
+              <path d="M7 8h8M7 12h5" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill">Coming soon</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">Budget Planner</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">Build a monthly budget, track spending categories, and find where your money is going.</p>
+        </div>
+
+        <!-- ── PLACEHOLDER 3: Savings Goal Tracker ───── -->
+        <div class="tool-card placeholder reveal reveal-delay-2">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M11 3v2M5.2 5.2l1.4 1.4M3 11H5M17 11h2M15.4 6.6l1.4-1.4" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+              <circle cx="11" cy="11" r="4" stroke="#333333" stroke-width="1.7"/>
+              <path d="M11 11l-2 3" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill">Coming soon</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">Savings Goal Tracker</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">Set a savings target, pick a date, and see exactly how much you need to put away each month.</p>
+        </div>
+
+        <!-- ── PLACEHOLDER 4: ISA Allowance Tracker ──── -->
+        <div class="tool-card placeholder reveal reveal-delay-3">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <rect x="3" y="6" width="16" height="12" rx="2" stroke="#333333" stroke-width="1.7"/>
+              <path d="M7 6V5a4 4 0 0 1 8 0v1" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M11 11v3M9 12h4" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill">Coming soon</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">ISA Allowance Tracker</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">Track your annual ISA allowance usage across Cash ISAs and Stocks &amp; Shares ISAs.</p>
+        </div>
+
+        <!-- ── PLACEHOLDER 5: Mortgage Repayment ─────── -->
+        <div class="tool-card placeholder reveal reveal-delay-4">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M3 10L11 3l8 7" stroke="#333333" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 10v8h4v-4h2v4h4v-8" stroke="#333333" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill">Coming soon</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">Mortgage Calculator</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">Estimate monthly repayments, total interest paid, and see the impact of overpayments.</p>
+        </div>
+
+        <!-- ── PLACEHOLDER 6: 50/30/20 Rule ──────────── -->
+        <div class="tool-card placeholder reveal reveal-delay-5">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" stroke="#333333" stroke-width="1.7"/>
+              <path d="M11 11L11 3" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M11 11L17.9 14.5" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+              <path d="M11 11L4.1 14.5" stroke="#333333" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill">Coming soon</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">50/30/20 Budget Split</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">Enter your income and instantly see how to split it across needs, wants, and savings.</p>
+        </div>
+
+        <!-- ── PLACEHOLDER 7: Emergency Fund ─────────── -->
+        <div class="tool-card placeholder reveal reveal-delay-6">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <path d="M11 3l7 4v4c0 4-3 7-7 8C7 18 4 15 4 11V7l7-4Z" stroke="#333333" stroke-width="1.7" stroke-linejoin="round"/>
+              <path d="M8.5 11l1.5 1.5 3-3" stroke="#333333" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill">Coming soon</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">Emergency Fund Planner</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">Find out how much emergency fund you need and how long it will take you to build it.</p>
+        </div>
+
+        <!-- ── PLACEHOLDER 8: Investment Return ──────── -->
+        <div class="tool-card placeholder reveal reveal-delay-7">
+          <div class="icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+              <rect x="3" y="13" width="3" height="6" rx="1" stroke="#333333" stroke-width="1.7"/>
+              <rect x="9.5" y="9" width="3" height="10" rx="1" stroke="#333333" stroke-width="1.7"/>
+              <rect x="16" y="5" width="3" height="14" rx="1" stroke="#333333" stroke-width="1.7"/>
+            </svg>
+          </div>
+          <div class="mb-3">
+            <span class="badge-pill">Coming soon</span>
+          </div>
+          <h3 class="font-display text-lg mb-2" style="color: #141414;">Investment Return</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(20,20,20,0.50);">Compare different investment strategies and visualise projected returns over time.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Footer bar ────────────────────────────────────── -->
+  <div class="footer-bar py-10 px-6 border-t" style="background: #F8F8F8; border-color: rgba(0,0,0,0.08);">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <a href="../index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to Jamie's Finance
+      </a>
+      <p class="text-xs text-center" style="color: rgba(20,20,20,0.30);">© 2025 Jamie's Finance — Educational use only. Not financial advice.</p>
+    </div>
+  </div>
+
+
+  <script>
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('jf-theme', isDark ? 'dark' : 'light');
+      applyNavBg();
+    }
+
+    const navbar = document.getElementById('navbar-tools');
+    function applyNavBg() {
+      const dark = document.documentElement.classList.contains('dark');
+      if (window.scrollY > 40) {
+        navbar.style.background     = dark ? 'rgba(17,17,17,0.92)' : 'rgba(248,248,248,0.92)';
+        navbar.style.backdropFilter = 'blur(16px)';
+        navbar.style.borderBottom   = '1px solid rgba(0,0,0,0.08)';
+        navbar.style.boxShadow      = '0 2px 16px rgba(0,0,0,0.07)';
+      } else {
+        navbar.style.background     = 'transparent';
+        navbar.style.backdropFilter = '';
+        navbar.style.borderBottom   = '';
+        navbar.style.boxShadow      = '';
+      }
+    }
+    window.addEventListener('scroll', applyNavBg, { passive: true });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.10 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
