@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jamie's Finance — Save Smarter, Live Better</title>
+  <title>Jamie's Finance — Your Guide to Smarter Money Choices</title>
+  <script>if(localStorage.getItem('jf-theme')==='dark')document.documentElement.classList.add('dark');</script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,29 +15,30 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
             brand: {
-              50:  '#EDFAF4',
-              100: '#D4F3E5',
-              200: '#A9E7CB',
-              300: '#6FD3A9',
-              400: '#35B882',
-              500: '#0E9E6A',
-              600: '#0A7F55',
-              700: '#0A6646',
-              800: '#0B5038',
-              900: '#0C3F2D',
-              950: '#062219',
+              50:  '#F5F5F5',
+              100: '#EBEBEB',
+              200: '#D6D6D6',
+              300: '#ADADAD',
+              400: '#848484',
+              500: '#5C5C5C',
+              600: '#3D3D3D',
+              700: '#2D2D2D',
+              800: '#1F1F1F',
+              900: '#141414',
+              950: '#0A0A0A',
             },
             gold: {
               400: '#E8C75A',
               500: '#D4A832',
               600: '#B88C1E',
             },
-            surface: '#F7FAF9',
-            ink:    '#0F1C17',
+            surface: 'rgb(var(--color-surface) / <alpha-value>)',
+            ink:     'rgb(var(--color-ink)     / <alpha-value>)',
           },
           fontFamily: {
             display: ['"DM Serif Display"', 'Georgia', 'serif'],
@@ -49,10 +51,10 @@
             relaxed: '1.7',
           },
           boxShadow: {
-            card:    '0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06)',
-            'card-hover': '0 4px 16px -4px rgba(10,127,85,0.18), 0 16px 40px -8px rgba(10,127,85,0.10)',
-            glow:    '0 0 40px -8px rgba(14,158,106,0.30)',
-            hero:    '0 24px 64px -12px rgba(10,79,56,0.35)',
+            card:    '0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04)',
+            'card-hover': '0 4px 16px -4px rgba(0,0,0,0.12), 0 16px 40px -8px rgba(0,0,0,0.07)',
+            glow:    '0 0 40px -8px rgba(0,0,0,0.20)',
+            hero:    '0 24px 64px -12px rgba(0,0,0,0.18)',
           },
         },
       },
@@ -65,8 +67,8 @@
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background-color: #F7FAF9;
-      color: #0F1C17;
+      background-color: #F8F8F8;
+      color: #141414;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -114,7 +116,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: #0E9E6A;
+      background: #141414;
       border-radius: 9999px;
       transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -127,7 +129,7 @@
     }
     .offer-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 4px 16px -4px rgba(10,127,85,0.18), 0 16px 40px -8px rgba(10,127,85,0.10);
+      box-shadow: 0 4px 16px -4px rgba(0,0,0,0.12), 0 16px 40px -8px rgba(0,0,0,0.07);
     }
 
     /* ── CTA button ──────────────────────────────────── */
@@ -136,12 +138,12 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.875rem 2rem;
-      background: #0E9E6A;
+      background: #1A1A1A;
       color: #fff;
       font-weight: 600;
       font-size: 0.9375rem;
       border-radius: 9999px;
-      box-shadow: 0 2px 12px -2px rgba(14,158,106,0.45);
+      box-shadow: 0 2px 12px -2px rgba(0,0,0,0.22);
       transition: background 0.20s ease,
                   transform 0.20s cubic-bezier(0.22, 1, 0.36, 1),
                   box-shadow 0.20s ease;
@@ -149,17 +151,17 @@
       border: none;
     }
     .btn-primary:hover {
-      background: #0A7F55;
+      background: #333333;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px -4px rgba(14,158,106,0.55);
+      box-shadow: 0 6px 20px -4px rgba(0,0,0,0.28);
     }
     .btn-primary:focus-visible {
-      outline: 3px solid #6FD3A9;
+      outline: 3px solid #9A9A9A;
       outline-offset: 3px;
     }
     .btn-primary:active {
       transform: translateY(0);
-      box-shadow: 0 2px 8px -2px rgba(14,158,106,0.35);
+      box-shadow: 0 2px 8px -2px rgba(0,0,0,0.18);
     }
 
     .btn-outline {
@@ -168,34 +170,30 @@
       gap: 0.5rem;
       padding: 0.875rem 2rem;
       background: transparent;
-      color: #0E9E6A;
+      color: #1A1A1A;
       font-weight: 600;
       font-size: 0.9375rem;
       border-radius: 9999px;
-      border: 2px solid #0E9E6A;
+      border: 2px solid #1A1A1A;
       transition: background 0.20s ease,
                   color 0.20s ease,
                   transform 0.20s cubic-bezier(0.22, 1, 0.36, 1);
       cursor: pointer;
     }
     .btn-outline:hover {
-      background: #0E9E6A;
+      background: #1A1A1A;
       color: #fff;
       transform: translateY(-2px);
     }
     .btn-outline:focus-visible {
-      outline: 3px solid #6FD3A9;
+      outline: 3px solid #9A9A9A;
       outline-offset: 3px;
     }
     .btn-outline:active { transform: translateY(0); }
 
     /* ── Hero gradient ───────────────────────────────── */
     .hero-bg {
-      background:
-        radial-gradient(ellipse 80% 60% at 60% 0%, rgba(14,158,106,0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 10% 100%, rgba(10,79,56,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 90% 90%, rgba(212,168,50,0.08) 0%, transparent 60%),
-        #F7FAF9;
+      background: #F8F8F8;
     }
 
     /* ── Section divider curve ───────────────────────── */
@@ -230,10 +228,10 @@
     }
     .guide-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 4px 20px -4px rgba(10,127,85,0.16), 0 12px 36px -8px rgba(10,127,85,0.08);
+      box-shadow: 0 4px 20px -4px rgba(0,0,0,0.10), 0 12px 36px -8px rgba(0,0,0,0.06);
     }
     .guide-card:focus-visible {
-      outline: 3px solid #6FD3A9;
+      outline: 3px solid #9A9A9A;
       outline-offset: 2px;
     }
 
@@ -241,9 +239,9 @@
     .footer-link {
       transition: color 0.20s ease, opacity 0.20s ease;
     }
-    .footer-link:hover { color: #6FD3A9; opacity: 1; }
+    .footer-link:hover { color: #ADADAD; opacity: 1; }
     .footer-link:focus-visible {
-      outline: 2px solid #6FD3A9;
+      outline: 2px solid #ADADAD;
       outline-offset: 2px;
       border-radius: 4px;
     }
@@ -261,12 +259,12 @@
       transition: background 0.20s ease, color 0.20s ease, transform 0.20s cubic-bezier(0.22,1,0.36,1);
     }
     .social-icon:hover {
-      background: rgba(14,158,106,0.35);
+      background: rgba(255,255,255,0.18);
       color: #fff;
       transform: translateY(-2px);
     }
     .social-icon:focus-visible {
-      outline: 2px solid #6FD3A9;
+      outline: 2px solid #ADADAD;
       outline-offset: 2px;
     }
     .social-icon:active { transform: translateY(0); }
@@ -287,10 +285,108 @@
     /* ── Profile image ───────────────────────────────── */
     .profile-ring {
       box-shadow:
-        0 0 0 4px #EDFAF4,
-        0 0 0 8px rgba(14,158,106,0.20),
-        0 16px 48px -8px rgba(10,79,56,0.28);
+        0 0 0 4px #F0F0F0,
+        0 0 0 8px rgba(0,0,0,0.10),
+        0 16px 48px -8px rgba(0,0,0,0.16);
     }
+
+    /* ── Hero profile image ──────────────────────────── */
+    .hero-profile-img {
+      box-shadow:
+        0 0 0 4px #F0F0F0,
+        0 0 0 8px rgba(0,0,0,0.10),
+        0 24px 64px -12px rgba(0,0,0,0.18);
+    }
+
+    /* ═══════════════════════════════════════════════════
+       CSS VARIABLES
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --color-ink:     20 20 20;
+      --color-surface: 248 248 248;
+    }
+    html.dark {
+      --color-ink:     240 240 240;
+      --color-surface: 24 24 24;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       DARK MODE OVERRIDES
+    ═══════════════════════════════════════════════════ */
+    html.dark body { background-color: #111111; }
+
+    html.dark .hero-bg { background: #111111 !important; }
+
+    /* White/surface sections → dark surface */
+    html.dark .bg-white    { background-color: #1E1E1E !important; }
+    html.dark .bg-surface  { background-color: #111111 !important; }
+    html.dark [style*="F8F8F8"],
+    html.dark [style*="F7FAF9"] { background: #111111 !important; }
+
+    /* Nav mobile menu */
+    html.dark #mobile-menu {
+      background: rgba(18,18,18,0.98) !important;
+      border-color: rgba(255,255,255,0.08) !important;
+    }
+
+    /* Wordmark & inline ink text */
+    html.dark [style*="#0F1C17"],
+    html.dark [style*="#141414"] { color: #F0F0F0 !important; }
+
+    /* Cards */
+    html.dark .offer-card { background-color: #1E1E1E !important; }
+    html.dark .guide-card  { background-color: #1E1E1E !important; }
+
+    /* Images */
+    html.dark .profile-ring {
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.08),
+                  0 0 0 8px rgba(255,255,255,0.04),
+                  0 16px 48px -8px rgba(0,0,0,0.50) !important;
+    }
+    html.dark .hero-profile-img {
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.08),
+                  0 0 0 8px rgba(255,255,255,0.04),
+                  0 24px 64px -12px rgba(0,0,0,0.55) !important;
+    }
+
+    /* Floating card in hero/about */
+    html.dark .floating-card { background-color: #1E1E1E !important; }
+
+    /* Badge pills with dark text → switch to light */
+    html.dark .badge[style*="1A1A1A"],
+    html.dark .badge[style*="333333"] {
+      color: #C0C0C0 !important;
+      background: rgba(255,255,255,0.08) !important;
+      border-color: rgba(255,255,255,0.12) !important;
+    }
+
+    /* Stats numbers */
+    html.dark .text-brand-600 { color: #ADADAD !important; }
+    html.dark .text-brand-700 { color: #C0C0C0 !important; }
+    html.dark .bg-brand-100   { background-color: rgba(255,255,255,0.10) !important; }
+
+    /* Outline button */
+    html.dark .btn-outline              { color: #D0D0D0 !important; border-color: #D0D0D0 !important; }
+    html.dark .btn-outline:hover        { background: #D0D0D0 !important; color: #111111 !important; border-color: #D0D0D0 !important; }
+
+    /* Borders */
+    html.dark .border-brand-100\/50 { border-color: rgba(255,255,255,0.06) !important; }
+    html.dark .border-brand-100     { border-color: rgba(255,255,255,0.10) !important; }
+
+    /* Theme toggle icon visibility */
+    .theme-sun  { display: none;  }
+    .theme-moon { display: block; }
+    html.dark .theme-sun  { display: block; }
+    html.dark .theme-moon { display: none;  }
+
+    /* Theme toggle button hover */
+    #theme-toggle { transition: background 0.20s ease, transform 0.20s ease; }
+    #theme-toggle:hover { transform: scale(1.10); }
+
+    /* Dark mode: nav underline + toggle */
+    html.dark .nav-link::after { background: #D0D0D0; }
+    html.dark #theme-toggle { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.12) !important; }
+    html.dark .wordmark-text { color: #F0F0F0 !important; }
   </style>
 </head>
 
@@ -302,19 +398,30 @@
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: transparent;">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
-      <!-- Wordmark -->
-      <a href="#" class="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 rounded-lg" aria-label="Jamie's Finance home">
-        <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #0E9E6A 0%, #0A6646 100%); box-shadow: 0 2px 8px -2px rgba(14,158,106,0.45);">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M8 2C5.8 2 4 3.8 4 6c0 1.5.8 2.8 2 3.5V11h4V9.5C11.2 8.8 12 7.5 12 6c0-2.2-1.8-4-4-4Z" fill="white" fill-opacity="0.9"/>
-            <rect x="5.5" y="11.5" width="5" height="1.5" rx="0.75" fill="white" fill-opacity="0.8"/>
-            <rect x="6.5" y="13.5" width="3" height="1" rx="0.5" fill="white" fill-opacity="0.6"/>
+      <!-- Left: Toggle + Wordmark -->
+      <div class="flex items-center gap-3">
+
+        <!-- Dark mode toggle -->
+        <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"
+          class="w-9 h-9 flex items-center justify-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+          style="background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12);">
+          <!-- Moon icon — visible in light mode -->
+          <svg class="theme-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#444444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
-        </div>
-        <span class="font-display text-lg font-normal leading-none" style="color: #0F1C17;">
-          Jamie's <span style="color: #0E9E6A;">Finance</span>
-        </span>
-      </a>
+          <!-- Sun icon — visible in dark mode -->
+          <svg class="theme-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C0C0C0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </button>
+
+        <!-- Wordmark (no icon) -->
+        <a href="#" class="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 rounded-lg" aria-label="Jamie's Finance home">
+          <span class="font-display text-lg font-normal leading-none" style="color: #141414;">
+            Jamie's Finance
+          </span>
+        </a>
+      </div>
 
       <!-- Desktop links -->
       <div class="hidden md:flex items-center gap-8">
@@ -348,62 +455,95 @@
   <!-- ════════════════════════════════════════════════
        HERO
   ════════════════════════════════════════════════ -->
-  <section class="hero-bg relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-20 overflow-hidden grain">
+  <section class="hero-bg relative min-h-screen flex items-center px-6 pt-24 pb-20 overflow-hidden grain">
 
     <!-- Decorative circles -->
-    <div aria-hidden="true" class="absolute top-20 right-0 w-96 h-96 rounded-full opacity-20 pointer-events-none"
-         style="background: radial-gradient(circle, rgba(14,158,106,0.35) 0%, transparent 70%); transform: translate(40%, -20%);"></div>
-    <div aria-hidden="true" class="absolute bottom-10 left-0 w-80 h-80 rounded-full opacity-15 pointer-events-none"
-         style="background: radial-gradient(circle, rgba(10,102,70,0.30) 0%, transparent 70%); transform: translate(-40%, 20%);"></div>
-    <div aria-hidden="true" class="absolute top-1/2 left-1/4 w-64 h-64 rounded-full opacity-10 pointer-events-none"
-         style="background: radial-gradient(circle, rgba(212,168,50,0.25) 0%, transparent 70%);"></div>
+    <div aria-hidden="true" class="absolute top-20 right-0 w-96 h-96 rounded-full opacity-30 pointer-events-none"
+         style="background: radial-gradient(circle, rgba(0,0,0,0.06) 0%, transparent 70%); transform: translate(40%, -20%);"></div>
+    <div aria-hidden="true" class="absolute bottom-10 left-0 w-80 h-80 rounded-full opacity-20 pointer-events-none"
+         style="background: radial-gradient(circle, rgba(0,0,0,0.05) 0%, transparent 70%); transform: translate(-40%, 20%);"></div>
 
-    <div class="relative z-10 max-w-3xl mx-auto text-center">
+    <div class="relative z-10 max-w-6xl mx-auto w-full">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-24 items-center">
 
-      <!-- Badge -->
-      <div class="reveal flex justify-center mb-6">
-        <span class="badge" style="background: rgba(14,158,106,0.10); color: #0A6646; border: 1px solid rgba(14,158,106,0.25);">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><circle cx="6" cy="6" r="3"/></svg>
-          UK Personal Finance
-        </span>
-      </div>
+        <!-- Left: Text -->
+        <div>
+          <!-- Badge -->
+          <div class="reveal flex mb-6">
+            <span class="badge" style="background: rgba(0,0,0,0.06); color: #333333; border: 1px solid rgba(0,0,0,0.12);">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><circle cx="6" cy="6" r="3"/></svg>
+              UK Financial Education
+            </span>
+          </div>
 
-      <!-- Headline -->
-      <h1 class="reveal reveal-delay-1 font-display text-5xl sm:text-6xl md:text-7xl leading-none mb-6" style="color: #0F1C17;">
-        Save Smarter.<br />
-        <span style="color: #0E9E6A;">Live Better.</span>
-      </h1>
+          <!-- Headline -->
+          <h1 class="reveal reveal-delay-1 font-display text-5xl sm:text-6xl md:text-7xl leading-none mb-6 text-ink">
+            Your Guide to<br />
+            <span style="color: #555555;">Smarter Money<br class="hidden sm:block" />Choices.</span>
+          </h1>
 
-      <!-- Sub-headline -->
-      <p class="reveal reveal-delay-2 text-base sm:text-lg text-ink/60 max-w-xl mx-auto mb-10" style="line-height: 1.7;">
-        Practical guides on budgeting, investing, banking, and saving money — built for everyday people in the UK who want to make smarter financial decisions.
-      </p>
+          <!-- Sub-headline -->
+          <p class="reveal reveal-delay-2 text-base sm:text-lg text-ink/60 max-w-lg mb-10" style="line-height: 1.7;">
+            Practical guides on budgeting, investing, banking, and saving money — built for everyday people in the UK who want to make smarter financial decisions.
+          </p>
 
-      <!-- CTAs -->
-      <div class="reveal reveal-delay-3 flex flex-wrap gap-4 justify-center">
-        <a href="#offers" class="btn-primary">
-          Explore Guides
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#signup" class="btn-outline">Join the Newsletter</a>
-      </div>
+          <!-- CTAs -->
+          <div class="reveal reveal-delay-3 flex flex-wrap gap-4 mb-12">
+            <a href="#offers" class="btn-primary">
+              Explore Guides
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#signup" class="btn-outline">Join the Newsletter</a>
+          </div>
 
-      <!-- Trust row -->
-      <div class="reveal reveal-delay-4 mt-14 flex flex-wrap items-center justify-center gap-6 sm:gap-10">
-        <div class="flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1.5l2.06 4.18 4.61.67-3.33 3.25.79 4.59L9 11.77l-4.13 2.42.79-4.59L2.33 6.35l4.61-.67L9 1.5Z" fill="#D4A832"/></svg>
-          <span class="text-sm font-medium text-ink/60">Independent Advice</span>
+          <!-- Trust row -->
+          <div class="reveal reveal-delay-4 flex flex-wrap items-center gap-6 sm:gap-8">
+            <div class="flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1.5l2.06 4.18 4.61.67-3.33 3.25.79 4.59L9 11.77l-4.13 2.42.79-4.59L2.33 6.35l4.61-.67L9 1.5Z" fill="#888888"/></svg>
+              <span class="text-sm font-medium text-ink/60">Financial Education</span>
+            </div>
+            <div class="w-px h-4 bg-ink/15 hidden sm:block"></div>
+            <div class="flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2a7 7 0 1 0 0 14A7 7 0 0 0 9 2Zm3.5 5.5-4 4-2-2" stroke="#555555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span class="text-sm font-medium text-ink/60">UK-Focused</span>
+            </div>
+            <div class="w-px h-4 bg-ink/15 hidden sm:block"></div>
+            <div class="flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#555555" stroke-width="1.5"/><path d="M6 5V4a3 3 0 0 1 6 0v1" stroke="#555555" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span class="text-sm font-medium text-ink/60">Always Free</span>
+            </div>
+          </div>
         </div>
-        <div class="w-px h-4 bg-ink/15 hidden sm:block"></div>
-        <div class="flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 2a7 7 0 1 0 0 14A7 7 0 0 0 9 2Zm3.5 5.5-4 4-2-2" stroke="#0E9E6A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="text-sm font-medium text-ink/60">UK-Focused</span>
+
+        <!-- Right: Photo -->
+        <div class="reveal reveal-delay-2 flex justify-center md:justify-end">
+          <div class="relative">
+            <!-- Glow blob behind image -->
+            <div aria-hidden="true" class="absolute inset-0 rounded-3xl pointer-events-none"
+                 style="background: radial-gradient(ellipse at center, rgba(0,0,0,0.08) 0%, transparent 65%); transform: scale(1.35);"></div>
+            <img
+              src="brand_assets/og.png"
+              alt="Jamie — founder of Jamie's Finance"
+              class="hero-profile-img relative w-64 h-72 sm:w-80 sm:h-96 object-cover object-top rounded-3xl"
+              loading="eager"
+            />
+            <!-- Floating badge -->
+            <div class="floating-card absolute -bottom-4 -left-6 bg-white rounded-2xl px-4 py-3 flex items-center gap-3"
+                 style="box-shadow: 0 4px 20px -4px rgba(0,0,0,0.12), 0 12px 36px -8px rgba(0,0,0,0.07);">
+              <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                   style="background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2Zm1 4.5v4l3 1.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-ink">Finance Made</p>
+                <p class="text-xs text-ink/50">Simple &amp; Accessible</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="w-px h-4 bg-ink/15 hidden sm:block"></div>
-        <div class="flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#0E9E6A" stroke-width="1.5"/><path d="M6 5V4a3 3 0 0 1 6 0v1" stroke="#0E9E6A" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span class="text-sm font-medium text-ink/60">Always Free</span>
-        </div>
+
       </div>
     </div>
 
@@ -446,23 +586,23 @@
   <section id="about" class="py-24 px-6 bg-white">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-14 md:gap-20 items-center">
 
-      <!-- Photo -->
-      <div class="reveal flex justify-center md:justify-start">
+      <!-- Photos -->
+      <div class="reveal flex flex-col gap-4 items-center md:items-start">
+        <!-- Main photo -->
         <div class="relative">
-          <!-- Decorative blob behind photo -->
           <div aria-hidden="true" class="absolute inset-0 rounded-3xl opacity-20 pointer-events-none"
-               style="background: radial-gradient(ellipse at 40% 60%, #0E9E6A 0%, transparent 70%); transform: scale(1.15);"></div>
+               style="background: radial-gradient(ellipse at 40% 60%, #555555 0%, transparent 70%); transform: scale(1.15);"></div>
           <img
-            src="brand_assets/IMG_3894 2.png"
+            src="brand_assets/og.png"
             alt="Jamie — founder of Jamie's Finance"
             class="profile-ring relative w-72 h-72 sm:w-80 sm:h-80 object-cover object-top rounded-3xl"
             loading="lazy"
           />
           <!-- Floating badge -->
           <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl px-4 py-3 flex items-center gap-3"
-               style="box-shadow: 0 4px 20px -4px rgba(10,127,85,0.20), 0 12px 36px -8px rgba(10,127,85,0.10);">
+               style="box-shadow: 0 4px 20px -4px rgba(0,0,0,0.12), 0 12px 36px -8px rgba(0,0,0,0.07);">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                 style="background: linear-gradient(135deg, #0E9E6A 0%, #0A6646 100%);">
+                 style="background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2Zm1 4.5v4l3 1.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
               </svg>
@@ -473,28 +613,43 @@
             </div>
           </div>
         </div>
+        <!-- Secondary photos -->
+        <div class="flex gap-4 mt-8 w-72 sm:w-80">
+          <img
+            src="brand_assets/church.png"
+            alt="Jamie's Finance"
+            class="w-1/2 h-36 object-cover rounded-2xl"
+            loading="lazy"
+          />
+          <img
+            src="brand_assets/ldntrain.jpg"
+            alt="Jamie's Finance"
+            class="w-1/2 h-36 object-cover rounded-2xl"
+            loading="lazy"
+          />
+        </div>
       </div>
 
       <!-- Text -->
       <div>
         <div class="reveal">
-          <span class="badge mb-5 inline-flex" style="background: rgba(14,158,106,0.08); color: #0A6646; border: 1px solid rgba(14,158,106,0.20);">About Me</span>
+          <span class="badge mb-5 inline-flex" style="background: rgba(0,0,0,0.06); color: #333333; border: 1px solid rgba(0,0,0,0.12);">About Me</span>
         </div>
         <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl text-ink mb-6 leading-tight">
           Hi, I'm Jamie.<br />
-          <span class="italic" style="color: #0E9E6A;">Money made simple.</span>
+          <span class="italic" style="color: #555555;">Money made simple.</span>
         </h2>
         <p class="reveal reveal-delay-2 text-ink/60 mb-5" style="line-height: 1.75;">
-          I started Jamie's Finance because I believe everyone deserves access to clear, honest, and jargon-free financial advice — not just those who can afford a private advisor.
+          I started Jamie's Finance to make financial education accessible to everyone — clear, honest, and jargon-free content that helps you understand your money without needing a degree or a financial background.
         </p>
         <p class="reveal reveal-delay-3 text-ink/60 mb-8" style="line-height: 1.75;">
-          Whether you're looking to switch to a better bank account, start investing for the first time, or simply get on top of your budget, I create practical guides and tools to help you make smarter money decisions right here in the UK.
+          Whether you're looking to switch to a better bank account, start learning about investing, or simply get on top of your budget — I create practical guides and resources to help you build financial knowledge right here in the UK.
         </p>
         <div class="reveal reveal-delay-4 flex flex-wrap gap-3">
-          <span class="badge" style="background: #EDFAF4; color: #0A6646; border: 1px solid rgba(14,158,106,0.20);">💰 Budgeting</span>
-          <span class="badge" style="background: #EDFAF4; color: #0A6646; border: 1px solid rgba(14,158,106,0.20);">📈 Investing</span>
-          <span class="badge" style="background: #EDFAF4; color: #0A6646; border: 1px solid rgba(14,158,106,0.20);">🏦 Banking</span>
-          <span class="badge" style="background: #EDFAF4; color: #0A6646; border: 1px solid rgba(14,158,106,0.20);">🇬🇧 UK Focus</span>
+          <span class="badge" style="background: #F0F0F0; color: #333333; border: 1px solid rgba(0,0,0,0.10);">💰 Budgeting</span>
+          <span class="badge" style="background: #F0F0F0; color: #333333; border: 1px solid rgba(0,0,0,0.10);">📈 Investing</span>
+          <span class="badge" style="background: #F0F0F0; color: #333333; border: 1px solid rgba(0,0,0,0.10);">🏦 Banking</span>
+          <span class="badge" style="background: #F0F0F0; color: #333333; border: 1px solid rgba(0,0,0,0.10);">🇬🇧 UK Focus</span>
         </div>
       </div>
     </div>
@@ -508,10 +663,10 @@
     <div class="max-w-6xl mx-auto">
 
       <div class="text-center mb-16">
-        <span class="reveal badge mb-5 inline-flex" style="background: rgba(14,158,106,0.08); color: #0A6646; border: 1px solid rgba(14,158,106,0.20);">What I Offer</span>
-        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl text-ink mb-4">Everything you need<br /><span style="color: #0E9E6A;">to get ahead financially</span></h2>
+        <span class="reveal badge mb-5 inline-flex" style="background: rgba(0,0,0,0.06); color: #333333; border: 1px solid rgba(0,0,0,0.12);">What I Offer</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl text-ink mb-4">Everything you need<br /><span style="color: #555555;">to build financial knowledge</span></h2>
         <p class="reveal reveal-delay-2 text-ink/55 max-w-xl mx-auto" style="line-height: 1.7;">
-          From step-by-step guides to handy calculators, I've built resources that make your money work harder for you.
+          From step-by-step educational guides to handy calculators, I've built resources to help you understand and manage your money better.
         </p>
       </div>
 
@@ -519,17 +674,17 @@
 
         <!-- Card 1 -->
         <div class="offer-card reveal bg-white rounded-2xl p-7 cursor-pointer"
-             style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+             style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-               style="background: linear-gradient(135deg, rgba(14,158,106,0.15) 0%, rgba(10,102,70,0.08) 100%);">
+               style="background: rgba(0,0,0,0.05);">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <rect x="2" y="5" width="18" height="13" rx="2" stroke="#0E9E6A" stroke-width="1.6"/>
-              <path d="M6 9h10M6 13h6" stroke="#0E9E6A" stroke-width="1.6" stroke-linecap="round"/>
+              <rect x="2" y="5" width="18" height="13" rx="2" stroke="#333333" stroke-width="1.6"/>
+              <path d="M6 9h10M6 13h6" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
           </div>
           <h3 class="font-display text-xl text-ink mb-2">Budgeting Guides</h3>
           <p class="text-sm text-ink/55 leading-relaxed">Learn how to track spending, set budgets, and build an emergency fund with practical step-by-step guides.</p>
-          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #0E9E6A;">
+          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #1A1A1A;">
             Read guides
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -537,17 +692,17 @@
 
         <!-- Card 2 -->
         <div class="offer-card reveal reveal-delay-1 bg-white rounded-2xl p-7 cursor-pointer"
-             style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+             style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-               style="background: linear-gradient(135deg, rgba(14,158,106,0.15) 0%, rgba(10,102,70,0.08) 100%);">
+               style="background: rgba(0,0,0,0.05);">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M11 3v2M7 4l1.5 1.5M4 8h2M4 14h2M7 18l1.5-1.5M11 17v2M15 18l-1.5-1.5M18 14h-2M18 8h-2M15 4l-1.5 1.5" stroke="#0E9E6A" stroke-width="1.6" stroke-linecap="round"/>
-              <circle cx="11" cy="11" r="4" stroke="#0E9E6A" stroke-width="1.6"/>
+              <path d="M11 3v2M7 4l1.5 1.5M4 8h2M4 14h2M7 18l1.5-1.5M11 17v2M15 18l-1.5-1.5M18 14h-2M18 8h-2M15 4l-1.5 1.5" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="11" cy="11" r="4" stroke="#333333" stroke-width="1.6"/>
             </svg>
           </div>
           <h3 class="font-display text-xl text-ink mb-2">Bank Switching Offers</h3>
           <p class="text-sm text-ink/55 leading-relaxed">Find the best bank switching bonuses and cashback offers available right now in the UK — updated regularly.</p>
-          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #0E9E6A;">
+          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #1A1A1A;">
             View offers
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -555,17 +710,17 @@
 
         <!-- Card 3 -->
         <div class="offer-card reveal reveal-delay-2 bg-white rounded-2xl p-7 cursor-pointer"
-             style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+             style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-               style="background: linear-gradient(135deg, rgba(14,158,106,0.15) 0%, rgba(10,102,70,0.08) 100%);">
+               style="background: rgba(0,0,0,0.05);">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <polyline points="3,17 8,11 12,14 19,6" stroke="#0E9E6A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="19" cy="6" r="2" fill="#0E9E6A"/>
+              <polyline points="3,17 8,11 12,14 19,6" stroke="#333333" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="19" cy="6" r="2" fill="#333333"/>
             </svg>
           </div>
           <h3 class="font-display text-xl text-ink mb-2">Investing Basics</h3>
           <p class="text-sm text-ink/55 leading-relaxed">S&amp;S ISAs, index funds, and long-term investing explained simply. Start building wealth with as little as £25/month.</p>
-          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #0E9E6A;">
+          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #1A1A1A;">
             Start learning
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -573,19 +728,19 @@
 
         <!-- Card 4 -->
         <div class="offer-card reveal reveal-delay-1 bg-white rounded-2xl p-7 cursor-pointer"
-             style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+             style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-               style="background: linear-gradient(135deg, rgba(14,158,106,0.15) 0%, rgba(10,102,70,0.08) 100%);">
+               style="background: rgba(0,0,0,0.05);">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <path d="M3 11a8 8 0 0 1 16 0" stroke="#0E9E6A" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M11 3v2M5.2 5.2l1.4 1.4M3 11H5M17 11h2M15.4 6.6l1.4-1.4" stroke="#0E9E6A" stroke-width="1.4" stroke-linecap="round"/>
-              <path d="M11 11l-3 4" stroke="#0E9E6A" stroke-width="1.6" stroke-linecap="round"/>
-              <circle cx="11" cy="11" r="1.5" fill="#0E9E6A"/>
+              <path d="M3 11a8 8 0 0 1 16 0" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M11 3v2M5.2 5.2l1.4 1.4M3 11H5M17 11h2M15.4 6.6l1.4-1.4" stroke="#333333" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M11 11l-3 4" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="11" cy="11" r="1.5" fill="#333333"/>
             </svg>
           </div>
           <h3 class="font-display text-xl text-ink mb-2">Saving Money Tips</h3>
           <p class="text-sm text-ink/55 leading-relaxed">Everyday hacks and strategies to cut costs, earn cashback, and make the most of every pound you earn.</p>
-          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #0E9E6A;">
+          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #1A1A1A;">
             Save more
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -593,19 +748,19 @@
 
         <!-- Card 5 -->
         <div class="offer-card reveal reveal-delay-2 bg-white rounded-2xl p-7 cursor-pointer"
-             style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+             style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-               style="background: linear-gradient(135deg, rgba(14,158,106,0.15) 0%, rgba(10,102,70,0.08) 100%);">
+               style="background: rgba(0,0,0,0.05);">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-              <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#0E9E6A" stroke-width="1.6"/>
-              <rect x="12" y="3" width="7" height="7" rx="1.5" stroke="#0E9E6A" stroke-width="1.6"/>
-              <rect x="3" y="12" width="7" height="7" rx="1.5" stroke="#0E9E6A" stroke-width="1.6"/>
-              <path d="M12 15.5h7M15.5 12v7" stroke="#0E9E6A" stroke-width="1.6" stroke-linecap="round"/>
+              <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#333333" stroke-width="1.6"/>
+              <rect x="12" y="3" width="7" height="7" rx="1.5" stroke="#333333" stroke-width="1.6"/>
+              <rect x="3" y="12" width="7" height="7" rx="1.5" stroke="#333333" stroke-width="1.6"/>
+              <path d="M12 15.5h7M15.5 12v7" stroke="#333333" stroke-width="1.6" stroke-linecap="round"/>
             </svg>
           </div>
           <h3 class="font-display text-xl text-ink mb-2" id="tools">Tools &amp; Calculators</h3>
           <p class="text-sm text-ink/55 leading-relaxed">Free budgeting spreadsheets, savings rate calculators, and ISA allowance trackers to take control of your finances.</p>
-          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #0E9E6A;">
+          <div class="mt-5 flex items-center gap-1.5 text-sm font-semibold" style="color: #1A1A1A;">
             Use tools
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
@@ -613,7 +768,7 @@
 
         <!-- Card 6 — highlighted -->
         <div class="offer-card reveal reveal-delay-3 rounded-2xl p-7 cursor-pointer relative overflow-hidden"
-             style="background: linear-gradient(135deg, #0E9E6A 0%, #0A6646 100%); box-shadow: 0 4px 20px -4px rgba(14,158,106,0.45), 0 16px 48px -8px rgba(10,79,56,0.25);">
+             style="background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%); box-shadow: 0 4px 20px -4px rgba(0,0,0,0.22), 0 16px 48px -8px rgba(0,0,0,0.12);">
           <div aria-hidden="true" class="absolute inset-0 opacity-10"
                style="background: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Ccircle cx=%2280%22 cy=%2220%22 r=%2250%22 fill=%22white%22/%3E%3C/svg%3E') no-repeat right -20px top -20px / 140px 140px;"></div>
           <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
@@ -643,7 +798,7 @@
 
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
         <div>
-          <span class="reveal badge mb-4 inline-flex" style="background: rgba(14,158,106,0.08); color: #0A6646; border: 1px solid rgba(14,158,106,0.20);">Featured Guides</span>
+          <span class="reveal badge mb-4 inline-flex" style="background: rgba(0,0,0,0.06); color: #333333; border: 1px solid rgba(0,0,0,0.12);">Featured Guides</span>
           <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl text-ink">Popular reads</h2>
         </div>
         <a href="#" class="reveal reveal-delay-2 btn-outline self-start sm:self-auto !py-2.5 !px-5 !text-sm flex-shrink-0">View all guides</a>
@@ -653,9 +808,9 @@
 
         <!-- Guide 1 -->
         <a href="#" class="guide-card reveal block rounded-2xl overflow-hidden bg-white focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none"
-           style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+           style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="relative h-44 overflow-hidden"
-               style="background: linear-gradient(135deg, #0A6646 0%, #0E9E6A 100%);">
+               style="background: linear-gradient(135deg, #1A1A1A 0%, #3D3D3D 100%);">
             <div aria-hidden="true" class="absolute inset-0 flex items-center justify-center opacity-20">
               <svg width="120" height="120" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="50" fill="white"/><path d="M40 70 L55 50 L65 60 L80 40" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
             </div>
@@ -677,11 +832,11 @@
 
         <!-- Guide 2 -->
         <a href="#" class="guide-card reveal reveal-delay-1 block rounded-2xl overflow-hidden bg-white focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none"
-           style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+           style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="relative h-44 overflow-hidden"
-               style="background: linear-gradient(135deg, #0A5038 0%, #0E9E6A 100%);">
+               style="background: linear-gradient(135deg, #222222 0%, #444444 100%);">
             <div aria-hidden="true" class="absolute inset-0 flex items-center justify-center opacity-20">
-              <svg width="120" height="120" viewBox="0 0 120 120" fill="none"><rect x="20" y="30" width="80" height="60" rx="8" fill="white"/><line x1="35" y1="55" x2="85" y2="55" stroke="#0E9E6A" stroke-width="4"/><line x1="35" y1="70" x2="65" y2="70" stroke="#0E9E6A" stroke-width="4"/></svg>
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none"><rect x="20" y="30" width="80" height="60" rx="8" fill="white"/><line x1="35" y1="55" x2="85" y2="55" stroke="#333333" stroke-width="4"/><line x1="35" y1="70" x2="65" y2="70" stroke="#333333" stroke-width="4"/></svg>
             </div>
             <div class="absolute top-4 left-4">
               <span class="badge" style="background: rgba(255,255,255,0.20); color: white; border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(8px);">Budgeting</span>
@@ -701,9 +856,9 @@
 
         <!-- Guide 3 -->
         <a href="#" class="guide-card reveal reveal-delay-2 block rounded-2xl overflow-hidden bg-white focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:outline-none"
-           style="box-shadow: 0 2px 8px -2px rgba(10,127,85,0.10), 0 8px 24px -4px rgba(10,127,85,0.06);">
+           style="box-shadow: 0 2px 8px -2px rgba(0,0,0,0.07), 0 8px 24px -4px rgba(0,0,0,0.04);">
           <div class="relative h-44 overflow-hidden"
-               style="background: linear-gradient(135deg, #062219 0%, #0A7F55 100%);">
+               style="background: linear-gradient(135deg, #111111 0%, #333333 100%);">
             <div aria-hidden="true" class="absolute inset-0 flex items-center justify-center opacity-20">
               <svg width="120" height="120" viewBox="0 0 120 120" fill="none"><path d="M20 60 L60 20 L100 60 L60 100 Z" fill="white"/></svg>
             </div>
@@ -735,10 +890,10 @@
     <div class="max-w-4xl mx-auto text-center">
       <div class="reveal">
         <svg width="40" height="32" viewBox="0 0 40 32" fill="none" class="mx-auto mb-6 opacity-30" aria-hidden="true">
-          <path d="M0 32V20C0 13.6 1.8 8.6 5.4 5C9 1.4 14 0 20.4 0L22 4.4C17.6 5.2 14.2 6.8 11.8 9.2C9.4 11.6 8.2 14.6 8.2 18.2H16V32H0ZM24 32V20C24 13.6 25.8 8.6 29.4 5C33 1.4 38 0 44.4 0L46 4.4C41.6 5.2 38.2 6.8 35.8 9.2C33.4 11.6 32.2 14.6 32.2 18.2H40V32H24Z" fill="#0E9E6A"/>
+          <path d="M0 32V20C0 13.6 1.8 8.6 5.4 5C9 1.4 14 0 20.4 0L22 4.4C17.6 5.2 14.2 6.8 11.8 9.2C9.4 11.6 8.2 14.6 8.2 18.2H16V32H0ZM24 32V20C24 13.6 25.8 8.6 29.4 5C33 1.4 38 0 44.4 0L46 4.4C41.6 5.2 38.2 6.8 35.8 9.2C33.4 11.6 32.2 14.6 32.2 18.2H40V32H24Z" fill="#333333"/>
         </svg>
         <p class="font-display text-3xl sm:text-4xl text-ink leading-snug max-w-2xl mx-auto mb-8">
-          "I switched banks using Jamie's guide and got <span style="color: #0E9E6A;">£175 cashback</span> in 20 minutes. Wish I'd found this site sooner."
+          "I switched banks using Jamie's guide and got <span style="color: #333333; font-weight: 600;">£175 cashback</span> in 20 minutes. Wish I'd found this site sooner."
         </p>
         <div class="flex items-center justify-center gap-3">
           <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-semibold text-sm">S</div>
@@ -756,14 +911,14 @@
        EMAIL SIGNUP
   ════════════════════════════════════════════════ -->
   <section id="signup" class="py-24 px-6 relative overflow-hidden grain"
-           style="background: linear-gradient(135deg, #062219 0%, #0A6646 50%, #0E9E6A 100%);">
+           style="background: linear-gradient(135deg, #0F0F0F 0%, #1A1A1A 50%, #2D2D2D 100%);">
 
     <!-- Decorative radial -->
     <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
       <div class="absolute top-0 right-0 w-96 h-96 rounded-full opacity-20"
-           style="background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); transform: translate(30%, -30%);"></div>
+           style="background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); transform: translate(30%, -30%);"></div>
       <div class="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-15"
-           style="background: radial-gradient(circle, rgba(212,168,50,0.25) 0%, transparent 70%); transform: translate(-30%, 30%);"></div>
+           style="background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); transform: translate(-30%, 30%);"></div>
     </div>
 
     <div class="relative z-10 max-w-2xl mx-auto text-center">
@@ -797,7 +952,7 @@
           aria-label="Email address"
         />
         <button type="submit" class="btn-primary flex-shrink-0"
-                style="background: white; color: #0A6646; box-shadow: 0 4px 16px -4px rgba(0,0,0,0.20);">
+                style="background: white; color: #1A1A1A; box-shadow: 0 4px 16px -4px rgba(0,0,0,0.20);">
           Start Saving Smarter
         </button>
       </form>
@@ -828,7 +983,7 @@
   <!-- ════════════════════════════════════════════════
        FOOTER
   ════════════════════════════════════════════════ -->
-  <footer style="background: #062219;" class="pt-16 pb-10 px-6">
+  <footer style="background: #111111;" class="pt-16 pb-10 px-6">
     <div class="max-w-6xl mx-auto">
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
@@ -837,31 +992,28 @@
         <div class="lg:col-span-2">
           <a href="#" class="flex items-center gap-2 mb-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 rounded-lg" aria-label="Jamie's Finance home">
             <div class="w-9 h-9 rounded-xl flex items-center justify-center"
-                 style="background: linear-gradient(135deg, #0E9E6A 0%, #35B882 100%); box-shadow: 0 4px 12px -2px rgba(14,158,106,0.40);">
+                 style="background: linear-gradient(135deg, #2D2D2D 0%, #4A4A4A 100%); box-shadow: 0 4px 12px -2px rgba(0,0,0,0.30);">
               <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M8 2C5.8 2 4 3.8 4 6c0 1.5.8 2.8 2 3.5V11h4V9.5C11.2 8.8 12 7.5 12 6c0-2.2-1.8-4-4-4Z" fill="white" fill-opacity="0.9"/>
                 <rect x="5.5" y="11.5" width="5" height="1.5" rx="0.75" fill="white" fill-opacity="0.8"/>
                 <rect x="6.5" y="13.5" width="3" height="1" rx="0.5" fill="white" fill-opacity="0.6"/>
               </svg>
             </div>
-            <span class="font-display text-xl" style="color: white;">Jamie's <span style="color: #6FD3A9;">Finance</span></span>
+            <span class="font-display text-xl" style="color: white;">Jamie's Finance</span>
           </a>
           <p class="text-sm max-w-xs mb-6" style="color: rgba(255,255,255,0.45); line-height: 1.75;">
             Practical money guides for everyday people in the UK — saving, banking, budgeting, and investing made simple.
           </p>
           <!-- Social icons -->
           <div class="flex gap-3">
-            <a href="#" class="social-icon" aria-label="YouTube">
+            <a href="https://youtube.com/@jamiesfinance?si=KXUErzkq_MiJwF2n" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5a3 3 0 0 0-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8ZM9.7 15.5V8.5l6.3 3.5-6.3 3.5Z"/></svg>
             </a>
-            <a href="#" class="social-icon" aria-label="TikTok">
+            <a href="https://www.tiktok.com/@jamiesfinance?_r=1&_t=ZN-958TaVXufEU" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
               <svg width="16" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 3.3A4.5 4.5 0 0 1 15 0h-3.4v16.4a2.6 2.6 0 0 1-2.6 2.3 2.6 2.6 0 0 1-2.6-2.6 2.6 2.6 0 0 1 2.6-2.6c.26 0 .5.04.74.1V10a6 6 0 0 0-.74-.05 6 6 0 0 0-6 6 6 6 0 0 0 6 6 6 6 0 0 0 6-6V8.1a8 8 0 0 0 4.6 1.5V6.2a4.5 4.5 0 0 1-3.04-2.9Z"/></svg>
             </a>
-            <a href="#" class="social-icon" aria-label="Instagram">
+            <a href="https://www.instagram.com/jamiesfinance?igsh=aXhiaXg3dTNkN2Vh&utm_source=qr" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-            </a>
-            <a href="#" class="social-icon" aria-label="X (Twitter)">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.3 1.5h3.5L14.7 10.4 23 22.5h-7L10.5 14.9 4.2 22.5H.7l7.5-9.5L1 1.5h7.1l5.4 7.1 6.8-7.1Zm-1.2 18.8h1.9L6.8 3.5H4.8l12.3 16.8Z"/></svg>
             </a>
           </div>
         </div>
@@ -909,21 +1061,30 @@
        SCRIPTS
   ════════════════════════════════════════════════ -->
   <script>
+    // ── Theme toggle ──────────────────────────────────
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('jf-theme', isDark ? 'dark' : 'light');
+      applyNavBg();
+    }
+
     // ── Navbar scroll effect ──────────────────────────
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
+    function applyNavBg() {
+      const dark = document.documentElement.classList.contains('dark');
       if (window.scrollY > 40) {
-        navbar.style.background = 'rgba(247,250,249,0.92)';
+        navbar.style.background = dark ? 'rgba(17,17,17,0.92)' : 'rgba(248,248,248,0.92)';
         navbar.style.backdropFilter = 'blur(16px)';
-        navbar.style.borderBottom = '1px solid rgba(14,158,106,0.10)';
-        navbar.style.boxShadow = '0 2px 16px -4px rgba(10,79,56,0.10)';
+        navbar.style.borderBottom = '1px solid rgba(0,0,0,0.08)';
+        navbar.style.boxShadow = '0 2px 16px -4px rgba(0,0,0,0.08)';
       } else {
         navbar.style.background = 'transparent';
         navbar.style.backdropFilter = 'none';
         navbar.style.borderBottom = 'none';
         navbar.style.boxShadow = 'none';
       }
-    }, { passive: true });
+    }
+    window.addEventListener('scroll', applyNavBg, { passive: true });
 
     // ── Mobile menu toggle ────────────────────────────
     const menuBtn  = document.getElementById('menu-btn');
