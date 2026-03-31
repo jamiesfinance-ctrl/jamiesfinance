@@ -2,6 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { NewsletterForm } from "@/components/home/newsletter-form";
+import dynamic from "next/dynamic";
+
+const FlowField = dynamic(
+  () => import("@/components/ui/flow-field-background"),
+  { ssr: false }
+);
 
 const offerCards = [
   {
@@ -73,9 +79,19 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex items-center px-6 pt-24 pb-20 overflow-hidden grain" style={{ background: "var(--card)" }}>
-        <div aria-hidden className="absolute top-20 right-0 w-96 h-96 rounded-full opacity-30 pointer-events-none" style={{ background: "radial-gradient(circle, rgba(0,0,0,0.06) 0%, transparent 70%)", transform: "translate(40%, -20%)" }} />
-        <div aria-hidden className="absolute bottom-10 left-0 w-80 h-80 rounded-full opacity-20 pointer-events-none" style={{ background: "radial-gradient(circle, rgba(0,0,0,0.05) 0%, transparent 70%)", transform: "translate(-40%, 20%)" }} />
+      <section className="relative min-h-screen flex items-center px-6 pt-24 pb-20 overflow-hidden">
+        {/* Flow-field canvas — fills entire hero */}
+        <div className="absolute inset-0">
+          <FlowField
+            color="#aaaaaa"
+            trailOpacity={0.12}
+            particleCount={500}
+            speed={0.7}
+          />
+        </div>
+        {/* Gradient overlay for text readability */}
+        <div aria-hidden className="absolute inset-0 pointer-events-none"
+          style={{ background: "linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%)" }} />
 
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-24 items-center">
@@ -83,20 +99,20 @@ export default function HomePage() {
             <div>
               <ScrollReveal className="flex mb-6">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border"
-                  style={{ background: "rgba(0,0,0,0.06)", color: "var(--foreground)", borderColor: "var(--border)" }}>
+                  style={{ background: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)", borderColor: "rgba(255,255,255,0.20)" }}>
                   <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
                   UK Financial Education
                 </span>
               </ScrollReveal>
 
               <ScrollReveal delay={1}>
-                <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-none mb-6" style={{ color: "var(--foreground)" }}>
+                <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-none mb-6 text-white">
                   Your Guide to<br />Smarter Money<br className="hidden sm:block" />Choices.
                 </h1>
               </ScrollReveal>
 
               <ScrollReveal delay={2}>
-                <p className="text-base sm:text-lg max-w-lg mb-10" style={{ color: "var(--ink-60)", lineHeight: 1.7 }}>
+                <p className="text-base sm:text-lg max-w-lg mb-10" style={{ color: "rgba(255,255,255,0.65)", lineHeight: 1.7 }}>
                   Practical guides on budgeting, investing, banking, and saving money — built for everyday people in the UK who want to make smarter financial decisions.
                 </p>
               </ScrollReveal>
@@ -105,13 +121,13 @@ export default function HomePage() {
                 <div className="flex flex-wrap gap-4 mb-12">
                   <Link href="#offers"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-opacity hover:opacity-80"
-                    style={{ background: "var(--foreground)", color: "var(--background)" }}>
+                    style={{ background: "white", color: "#141414" }}>
                     Explore Guides
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </Link>
                   <Link href="#signup"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border transition-all hover:border-foreground"
-                    style={{ borderColor: "var(--border)", color: "var(--ink-60)" }}>
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border transition-all hover:opacity-80"
+                    style={{ borderColor: "rgba(255,255,255,0.35)", color: "rgba(255,255,255,0.80)" }}>
                     Join the Newsletter
                   </Link>
                 </div>
@@ -120,8 +136,8 @@ export default function HomePage() {
               <ScrollReveal delay={4}>
                 <div className="flex flex-wrap items-center gap-6">
                   {["Financial Education", "UK-Focused", "Always Free"].map((t, i) => (
-                    <span key={t} className="flex items-center gap-2 text-sm font-medium" style={{ color: "var(--ink-60)" }}>
-                      {i > 0 && <span className="hidden sm:block w-px h-4" style={{ background: "var(--border)" }} />}
+                    <span key={t} className="flex items-center gap-2 text-sm font-medium" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      {i > 0 && <span className="hidden sm:block w-px h-4" style={{ background: "rgba(255,255,255,0.25)" }} />}
                       {t}
                     </span>
                   ))}
@@ -158,8 +174,8 @@ export default function HomePage() {
         </div>
 
         <div aria-hidden className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-          <span className="text-xs font-medium tracking-widest uppercase" style={{ color: "var(--ink-60)" }}>Scroll</span>
-          <div className="w-px h-8 animate-pulse" style={{ background: "var(--ink-40)" }} />
+          <span className="text-xs font-medium tracking-widest uppercase text-white">Scroll</span>
+          <div className="w-px h-8 animate-pulse" style={{ background: "rgba(255,255,255,0.6)" }} />
         </div>
       </section>
 
