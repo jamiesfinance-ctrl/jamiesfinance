@@ -58,9 +58,9 @@ const offerCards = [
 ];
 
 const guides = [
-  { category: "Investing", title: "How to Start Investing with Just £25/Month", desc: "A complete beginner's guide to index funds, S&S ISAs, and building long-term wealth in the UK.", read: "8 min read" },
-  { category: "Budgeting", title: "The 50/30/20 Budget Rule — Does It Work in the UK?", desc: "Breaking down the most popular budgeting framework and how to adapt it for UK salaries and living costs.", read: "6 min read" },
-  { category: "Banking", title: "Best Bank Switch Bonuses in the UK Right Now", desc: "Get paid up to £200 just for switching your current account. Here's exactly which deals are worth taking in 2025.", read: "5 min read" },
+  { category: "Investing", title: "How to Start Investing with Just £25/Month", desc: "A complete beginner's guide to index funds, S&S ISAs, and building long-term wealth in the UK.", read: "8 min read", href: "/guides/start-investing-25-a-month" },
+  { category: "Budgeting", title: "The 50/30/20 Budget Rule — Does It Work in the UK?", desc: "Breaking down the most popular budgeting framework and how to adapt it for UK salaries and living costs.", read: "6 min read", href: "#" },
+  { category: "Banking", title: "Best Bank Switch Bonuses in the UK Right Now", desc: "Get paid up to £200 just for switching your current account. Here's exactly which deals are worth taking in 2025.", read: "5 min read", href: "/bank-switching-offers" },
 ];
 
 const stats = [
@@ -186,23 +186,13 @@ export default function HomePage() {
             <div className="relative">
               <div aria-hidden className="absolute inset-0 rounded-3xl opacity-20 pointer-events-none" style={{ background: "radial-gradient(ellipse at 40% 60%, #555 0%, transparent 70%)", transform: "scale(1.15)" }} />
               <Image
-                src="/church.png"
+                src="/og.png"
                 alt="Jamie Schmidt — founder of Jamie's Finance"
                 width={320} height={320}
                 className="relative rounded-3xl object-cover object-top w-72 h-72 sm:w-80 sm:h-80"
                 loading="lazy"
                 style={{ boxShadow: "0 4px 24px -6px rgba(0,0,0,0.15)" }}
               />
-              <div className="absolute -bottom-5 -right-5 rounded-2xl px-4 py-3 flex items-center gap-3"
-                style={{ background: "var(--card)", boxShadow: "0 4px 20px -4px rgba(0,0,0,0.12), 0 12px 36px -8px rgba(0,0,0,0.07)" }}>
-                <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0">
-                  <Image src="/og.png" alt="Jamie Schmidt" width={40} height={40} className="w-full h-full object-cover object-top" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold" style={{ color: "var(--foreground)" }}>Jamie Schmidt</p>
-                  <p className="text-xs" style={{ color: "var(--ink-40)" }}>Founder, Jamie&apos;s Finance</p>
-                </div>
-              </div>
             </div>
           </ScrollReveal>
 
@@ -220,26 +210,29 @@ export default function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={2}>
               <p className="mb-5" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
-                The UK has a real financial education problem. Financial literacy was added to the secondary school curriculum in England in 2014 — but only as a small part of Citizenship lessons, not as a subject in its own right. The Money and Pensions Service, the UK government&apos;s own financial wellbeing body, has found that millions of adults lack the basic knowledge and confidence to make sound financial decisions. That&apos;s not a personal failing. It&apos;s a systemic one.
+                The UK school system doesn&apos;t really teach personal finance. Financial literacy was added to the curriculum in 2014 — tucked away inside Citizenship lessons, not given its own space. According to the Money and Pensions Service, only 1 in 5 children in the UK receive a meaningful financial education. People aren&apos;t bad with money because they&apos;re careless. They&apos;re bad with money because nobody ever taught them.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={3}>
-              <blockquote className="rounded-2xl px-5 py-4 mb-5 border-l-4 italic text-sm"
-                style={{ background: "var(--muted)", borderColor: "var(--border)", color: "var(--ink-60)", lineHeight: 1.75 }}>
-                &ldquo;Only 1 in 5 children in the UK are receiving a meaningful financial education.&rdquo;
-                <span className="block mt-1 not-italic text-xs font-semibold" style={{ color: "var(--ink-40)" }}>
-                  — Money and Pensions Service, UK Strategy for Financial Wellbeing 2020–2030
-                </span>
-              </blockquote>
+              {/* Childhood photo inline */}
+              <div className="flex items-start gap-4 rounded-2xl p-4 mb-5 border"
+                style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
+                <Image
+                  src="/church.png"
+                  alt="Jamie as a young boy"
+                  width={72} height={72}
+                  className="rounded-xl object-cover object-top flex-shrink-0"
+                  style={{ width: 72, height: 72 }}
+                  loading="lazy"
+                />
+                <p className="text-sm" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
+                  I&apos;ve been passionate about creating content and raising awareness since I was a young boy — always looking for ways to explain things clearly and help people understand the world around them. That drive hasn&apos;t changed.
+                </p>
+              </div>
             </ScrollReveal>
             <ScrollReveal delay={3}>
-              <p className="mb-5" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
-                I built Jamie&apos;s Finance because I believe anyone can be better with their money — you just need someone to explain it plainly. Take investing: you can start with as little as £1. Not because £1 will change your life, but because the point is understanding how it works, seeing just how easy it actually is, and overcoming the mental hurdle that it&apos;s somehow complicated or reserved for wealthy people. It isn&apos;t.
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={4}>
               <p className="mb-8" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
-                There is a real stigma around money in this country — people feel embarrassed not knowing, so they never ask. I&apos;m trying to get rid of that. Smarter money choices are available to everybody. My job is just to show you how.
+                Jamie&apos;s Finance is that same instinct applied to money. Anyone can be better with their finances — you can start investing with as little as £1. Not because £1 will change your life, but because starting small is how you understand the concept, see how easy it actually is, and get over the stigma that it&apos;s somehow reserved for the wealthy. It isn&apos;t. My job is just to show you how.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={4}>
@@ -356,7 +349,7 @@ export default function HomePage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {guides.map((g, i) => (
               <ScrollReveal key={g.title} delay={(i % 3) as 0|1|2}>
-                <Link href="#" className="block rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" style={{ background: "var(--background)", boxShadow: "0 2px 8px -2px rgba(0,0,0,0.07)" }}>
+                <Link href={g.href} className="block rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" style={{ background: "var(--background)", boxShadow: "0 2px 8px -2px rgba(0,0,0,0.07)" }}>
                   <div className="relative h-44 overflow-hidden" style={{ background: "linear-gradient(135deg, #1A1A1A 0%, #3D3D3D 100%)" }}>
                     <div className="absolute top-4 left-4">
                       <span className="px-2.5 py-1 rounded-full text-xs font-semibold" style={{ background: "rgba(255,255,255,0.20)", color: "white", border: "1px solid rgba(255,255,255,0.25)" }}>{g.category}</span>

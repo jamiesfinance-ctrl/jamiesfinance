@@ -42,6 +42,7 @@ export default function RootLayout({
           defaultTheme="dark"
           storageKey="jf-theme"
           enableSystem={false}
+          themes={["light", "dark", "green"]}
         >
           <ForceDarkOnHome />
           <Navbar />
