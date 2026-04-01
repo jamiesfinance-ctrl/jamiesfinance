@@ -186,14 +186,17 @@ export default function HomePage() {
             <div className="relative">
               <div aria-hidden className="absolute inset-0 rounded-3xl opacity-20 pointer-events-none" style={{ background: "radial-gradient(ellipse at 40% 60%, #555 0%, transparent 70%)", transform: "scale(1.15)" }} />
               <Image
-                src="/og.png"
-                alt="Jamie Schmidt — founder of Jamie's Finance"
+                src="/childhood.jpg"
+                alt="Jamie as a young boy"
                 width={320} height={320}
-                className="relative rounded-3xl object-cover object-top w-72 h-72 sm:w-80 sm:h-80"
+                className="relative rounded-3xl object-cover object-center w-72 h-72 sm:w-80 sm:h-80"
                 loading="lazy"
                 style={{ boxShadow: "0 4px 24px -6px rgba(0,0,0,0.15)" }}
               />
             </div>
+            <p className="text-sm italic max-w-xs text-center md:text-left" style={{ color: "var(--ink-40)", lineHeight: 1.7 }}>
+              &ldquo;I&apos;ve been passionate about creating content and raising awareness since I was a young boy — always looking for ways to explain things clearly and help people understand the world around them.&rdquo;
+            </p>
           </ScrollReveal>
 
           <div>
@@ -212,23 +215,6 @@ export default function HomePage() {
               <p className="mb-5" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
                 The UK school system doesn&apos;t really teach personal finance. Financial literacy was added to the curriculum in 2014 — tucked away inside Citizenship lessons, not given its own space. According to the Money and Pensions Service, only 1 in 5 children in the UK receive a meaningful financial education. People aren&apos;t bad with money because they&apos;re careless. They&apos;re bad with money because nobody ever taught them.
               </p>
-            </ScrollReveal>
-            <ScrollReveal delay={3}>
-              {/* Childhood photo inline */}
-              <div className="flex items-start gap-4 rounded-2xl p-4 mb-5 border"
-                style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
-                <Image
-                  src="/church.png"
-                  alt="Jamie as a young boy"
-                  width={72} height={72}
-                  className="rounded-xl object-cover object-top flex-shrink-0"
-                  style={{ width: 72, height: 72 }}
-                  loading="lazy"
-                />
-                <p className="text-sm" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
-                  I&apos;ve been passionate about creating content and raising awareness since I was a young boy — always looking for ways to explain things clearly and help people understand the world around them. That drive hasn&apos;t changed.
-                </p>
-              </div>
             </ScrollReveal>
             <ScrollReveal delay={3}>
               <p className="mb-8" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
