@@ -220,12 +220,26 @@ export default function HomePage() {
             </ScrollReveal>
             <ScrollReveal delay={2}>
               <p className="mb-5" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
-                I started Jamie&apos;s Finance to make financial education accessible to everyone — clear, honest, and jargon-free content that helps you understand your money without needing a degree or a financial background.
+                The UK has a real financial education problem. Financial literacy was added to the secondary school curriculum in England in 2014 — but only as a small part of Citizenship lessons, not as a subject in its own right. The Money and Pensions Service, the UK government&apos;s own financial wellbeing body, has found that millions of adults lack the basic knowledge and confidence to make sound financial decisions. That&apos;s not a personal failing. It&apos;s a systemic one.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={3}>
+              <blockquote className="rounded-2xl px-5 py-4 mb-5 border-l-4 italic text-sm"
+                style={{ background: "var(--muted)", borderColor: "var(--border)", color: "var(--ink-60)", lineHeight: 1.75 }}>
+                &ldquo;Only 1 in 5 children in the UK are receiving a meaningful financial education.&rdquo;
+                <span className="block mt-1 not-italic text-xs font-semibold" style={{ color: "var(--ink-40)" }}>
+                  — Money and Pensions Service, UK Strategy for Financial Wellbeing 2020–2030
+                </span>
+              </blockquote>
+            </ScrollReveal>
+            <ScrollReveal delay={3}>
+              <p className="mb-5" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
+                I built Jamie&apos;s Finance because I believe anyone can be better with their money — you just need someone to explain it plainly. Take investing: you can start with as little as £1. Not because £1 will change your life, but because the point is understanding how it works, seeing just how easy it actually is, and overcoming the mental hurdle that it&apos;s somehow complicated or reserved for wealthy people. It isn&apos;t.
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={4}>
               <p className="mb-8" style={{ color: "var(--ink-60)", lineHeight: 1.75 }}>
-                Whether you&apos;re looking to switch to a better bank account, start learning about investing, or simply get on top of your budget — I create practical guides and resources to help you build financial knowledge right here in the UK.
+                There is a real stigma around money in this country — people feel embarrassed not knowing, so they never ask. I&apos;m trying to get rid of that. Smarter money choices are available to everybody. My job is just to show you how.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={4}>
