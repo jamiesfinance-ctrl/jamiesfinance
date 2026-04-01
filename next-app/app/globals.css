@@ -95,6 +95,34 @@
   --surface:  #111111;
 }
 
+/* ── Green mode tokens ────────────────────────────────────── */
+.green {
+  --background:           #f0f9f0;
+  --foreground:           #1a3a1a;
+  --card:                 #ffffff;
+  --card-foreground:      #1a3a1a;
+  --popover:              #ffffff;
+  --popover-foreground:   #1a3a1a;
+  --primary:              #2d7a2d;
+  --primary-foreground:   #ffffff;
+  --secondary:            #ddf0dd;
+  --secondary-foreground: #1a3a1a;
+  --muted:                #e6f4e6;
+  --muted-foreground:     rgba(26,58,26,0.55);
+  --accent:               #d2edd2;
+  --accent-foreground:    #1a3a1a;
+  --destructive:          #e05252;
+  --border:               rgba(55,130,55,0.16);
+  --input:                rgba(55,130,55,0.16);
+  --ring:                 rgba(55,130,55,0.32);
+
+  --ink:      #1a3a1a;
+  --ink-60:   rgba(26,58,26,0.62);
+  --ink-40:   rgba(26,58,26,0.42);
+  --ink-10:   rgba(55,130,55,0.08);
+  --surface:  #f0f9f0;
+}
+
 /* ── Base styles ──────────────────────────────────────────── */
 @layer base {
   * {
@@ -154,6 +182,9 @@
 .dark .prose-body {
   color: rgba(240,240,240,0.55);
 }
+.green .prose-body {
+  color: rgba(26,58,26,0.62);
+}
 .prose-body strong {
   color: var(--ink);
   font-weight: 600;
@@ -189,6 +220,9 @@
 }
 .dark .callout {
   border-left-color: rgba(255,255,255,0.18);
+}
+.green .callout {
+  border-left-color: rgba(55,130,55,0.35);
 }
 
 /* ── Custom range slider ──────────────────────────────────── */
