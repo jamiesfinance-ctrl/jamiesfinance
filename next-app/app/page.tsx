@@ -64,10 +64,10 @@ const guides = [
 ];
 
 const stats = [
-  { value: "10K+", label: "Monthly Readers" },
-  { value: "50+", label: "Free Guides" },
-  { value: "£1,000s", label: "Saved by Readers" },
+  { value: "50M+", label: "Views Across Platforms" },
+  { value: "£50,000+", label: "Saved by Viewers" },
   { value: "100%", label: "Independent" },
+  { value: "Free", label: "Tools & Guides" },
 ];
 
 export default function HomePage() {
