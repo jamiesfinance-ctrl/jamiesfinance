@@ -2,12 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { NewsletterForm } from "@/components/home/newsletter-form";
-import dynamic from "next/dynamic";
-
-const FlowField = dynamic(
-  () => import("@/components/ui/flow-field-background"),
-  { ssr: false }
-);
+import { HeroCanvas } from "@/components/home/hero-canvas";
 
 const offerCards = [
   {
@@ -81,14 +76,7 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center px-6 pt-24 pb-20 overflow-hidden" style={{ background: "#0a0a0a" }}>
         {/* Flow-field canvas — fills entire hero */}
-        <div style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-          <FlowField
-            color="#cccccc"
-            trailOpacity={0.08}
-            particleCount={500}
-            speed={0.7}
-          />
-        </div>
+        <HeroCanvas />
         {/* Gradient overlay for text readability */}
         <div aria-hidden className="absolute inset-0 pointer-events-none"
           style={{ background: "linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%)" }} />
