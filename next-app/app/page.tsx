@@ -60,7 +60,7 @@ const offerCards = [
 const guides = [
   { category: "Investing", title: "How to Start Investing with Just £25/Month", desc: "A complete beginner's guide to index funds, S&S ISAs, and building long-term wealth in the UK.", read: "8 min read", href: "/guides/start-investing-25-a-month" },
   { category: "Budgeting", title: "The 50/30/20 Budget Rule — Does It Work in the UK?", desc: "Breaking down the most popular budgeting framework and how to adapt it for UK salaries and living costs.", read: "6 min read", href: "#" },
-  { category: "Banking", title: "Best Bank Switch Bonuses in the UK Right Now", desc: "Get paid up to £200 just for switching your current account. Here's exactly which deals are worth taking in 2025.", read: "5 min read", href: "/bank-switching-offers" },
+  { category: "Banking", title: "Best Bank Switch Bonuses in the UK Right Now", desc: "Get paid up to £200 just for switching your current account. Here's exactly which deals are worth taking in 2025.", read: "5 min read", href: "/guides/my-bank-switching-story" },
 ];
 
 const stats = [
