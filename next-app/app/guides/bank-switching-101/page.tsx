@@ -12,13 +12,6 @@ export const metadata: Metadata = {
   description: "A comprehensive guide to earning free cash by switching bank accounts in 2025.",
 };
 
-const banks = [
-  { name: "Monzo", note: "No switch required", reward: "£10", req: "Download Monzo, sign up using a friend link, and make a card payment within 30 days.", link: { href: "https://join.monzo.com/c/vhwscvhb", label: "My friend link →" } },
-  { name: "NatWest", note: "Can't do RBS too (same group)", reward: "£175", req: "Open a Reward or Select account. Switch in a non-NatWest/RBS/Ulster account. Pay in £1,250+ and log in to mobile banking within 60 days." },
-  { name: "First Direct", note: "Stack with cashback apps", reward: "£175", req: "Open account in-app. Switch in with 2+ direct debits in 45 days. Pay in £1,000+ and make 5+ debit card payments in 45 days." },
-  { name: "Barclays", note: "Blue Rewards required", reward: "£175", req: "Open a sole account via the Barclays app. Switch in with 2+ direct debits. Join Blue Rewards (£5/month, pay in £800+). Deposit £1,500 within 30 days." },
-  { name: "TSB", note: "+ £15/month bonus available", reward: "£100", req: "Open account online or in-app. Switch from another bank, make 5+ debit card purchases, log into the app. Also earn £15/month for 6 months with 20+ transactions." },
-];
 
 const faqs = [
   { q: "Will bank switching affect my credit score?", a: "A hard credit search is performed when you open most current accounts, which may cause a small, temporary dip in your credit score. However, as long as you're not doing this excessively, the impact is minimal and short-lived. Switching your main bank account can have more significant effects — which is why the dummy account strategy is recommended." },
@@ -30,7 +23,7 @@ const faqs = [
 const toc = [
   { num: "01", label: "What is a bank switch offer?", href: "#what-is" },
   { num: "02", label: "Setting up direct debits", href: "#direct-debits" },
-  { num: "03", label: "Current offers (Aug 2025)", href: "#offers" },
+  { num: "03", label: "Latest offers", href: "#offers" },
   { num: "04", label: "The dummy account strategy", href: "#dummy-account" },
   { num: "05", label: "Step-by-step walkthrough", href: "#walkthrough" },
   { num: "06", label: "Maximising your rewards", href: "#maximise" },
@@ -45,7 +38,7 @@ export default function BankSwitchingPage() {
       <section className="relative overflow-hidden grain pt-32 pb-20 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            {["Free Guide", "Updated August 2025", "By @jamiesfinance"].map((t) => (
+            {["Updated 2025", "By @jamiesfinance"].map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[0.6875rem] font-bold uppercase tracking-widest border"
                 style={{ background: "rgba(0,0,0,0.05)", color: "var(--ink-60)", borderColor: "var(--border)" }}>
                 {t}
@@ -161,37 +154,23 @@ export default function BankSwitchingPage() {
         </div>
       </section>
 
-      {/* Section 03 — Offers Table */}
+      {/* Section 03 — Latest Offers */}
       <section id="offers" className="py-20 px-6" style={{ background: "var(--background)" }}>
         <div className="max-w-4xl mx-auto">
           <div className="section-heading">
             <span className="font-display text-xs tracking-widest uppercase" style={{ color: "var(--ink-40)" }}>03</span>
-            <h2 className="font-display text-3xl sm:text-4xl" style={{ color: "var(--foreground)" }}>Current offers</h2>
+            <h2 className="font-display text-3xl sm:text-4xl" style={{ color: "var(--foreground)" }}>Latest offers</h2>
           </div>
-          <p className="prose-body mb-8">As of <strong>1st August 2025</strong>. Always check the bank&apos;s website directly before initiating a switch.</p>
-
-          <div className="rounded-2xl overflow-hidden border" style={{ borderColor: "var(--border)", background: "var(--card)" }}>
-            {/* Header row */}
-            <div className="grid grid-cols-[1.5fr_1fr_2fr] gap-4 px-5 py-3 text-[0.6875rem] font-bold uppercase tracking-widest border-b" style={{ borderColor: "var(--border)", color: "var(--ink-40)", background: "var(--muted)" }}>
-              <span>Bank</span><span>Reward</span><span>Key Requirements</span>
-            </div>
-            {banks.map((bank, i) => (
-              <div key={i} className="grid grid-cols-[1.5fr_1fr_2fr] gap-4 items-start px-5 py-4 border-b last:border-b-0 transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02]" style={{ borderColor: "var(--border)" }}>
-                <div>
-                  <p className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>{bank.name}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "var(--ink-40)" }}>{bank.note}</p>
-                </div>
-                <div>
-                  <span className="font-display text-xl px-2 py-0.5 rounded-lg" style={{ background: "var(--muted)", color: "var(--foreground)" }}>{bank.reward}</span>
-                </div>
-                <p className="text-sm prose-body">
-                  {bank.req}
-                  {bank.link && <> <Link href={bank.link.href} target="_blank" rel="noopener" className="underline underline-offset-2">{bank.link.label}</Link></>}
-                </p>
-              </div>
-            ))}
+          <div className="space-y-5 prose-body mb-10">
+            <p>Bank switch offers change frequently — rewards go up and down, new banks join, and old deals expire. Rather than publishing a list that goes out of date, I maintain a <strong>dedicated, regularly updated page</strong> with the latest offers.</p>
+            <p>Before you initiate any switch, always check the bank&apos;s own website for the most up-to-date terms and eligibility requirements.</p>
           </div>
-          <p className="text-xs mt-4 prose-body">Ts&amp;Cs apply. Conditions can change at any time.</p>
+          <Link href="/bank-switching-offers"
+            className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl text-sm font-semibold transition-opacity hover:opacity-80"
+            style={{ background: "var(--foreground)", color: "var(--background)" }}>
+            View the latest bank switch offers
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </Link>
         </div>
       </section>
 
@@ -202,15 +181,30 @@ export default function BankSwitchingPage() {
             <span className="font-display text-xs tracking-widest uppercase" style={{ color: "var(--ink-40)" }}>04</span>
             <h2 className="font-display text-3xl sm:text-4xl" style={{ color: "var(--foreground)" }}>The dummy account strategy</h2>
           </div>
+          {/* Chase disclaimer */}
+          <div className="rounded-2xl p-5 border mb-10" style={{ background: "rgba(255,200,0,0.06)", borderColor: "rgba(200,150,0,0.25)" }}>
+            <p className="text-sm font-semibold mb-1" style={{ color: "var(--foreground)" }}>Important update — Chase & the dummy account strategy</p>
+            <p className="text-sm prose-body">Chase has recently sent emails to some users about their use of the dummy account strategy. <strong>This does not necessarily mean the strategy is against Chase&apos;s terms</strong>, but it is worth being aware of. If you receive such an email, read it carefully. The dummy account strategy is most useful if you want to run multiple switches at the same time — if that&apos;s not your goal, the traditional approach below is simpler and carries less admin.</p>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <div className="space-y-5 prose-body">
               <p><strong>You should never switch your main bank account</strong> — this carries much worse credit score implications. Instead, create a dummy account that exists solely for the purpose of switching.</p>
-              <p><strong>Chase Bank</strong> is the best option. You can create additional accounts in seconds — each gets a unique sort code and account number.</p>
+
+              <div>
+                <p className="font-semibold mb-2" style={{ color: "var(--foreground)" }}>Option A — Traditional route (simpler)</p>
+                <p>If you just want to do one bank switch every few months, simply open one burner account (e.g. a free Chase or Starling account), set up direct debits on it, and switch it to your target bank. Repeat when you&apos;re ready for the next one. This is far less admin, and you only ever need to manage one extra account.</p>
+              </div>
+
+              <div>
+                <p className="font-semibold mb-2" style={{ color: "var(--foreground)" }}>Option B — Multiple switches at once (more admin)</p>
+                <p><strong>Chase Bank</strong> lets you create additional sub-accounts in seconds — each with a unique sort code and account number. This lets you run several switches simultaneously, which maximises earnings in a short time.</p>
+              </div>
+
               <div className="callout">
                 <p className="text-sm font-semibold mb-1" style={{ color: "var(--foreground)" }}>Important Chase note</p>
-                <p className="text-sm prose-body">Always keep at least <strong>2 accounts open within Chase</strong>. Switching away your only Chase account closes your entire Chase profile. Switching additional Chase accounts does <em>not</em> cancel your debit card.</p>
+                <p className="text-sm prose-body">Always keep at least <strong>2 accounts open within Chase</strong>. Switching away your only Chase account closes your entire Chase profile. Switching additional sub-accounts does <em>not</em> cancel your debit card.</p>
               </div>
-              <p>Simply tap <strong>&apos;Add +&apos;</strong> in the Chase app to create a new account with a fresh sort code and account number instantly.</p>
             </div>
             <div className="rounded-2xl p-6 border" style={{ background: "var(--background)", borderColor: "var(--border)" }}>
               <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: "var(--ink-40)" }}>Step-by-step in Chase</p>
@@ -335,22 +329,17 @@ export default function BankSwitchingPage() {
       <section id="contact" className="py-20 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-3xl sm:text-4xl mb-4" style={{ color: "var(--foreground)" }}>Questions? Get in touch</h2>
-          <p className="prose-body mb-10 max-w-xl mx-auto">If you have any questions about bank switching or this guide, reach out on TikTok, WhatsApp, or email.</p>
+          <p className="prose-body mb-10 max-w-xl mx-auto">If you have any questions about bank switching or this guide, reach out on TikTok or by email — I reply to everything.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="https://www.tiktok.com/@jamiesfinance" target="_blank" rel="noopener"
               className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-80"
               style={{ background: "var(--foreground)", color: "var(--background)" }}>
               TikTok @jamiesfinance
             </Link>
-            <Link href="https://wa.me/447404284953" target="_blank" rel="noopener"
+            <Link href="mailto:jamie@jamiesfinance.uk"
               className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold border transition-all hover:border-foreground"
               style={{ borderColor: "var(--border)", color: "var(--ink-60)" }}>
-              WhatsApp
-            </Link>
-            <Link href="mailto:jamiesfinance@gmail.com"
-              className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold border transition-all hover:border-foreground"
-              style={{ borderColor: "var(--border)", color: "var(--ink-60)" }}>
-              jamiesfinance@gmail.com
+              jamie@jamiesfinance.uk
             </Link>
           </div>
         </div>

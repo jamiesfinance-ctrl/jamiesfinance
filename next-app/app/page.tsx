@@ -314,19 +314,18 @@ export default function HomePage() {
 
             {/* Featured digital products card */}
             <ScrollReveal delay={3}>
-              <Link href="/guides/bank-switching-101"
+              <Link href="/products"
                 className="block rounded-2xl p-7 relative overflow-hidden transition-all duration-300 hover:-translate-y-1"
-                style={{ background: "linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%)", boxShadow: "0 4px 20px -4px rgba(0,0,0,0.22)" }}>
-                <div className="absolute inset-0 opacity-10" aria-hidden style={{ background: "url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Ccircle cx=%2280%22 cy=%2220%22 r=%2250%22 fill=%22white%22/%3E%3C/svg%3E') no-repeat right -20px top -20px / 140px 140px" }} />
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style={{ background: "rgba(255,255,255,0.18)" }}>
+                style={{ background: "var(--foreground)", boxShadow: "0 4px 20px -4px rgba(0,0,0,0.22)" }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style={{ background: "rgba(128,128,128,0.20)" }}>
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
-                    <path d="M11 2l2.5 5 5.5.8-4 3.9.95 5.5L11 14.65 6.05 17.2 7 11.7 3 7.8l5.5-.8L11 2Z" stroke="white" strokeWidth="1.6" strokeLinejoin="round"/>
+                    <path d="M11 2l2.5 5 5.5.8-4 3.9.95 5.5L11 14.65 6.05 17.2 7 11.7 3 7.8l5.5-.8L11 2Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" style={{ stroke: "var(--background)" }}/>
                   </svg>
                 </div>
-                <h3 className="font-display text-xl text-white mb-2">Digital Products</h3>
-                <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.75)" }}>Free guides and resources — starting with Bank Switching 101, the complete playbook for earning cash from bank switches.</p>
-                <div className="flex items-center gap-1.5 text-sm font-semibold text-white">
-                  Read the guide
+                <h3 className="font-display text-xl mb-2" style={{ color: "var(--background)" }}>Digital Products</h3>
+                <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--background)", opacity: 0.7 }}>In-depth guides and playbooks — including Bank Switching 101, the complete playbook for earning cash from bank switches.</p>
+                <div className="flex items-center gap-1.5 text-sm font-semibold" style={{ color: "var(--background)" }}>
+                  Browse products
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
               </Link>
@@ -379,14 +378,14 @@ export default function HomePage() {
       </section>
 
       {/* ── Newsletter signup ── */}
-      <section id="signup" className="py-24 px-6" style={{ background: "var(--foreground)" }}>
+      <section id="signup" className="py-24 px-6" style={{ background: "#141414" }}>
         <div className="max-w-2xl mx-auto text-center">
           <ScrollReveal>
             <h2 className="font-display text-4xl sm:text-5xl mb-4 text-white">Stay in the loop</h2>
           </ScrollReveal>
           <ScrollReveal delay={1}>
             <p className="mb-8 text-lg" style={{ color: "rgba(255,255,255,0.60)", lineHeight: 1.7 }}>
-              Get the latest guides, bank switch offers, and money tips delivered to your inbox. Free, no spam.
+              Get the latest guides, bank switch offers, and money tips delivered to your inbox. No spam.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={2}>
@@ -410,8 +409,7 @@ export default function HomePage() {
                 { label: "TikTok", href: "https://www.tiktok.com/@jamiesfinance" },
                 { label: "YouTube", href: "https://www.youtube.com/@jamiesfinance" },
                 { label: "Instagram", href: "https://www.instagram.com/jamiesfinance_" },
-                { label: "WhatsApp", href: "https://wa.me/447404284953" },
-                { label: "Email", href: "mailto:jamiesfinance@gmail.com" },
+                { label: "Email", href: "mailto:jamie@jamiesfinance.uk" },
               ].map((s) => (
                 <Link key={s.label} href={s.href} target="_blank" rel="noopener"
                   className="px-5 py-3 rounded-full text-sm font-semibold border transition-all hover:border-foreground"
