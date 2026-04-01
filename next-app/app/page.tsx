@@ -79,12 +79,12 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex items-center px-6 pt-24 pb-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center px-6 pt-24 pb-20 overflow-hidden" style={{ background: "#0a0a0a" }}>
         {/* Flow-field canvas — fills entire hero */}
-        <div className="absolute inset-0">
+        <div style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
           <FlowField
-            color="#aaaaaa"
-            trailOpacity={0.12}
+            color="#cccccc"
+            trailOpacity={0.08}
             particleCount={500}
             speed={0.7}
           />

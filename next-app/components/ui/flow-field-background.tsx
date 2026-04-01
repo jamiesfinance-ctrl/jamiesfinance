@@ -89,11 +89,16 @@ export default function NeuralBackground({
     const handleMouseMove = (e: MouseEvent) => { const r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; };
     const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; };
 
+    // Re-init if container gains height after mount (e.g. CSS resolves late)
+    const ro = new ResizeObserver(() => { handleResize(); });
+    ro.observe(container);
+
     init(); animate();
     window.addEventListener("resize", handleResize);
     container.addEventListener("mousemove", handleMouseMove);
     container.addEventListener("mouseleave", handleMouseLeave);
     return () => {
+      ro.disconnect();
       window.removeEventListener("resize", handleResize);
       container.removeEventListener("mousemove", handleMouseMove);
       container.removeEventListener("mouseleave", handleMouseLeave);
