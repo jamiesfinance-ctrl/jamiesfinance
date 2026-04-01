@@ -27,7 +27,7 @@ const offerCards = [
     title: "Bank Switching Offers",
     desc: "Find the best bank switching bonuses and cashback offers available right now in the UK — updated regularly.",
     cta: "View offers",
-    href: "/guides/bank-switching-101",
+    href: "/bank-switching-offers",
   },
   {
     icon: (
