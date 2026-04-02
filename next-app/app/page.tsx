@@ -53,7 +53,7 @@ const offerCards = [
     title: "Product Reviews",
     desc: "Honest, scored reviews of credit cards, savings accounts, and financial products — the good, the bad, and the ones to avoid.",
     cta: "Read reviews",
-    href: "/credit-cards",
+    href: "/reviews",
   },
 ];
 
