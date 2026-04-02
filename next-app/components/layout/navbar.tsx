@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Moon, Sun, Menu, X, Leaf } from "lucide-react";
+import { SearchButton } from "@/components/layout/search";
 
 function navBg(theme: string | undefined, scrolled: boolean) {
   if (!scrolled) return "transparent";
@@ -150,8 +151,13 @@ export function Navbar() {
           </Link>
         </div>
 
+        {/* Search */}
+        <div className="hidden sm:block">
+          <SearchButton />
+        </div>
+
         {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {[
             { label: "Guides", href: "/#guides" },
             { label: "Tools", href: "/tools" },
@@ -175,7 +181,9 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
+        {/* Mobile: search + hamburger */}
+        <div className="flex items-center gap-2 md:hidden">
+          <div className="sm:hidden"><SearchButton /></div>
         <button
           className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl"
           style={{ background: "rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.12)" }}
@@ -184,6 +192,7 @@ export function Navbar() {
         >
           {menuOpen ? <X size={16} /> : <Menu size={16} />}
         </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

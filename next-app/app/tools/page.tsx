@@ -9,6 +9,20 @@ export const metadata: Metadata = {
 
 const tools = [
   {
+    id: "take-home-pay",
+    title: "Take-Home Pay Calculator",
+    description: "See exactly what you earn after income tax, National Insurance, and student loan. 2025/26 rates, all plans supported.",
+    href: "/tools/take-home-pay",
+    live: true,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+        <rect x="3" y="5" width="16" height="13" rx="2" stroke="currentColor" strokeWidth="1.7"/>
+        <path d="M3 9h16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+        <path d="M7 13h4M15 13h-2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
     id: "compound-interest",
     title: "Compound Interest",
     description: "See how your money grows over time with our interactive compound interest calculator.",
