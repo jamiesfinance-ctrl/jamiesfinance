@@ -220,8 +220,7 @@ export default function CreditCardsPage() {
             score={9}
             name="Monzo Flex"
             tagline="My favourite beginner credit card"
-            image={null}
-            imagePlaceholder={{ gradient: "linear-gradient(135deg, #FF5A58 0%, #FF8C69 100%)", label: "Monzo Flex" }}
+            image="/monzo-flex.png"
             badge="Top Pick — Beginners"
             badgeColor="#16a34a"
             tags={[<Tag key="fx" label="0% FX Fees" color="#16a34a"/>, <Tag key="mc" label="Mastercard"/>]}
