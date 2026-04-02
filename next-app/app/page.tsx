@@ -118,6 +118,11 @@ export default function HomePage() {
                     style={{ borderColor: "rgba(255,255,255,0.35)", color: "rgba(255,255,255,0.80)" }}>
                     Join the Newsletter
                   </Link>
+                  <Link href="/philosophy"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border transition-all hover:opacity-80"
+                    style={{ borderColor: "rgba(255,255,255,0.20)", color: "rgba(255,255,255,0.55)" }}>
+                    My Philosophy
+                  </Link>
                 </div>
               </ScrollReveal>
 
