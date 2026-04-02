@@ -44,16 +44,16 @@ const offerCards = [
   {
     icon: (
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
-        <path d="M3 11a8 8 0 0 1 16 0" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-        <path d="M11 3v2M5.2 5.2l1.4 1.4M3 11H5M17 11h2M15.4 6.6l1.4-1.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-        <path d="M11 11l-3 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-        <circle cx="11" cy="11" r="1.5" fill="currentColor"/>
+        <rect x="3" y="6" width="16" height="11" rx="2" stroke="currentColor" strokeWidth="1.6"/>
+        <path d="M3 10h16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+        <path d="M7 14h3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+        <circle cx="16" cy="14" r="1.5" fill="currentColor"/>
       </svg>
     ),
-    title: "Saving Money Tips",
-    desc: "Everyday hacks and strategies to cut costs, earn cashback, and make the most of every pound you earn.",
-    cta: "Save more",
-    href: "#guides",
+    title: "Product Reviews",
+    desc: "Honest, scored reviews of credit cards, savings accounts, and financial products — the good, the bad, and the ones to avoid.",
+    cta: "Read reviews",
+    href: "/credit-cards",
   },
 ];
 
@@ -188,6 +188,14 @@ export default function HomePage() {
       <section id="about" className="py-24 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-14 md:gap-20 items-center">
           <ScrollReveal className="flex flex-col gap-4 items-center md:items-start">
+            <Link href="/philosophy" className="w-72 sm:w-80 flex items-center justify-between gap-3 px-5 py-3.5 rounded-2xl border transition-all hover:-translate-y-0.5 hover:shadow-md"
+              style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
+              <div className="flex items-center gap-3">
+                <span className="text-base">📜</span>
+                <span className="text-sm font-semibold" style={{ color: "var(--foreground)" }}>Read my personal philosophy</span>
+              </div>
+              <svg className="flex-shrink-0" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--ink-40)" }}/></svg>
+            </Link>
             <div className="relative">
               <div aria-hidden className="absolute inset-0 rounded-3xl opacity-20 pointer-events-none" style={{ background: "radial-gradient(ellipse at 40% 60%, #555 0%, transparent 70%)", transform: "scale(1.15)" }} />
               <Image
