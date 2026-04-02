@@ -16,6 +16,20 @@ export const SEARCH_INDEX: SearchItem[] = [
     tags: ["salary", "tax", "income tax", "national insurance", "NI", "student loan", "take home", "pay", "wages", "PAYE", "net pay", "gross pay"],
   },
   {
+    title: "Student Loan Repayment Simulator",
+    description: "See how long your student loan will last, total amount repaid, and whether it'll be written off before you pay it off. Supports Plans 1, 2, 4 and 5.",
+    href: "/tools/student-loan",
+    type: "tool",
+    tags: ["student loan", "plan 1", "plan 2", "plan 4", "plan 5", "repayment", "write off", "balance", "graduate", "university", "tuition"],
+  },
+  {
+    title: "Budget Builder (50/30/20)",
+    description: "Split your monthly take-home pay across needs, wants, and savings using the 50/30/20 rule. Adjust percentages and category amounts.",
+    href: "/tools/budget-builder",
+    type: "tool",
+    tags: ["budget", "50/30/20", "needs wants savings", "budgeting", "monthly budget", "spending", "categories"],
+  },
+  {
     title: "Compound Interest Calculator",
     description: "See how your savings and investments grow over time with compound interest. Adjust deposit, monthly contributions, return rate, and investment period.",
     href: "/tools/compound-interest",
@@ -52,6 +66,13 @@ export const SEARCH_INDEX: SearchItem[] = [
     tags: ["investing", "ISA", "index funds", "ETF", "S&P 500", "FTSE", "beginner", "stocks and shares", "compound interest", "£25"],
   },
   // ── Deals / Offers ─────────────────────────────────────────────
+  {
+    title: "Deals & Offers Hub",
+    description: "All current UK financial deals in one place — bank switching bonuses, investing sign-up offers, cashback, and credit card bonuses. Updated regularly.",
+    href: "/deals",
+    type: "deal",
+    tags: ["deals", "offers", "bonuses", "cashback", "Trading 212", "TopCashback", "free shares", "sign-up bonus"],
+  },
   {
     title: "Bank Switching Offers",
     description: "Current UK bank switching bonuses — updated regularly. Earn up to £200 for switching your current account. Standard and premier offers listed.",

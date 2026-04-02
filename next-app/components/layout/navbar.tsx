@@ -161,6 +161,7 @@ export function Navbar() {
           {[
             { label: "Guides", href: "/#guides" },
             { label: "Tools", href: "/tools" },
+            { label: "Deals", href: "/deals" },
             { label: "About", href: "/#about" },
           ].map((link) => (
             <Link
@@ -204,6 +205,7 @@ export function Navbar() {
           {[
             { label: "Guides", href: "/#guides" },
             { label: "Tools", href: "/tools" },
+            { label: "Deals", href: "/deals" },
             { label: "About", href: "/#about" },
             { label: "Get in touch", href: "/#contact" },
           ].map((link) => (

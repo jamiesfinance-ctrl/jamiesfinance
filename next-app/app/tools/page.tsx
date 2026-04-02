@@ -49,6 +49,32 @@ const tools = [
     ),
   },
   {
+    id: "student-loan",
+    title: "Student Loan Simulator",
+    description: "See how long your loan lasts, total repaid, and whether it'll be written off — for Plans 1, 2, 4 and 5.",
+    href: "/tools/student-loan",
+    live: true,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+        <path d="M11 3l9 5-9 5-9-5 9-5Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/>
+        <path d="M4 10.5v5.5c0 0 2.5 2 7 2s7-2 7-2V10.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    id: "budget-builder",
+    title: "Budget Builder",
+    description: "Enter your take-home pay and split it using the 50/30/20 rule. Adjust categories and percentages to fit your life.",
+    href: "/tools/budget-builder",
+    live: true,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+        <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.7"/>
+        <path d="M11 11L11 3M11 11L17.9 14.5M11 11L4.1 14.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
     id: "budget-planner",
     title: "Budget Planner",
     description: "Build a monthly budget, track spending categories, and find where your money is going.",

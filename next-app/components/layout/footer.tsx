@@ -19,6 +19,7 @@ export function Footer() {
               {[
                 { label: "Guides", href: "/#guides" },
                 { label: "Tools", href: "/tools" },
+                { label: "Deals", href: "/deals" },
                 { label: "Reviews", href: "/reviews" },
                 { label: "About", href: "/#about" },
               ].map((link) => (
