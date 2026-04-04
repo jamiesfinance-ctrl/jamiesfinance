@@ -89,12 +89,12 @@ export function Navbar() {
                 style={{
                   background: currentTheme === "green"
                     ? "rgba(55,130,55,0.10)"
-                    : isHomePage && !scrolled
+                    : isHomePage && !scrolled && currentTheme !== "light"
                       ? "rgba(255,255,255,0.12)"
                       : "rgba(0,0,0,0.06)",
                   border: currentTheme === "green"
                     ? "1px solid rgba(55,130,55,0.30)"
-                    : isHomePage && !scrolled
+                    : isHomePage && !scrolled && currentTheme !== "light"
                       ? "1px solid rgba(255,255,255,0.20)"
                       : "1px solid rgba(0,0,0,0.12)",
                 }}
@@ -104,7 +104,7 @@ export function Navbar() {
                 ) : currentTheme === "green" ? (
                   <Leaf size={15} style={{ color: "#2d7a2d" }} />
                 ) : (
-                  <Moon size={15} style={{ color: isHomePage && !scrolled ? "#e0e0e0" : "#444444" }} />
+                  <Moon size={15} style={{ color: "#444444" }} />
                 )}
               </button>
 
@@ -151,7 +151,7 @@ export function Navbar() {
           <Link
             href="/"
             className="font-display text-lg leading-none"
-            style={{ color: isHomePage && !scrolled ? "#ffffff" : "var(--foreground)" }}
+            style={{ color: isHomePage && !scrolled && currentTheme !== "light" ? "#ffffff" : "var(--foreground)" }}
           >
             Jamie&apos;s Finance
           </Link>
@@ -174,7 +174,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className="text-sm font-medium transition-opacity hover:opacity-70"
-              style={{ color: isHomePage && !scrolled ? "rgba(255,255,255,0.75)" : "var(--ink-60)" }}
+              style={{ color: isHomePage && !scrolled && currentTheme !== "light" ? "rgba(255,255,255,0.75)" : "var(--ink-60)" }}
             >
               {link.label}
             </Link>
@@ -182,7 +182,7 @@ export function Navbar() {
           <Link
             href="/#contact"
             className="text-sm font-semibold px-4 py-2 rounded-full transition-opacity hover:opacity-80"
-            style={isHomePage && !scrolled
+            style={isHomePage && !scrolled && currentTheme !== "light"
               ? { background: "rgba(255,255,255,0.15)", color: "#ffffff", border: "1px solid rgba(255,255,255,0.25)" }
               : { background: "var(--foreground)", color: "var(--background)" }
             }
@@ -197,9 +197,9 @@ export function Navbar() {
         <button
           className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl"
           style={{
-            background: isHomePage && !scrolled ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.06)",
-            border: isHomePage && !scrolled ? "1px solid rgba(255,255,255,0.20)" : "1px solid rgba(0,0,0,0.12)",
-            color: isHomePage && !scrolled ? "#e0e0e0" : "var(--foreground)",
+            background: isHomePage && !scrolled && currentTheme !== "light" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.06)",
+            border: isHomePage && !scrolled && currentTheme !== "light" ? "1px solid rgba(255,255,255,0.20)" : "1px solid rgba(0,0,0,0.12)",
+            color: isHomePage && !scrolled && currentTheme !== "light" ? "#e0e0e0" : "var(--foreground)",
           }}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
