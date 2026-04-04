@@ -28,7 +28,7 @@ const stoicQuotes = [
 
 export default function PhilosophyPage() {
   return (
-    <div style={{ background: "var(--background)", color: "var(--foreground)" }}>
+    <div className="dark" style={{ background: "var(--background)", color: "var(--foreground)" }}>
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-end overflow-hidden">

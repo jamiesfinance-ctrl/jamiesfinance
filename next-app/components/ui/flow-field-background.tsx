@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 interface NeuralBackgroundProps {
   className?: string;
   color?: string;
+  bgColor?: string;
+  trailColor?: string;
   trailOpacity?: number;
   particleCount?: number;
   speed?: number;
@@ -14,6 +16,8 @@ interface NeuralBackgroundProps {
 export default function NeuralBackground({
   className,
   color = "#6366f1",
+  bgColor = "black",
+  trailColor,
   trailOpacity = 0.15,
   particleCount = 600,
   speed = 1,
@@ -78,8 +82,9 @@ export default function NeuralBackground({
       particles = Array.from({ length: particleCount }, () => new Particle());
     };
 
+    const trail = trailColor ?? `rgba(0,0,0,${trailOpacity})`;
     const animate = () => {
-      ctx.fillStyle = `rgba(0,0,0,${trailOpacity})`;
+      ctx.fillStyle = trail;
       ctx.fillRect(0, 0, width, height);
       particles.forEach((p) => { p.update(); p.draw(ctx); });
       animationFrameId = requestAnimationFrame(animate);
@@ -104,10 +109,10 @@ export default function NeuralBackground({
       container.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [color, trailOpacity, particleCount, speed]);
+  }, [color, bgColor, trailColor, trailOpacity, particleCount, speed]);
 
   return (
-    <div ref={containerRef} className={cn("relative w-full h-full bg-black overflow-hidden", className)}>
+    <div ref={containerRef} className={cn("relative w-full h-full overflow-hidden", className)} style={{ background: bgColor }}>
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );
