@@ -45,9 +45,14 @@ export default function TakeHomePayPage() {
       {/* What these numbers mean */}
       <section className="py-16 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-display text-3xl sm:text-4xl mb-10" style={{ color: "var(--foreground)" }}>
-            What these numbers mean
-          </h2>
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
+            <h2 className="font-display text-3xl sm:text-4xl" style={{ color: "var(--foreground)" }}>
+              What these numbers mean
+            </h2>
+            <span className="text-xs font-semibold px-3 py-1.5 rounded-full border" style={{ color: "var(--ink-40)", borderColor: "var(--border)", background: "var(--muted)" }}>
+              True as of April 2026 · subject to change
+            </span>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {

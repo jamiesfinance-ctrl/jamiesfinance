@@ -82,13 +82,13 @@ export default function CreditCardsPage() {
             </div>
           </div>
           {/* Amex acceptance notice */}
-          <div className="rounded-2xl p-4 border flex items-start gap-3 mb-8" style={{ background: "#fffbeb", borderColor: "#fbbf2460" }}>
+          <div className="rounded-2xl p-4 border flex items-start gap-3 mb-8" style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
             <svg className="flex-shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M9 2L16.5 15H1.5L9 2Z" stroke="#d97706" strokeWidth="1.5" strokeLinejoin="round"/>
-              <path d="M9 7v4" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round"/>
-              <circle cx="9" cy="13" r="0.75" fill="#d97706"/>
+              <path d="M9 2L16.5 15H1.5L9 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" style={{ color: "var(--ink-60)" }}/>
+              <path d="M9 7v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ color: "var(--ink-60)" }}/>
+              <circle cx="9" cy="13" r="0.75" fill="currentColor" style={{ color: "var(--ink-60)" }}/>
             </svg>
-            <p className="text-sm" style={{ color: "#92400e", lineHeight: 1.65 }}>
+            <p className="text-sm" style={{ color: "var(--ink-60)", lineHeight: 1.65 }}>
               <strong>American Express is not universally accepted in the UK.</strong> Some merchants — including Subway, Home Bargains, and KFC — do not accept it. If you rely on one card for everything, pair your Amex with a fee-free Mastercard or Visa as a backup.
             </p>
           </div>
@@ -331,17 +331,17 @@ export default function CreditCardsPage() {
       </section>
 
       {/* Footer CTA */}
-      <section className="py-16 px-6" style={{ background: "#141414" }}>
+      <section className="py-16 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div>
-            <p className="font-display text-2xl text-white mb-2">Looking for more ways to earn?</p>
-            <p style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
+            <p className="font-display text-2xl mb-2" style={{ color: "var(--foreground)" }}>Looking for more ways to earn?</p>
+            <p style={{ color: "var(--ink-60)", lineHeight: 1.7 }}>
               Bank switching bonuses pay up to £200 per switch — no rewards card needed.
             </p>
           </div>
           <Link href="/bank-switching-offers"
             className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border transition-all hover:opacity-80"
-            style={{ borderColor: "rgba(255,255,255,0.30)", color: "rgba(255,255,255,0.85)" }}>
+            style={{ borderColor: "var(--border)", color: "var(--foreground)" }}>
             View bank switch offers
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </Link>

@@ -372,13 +372,13 @@ export default function HomePage() {
       </section>
 
       {/* ── Newsletter signup ── */}
-      <section id="signup" className="py-24 px-6" style={{ background: "#141414" }}>
+      <section id="signup" className="py-24 px-6" style={{ background: "var(--background)" }}>
         <div className="max-w-2xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="font-display text-4xl sm:text-5xl mb-4 text-white">Stay in the loop</h2>
+            <h2 className="font-display text-4xl sm:text-5xl mb-4" style={{ color: "var(--foreground)" }}>Stay in the loop</h2>
           </ScrollReveal>
           <ScrollReveal delay={1}>
-            <p className="mb-8 text-lg" style={{ color: "rgba(255,255,255,0.60)", lineHeight: 1.7 }}>
+            <p className="mb-8 text-lg" style={{ color: "var(--ink-60)", lineHeight: 1.7 }}>
               Get the latest guides, bank switch offers, and money tips delivered to your inbox. No spam.
             </p>
           </ScrollReveal>

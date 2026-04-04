@@ -7,17 +7,19 @@ export const PLAN_INFO: Record<LoanPlan, {
   label: string;
   threshold: number;
   rate: number;         // repayment rate (9% for all current plans)
-  interestRate: number; // approximate 2025 rate
+  interestRate: number; // approximate 2026 rate
   writeOffYears: number;
   writeOffNote: string;
+  niNote?: string;
 }> = {
   plan1: {
     label: "Plan 1 (pre-2012)",
     threshold: 24_990,
     rate: 0.09,
-    interestRate: 0.043, // ~RPI 2025
+    interestRate: 0.043, // ~RPI — true as of April 2026
     writeOffYears: 25,   // 25 years after first repayment April, or age 65
     writeOffNote: "Written off 25 years after first repayment April (or age 65)",
+    niNote: "Plan 1 also applies to students from Northern Ireland who started university after 2012 — unlike the rest of the UK, Northern Ireland did not move to Plan 2.",
   },
   plan2: {
     label: "Plan 2 (2012–2023)",

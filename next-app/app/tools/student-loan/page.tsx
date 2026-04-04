@@ -43,9 +43,20 @@ export default function StudentLoanPage() {
       {/* The write-off reality */}
       <section className="py-16 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-display text-3xl sm:text-4xl mb-8" style={{ color: "var(--foreground)" }}>
-            The write-off reality
-          </h2>
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <h2 className="font-display text-3xl sm:text-4xl" style={{ color: "var(--foreground)" }}>
+              The write-off reality
+            </h2>
+            <span className="text-xs font-semibold px-3 py-1.5 rounded-full border" style={{ color: "var(--ink-40)", borderColor: "var(--border)", background: "var(--muted)" }}>
+              True as of April 2026 · subject to change
+            </span>
+          </div>
+          <div className="mb-6 rounded-2xl p-5 border" style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
+            <p className="text-sm font-semibold mb-1" style={{ color: "var(--foreground)" }}>Northern Ireland — Plan 1 applies after 2012</p>
+            <p className="text-sm" style={{ color: "var(--ink-60)", lineHeight: 1.7 }}>
+              Students from Northern Ireland who started university after 2012 are on <strong>Plan 1</strong> — not Plan 2 like the rest of the UK. This is because Northern Ireland did not adopt the 2012 tuition fee reforms. Plan 1 has a lower repayment threshold (£24,990) and a shorter write-off period (25 years), but also charges lower interest (roughly RPI only, compared to RPI+3% on Plan 2/5).
+            </p>
+          </div>
           <div className="grid sm:grid-cols-2 gap-6">
             {[
               {
@@ -62,7 +73,7 @@ export default function StudentLoanPage() {
               },
               {
                 title: "The written-off amount is not taxable",
-                body: "When your student loan is written off, HMRC does not treat the cancelled amount as income. You won't receive a tax bill for the amount forgiven. It simply disappears.",
+                body: "When your student loan is written off, HMRC does not treat the cancelled amount as income. You won't receive a tax bill for the amount forgiven. It simply disappears. This is the current position as of April 2026 and could change.",
               },
             ].map((item) => (
               <div key={item.title} className="rounded-2xl p-5 border" style={{ background: "var(--background)", borderColor: "var(--border)" }}>

@@ -77,9 +77,9 @@ export function Navbar() {
       }}
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Left: theme toggle (hidden on homepage) + wordmark */}
+        {/* Left: theme toggle + wordmark */}
         <div className="flex items-center gap-3">
-          {mounted && !isHomePage && (
+          {mounted && (
             <div ref={toggleRef} className="relative">
               <button
                 onClick={toggleTheme}
@@ -87,18 +87,24 @@ export function Navbar() {
                 aria-label="Toggle theme"
                 className="w-9 h-9 flex items-center justify-center rounded-xl transition-transform hover:scale-110"
                 style={{
-                  background: currentTheme === "green" ? "rgba(55,130,55,0.10)" : "rgba(0,0,0,0.06)",
+                  background: currentTheme === "green"
+                    ? "rgba(55,130,55,0.10)"
+                    : isHomePage && !scrolled
+                      ? "rgba(255,255,255,0.12)"
+                      : "rgba(0,0,0,0.06)",
                   border: currentTheme === "green"
                     ? "1px solid rgba(55,130,55,0.30)"
-                    : "1px solid rgba(0,0,0,0.12)",
+                    : isHomePage && !scrolled
+                      ? "1px solid rgba(255,255,255,0.20)"
+                      : "1px solid rgba(0,0,0,0.12)",
                 }}
               >
                 {currentTheme === "dark" ? (
-                  <Sun size={15} className="text-[#C0C0C0]" />
+                  <Sun size={15} style={{ color: isHomePage && !scrolled ? "#e0e0e0" : "#C0C0C0" }} />
                 ) : currentTheme === "green" ? (
                   <Leaf size={15} style={{ color: "#2d7a2d" }} />
                 ) : (
-                  <Moon size={15} className="text-[#444444]" />
+                  <Moon size={15} style={{ color: isHomePage && !scrolled ? "#e0e0e0" : "#444444" }} />
                 )}
               </button>
 
@@ -145,7 +151,7 @@ export function Navbar() {
           <Link
             href="/"
             className="font-display text-lg leading-none"
-            style={{ color: "var(--foreground)" }}
+            style={{ color: isHomePage && !scrolled ? "#ffffff" : "var(--foreground)" }}
           >
             Jamie&apos;s Finance
           </Link>
@@ -168,7 +174,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className="text-sm font-medium transition-opacity hover:opacity-70"
-              style={{ color: "var(--ink-60)" }}
+              style={{ color: isHomePage && !scrolled ? "rgba(255,255,255,0.75)" : "var(--ink-60)" }}
             >
               {link.label}
             </Link>
@@ -176,7 +182,10 @@ export function Navbar() {
           <Link
             href="/#contact"
             className="text-sm font-semibold px-4 py-2 rounded-full transition-opacity hover:opacity-80"
-            style={{ background: "var(--foreground)", color: "var(--background)" }}
+            style={isHomePage && !scrolled
+              ? { background: "rgba(255,255,255,0.15)", color: "#ffffff", border: "1px solid rgba(255,255,255,0.25)" }
+              : { background: "var(--foreground)", color: "var(--background)" }
+            }
           >
             Get in touch
           </Link>
@@ -187,7 +196,11 @@ export function Navbar() {
           <div className="sm:hidden"><SearchButton /></div>
         <button
           className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl"
-          style={{ background: "rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.12)" }}
+          style={{
+            background: isHomePage && !scrolled ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.06)",
+            border: isHomePage && !scrolled ? "1px solid rgba(255,255,255,0.20)" : "1px solid rgba(0,0,0,0.12)",
+            color: isHomePage && !scrolled ? "#e0e0e0" : "var(--foreground)",
+          }}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -219,6 +232,53 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+
+          {/* Theme controls */}
+          {mounted && (
+            <div className="pt-2 flex flex-col gap-2">
+              <p className="text-[0.6rem] font-bold uppercase tracking-widest" style={{ color: "var(--ink-40)" }}>
+                Appearance
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setTheme("light")}
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all"
+                  style={{
+                    background: currentTheme === "light" ? "var(--foreground)" : "transparent",
+                    color: currentTheme === "light" ? "var(--background)" : "var(--ink-60)",
+                    borderColor: currentTheme === "light" ? "var(--foreground)" : "var(--border)",
+                  }}
+                >
+                  <Sun size={13} />
+                  Light
+                </button>
+                <button
+                  onClick={() => setTheme("dark")}
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all"
+                  style={{
+                    background: currentTheme === "dark" ? "var(--foreground)" : "transparent",
+                    color: currentTheme === "dark" ? "var(--background)" : "var(--ink-60)",
+                    borderColor: currentTheme === "dark" ? "var(--foreground)" : "var(--border)",
+                  }}
+                >
+                  <Moon size={13} />
+                  Dark
+                </button>
+                <button
+                  onClick={() => setTheme("green")}
+                  className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all"
+                  style={{
+                    background: currentTheme === "green" ? "#2d7a2d" : "transparent",
+                    color: currentTheme === "green" ? "#ffffff" : "var(--ink-60)",
+                    borderColor: currentTheme === "green" ? "#2d7a2d" : "var(--border)",
+                  }}
+                >
+                  <Leaf size={13} />
+                  Green
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </nav>

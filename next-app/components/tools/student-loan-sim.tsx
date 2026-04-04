@@ -162,12 +162,20 @@ export function StudentLoanSim() {
                   <span className="text-sm font-semibold block" style={{ color: plan === opt.value ? "var(--background)" : "var(--foreground)" }}>
                     {opt.label}
                   </span>
-                  <span className="text-xs" style={{ color: plan === opt.value ? `rgba(${plan === opt.value ? "248,248,248" : "0,0,0"},0.55)` : "var(--ink-40)" }}>
-                    Threshold {fmt(opt.threshold)} · {info.writeOffYears}yr write-off
+                  <span className="text-xs" style={{ color: plan === opt.value ? "rgba(248,248,248,0.55)" : "var(--ink-40)" }}>
+                    Threshold {fmt(opt.threshold)} · {PLAN_INFO[opt.value].writeOffYears}yr write-off
                   </span>
                 </button>
               ))}
             </div>
+            {/* Northern Ireland note for Plan 1 */}
+            {plan === "plan1" && PLAN_INFO.plan1.niNote && (
+              <div className="mt-3 rounded-xl p-3 border" style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
+                <p className="text-xs" style={{ color: "var(--ink-60)", lineHeight: 1.6 }}>
+                  <strong style={{ color: "var(--foreground)" }}>Northern Ireland:</strong> {PLAN_INFO.plan1.niNote}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Years since graduation */}
@@ -193,7 +201,7 @@ export function StudentLoanSim() {
       <div className="space-y-5">
 
         {/* Outcome hero card */}
-        <div className="rounded-2xl p-6" style={{ background: paidOff ? "#14411e" : "#1a1a2e" }}>
+        <div className="rounded-2xl p-6" style={{ background: "#141414" }}>
           <p className="text-xs font-bold uppercase tracking-widest mb-2"
             style={{ color: paidOff ? "rgba(134,239,172,0.6)" : "rgba(165,180,252,0.6)" }}>
             {paidOff ? "Loan Paid Off" : "Loan Written Off"}
@@ -301,7 +309,11 @@ export function StudentLoanSim() {
         {/* Context note */}
         <div className="rounded-2xl p-4 border" style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
           <p className="text-xs" style={{ color: "var(--ink-40)", lineHeight: 1.7 }}>
-            <strong style={{ color: "var(--ink-60)" }}>How this works.</strong> You repay 9% of earnings above your plan threshold — not 9% of your total salary. Interest accrues on your balance year-round. Interest rates shown are approximate 2025 figures and are subject to change. If your loan isn&apos;t paid off by the write-off date, the remaining balance is cancelled — you don&apos;t pay it. This is for illustration only, not financial advice.
+            <strong style={{ color: "var(--ink-60)" }}>How this works.</strong> You repay 9% of earnings above your plan threshold — not 9% of your total salary. Interest accrues on your balance year-round. If your loan isn&apos;t paid off by the write-off date, the remaining balance is cancelled — you don&apos;t pay it.
+          </p>
+          <p className="text-xs mt-2" style={{ color: "var(--ink-40)", lineHeight: 1.7 }}>
+            <strong style={{ color: "var(--ink-60)" }}>True as of April 2026.</strong> Repayment thresholds, interest rates, and write-off rules are subject to change by the government at any time. This tool is for illustration only — not financial advice. If unsure about your plan type or repayment terms, do your own independent research at{" "}
+            <a href="https://www.gov.uk/repaying-your-student-loan" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "var(--ink-60)" }}>gov.uk/repaying-your-student-loan</a>.
           </p>
         </div>
       </div>

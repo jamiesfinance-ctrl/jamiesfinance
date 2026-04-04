@@ -292,7 +292,8 @@ export function TakeHomePayCalc() {
         {/* Disclaimer */}
         <div className="rounded-2xl p-4 border" style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
           <p className="text-xs" style={{ color: "var(--ink-40)", lineHeight: 1.7 }}>
-            <strong style={{ color: "var(--ink-60)" }}>2025/26 tax year.</strong> Calculations are based on standard PAYE rates and do not account for pension contributions, employer schemes, blind person&apos;s allowance, marriage allowance, or other deductions. For illustration only — not financial advice.
+            <strong style={{ color: "var(--ink-60)" }}>True as of April 2026 (2025/26 tax year).</strong> Calculations use standard PAYE rates and do not account for pension contributions, employer schemes, blind person&apos;s allowance, marriage allowance, or other adjustments. Tax bands and thresholds are subject to change. For illustration only — not financial advice. If unsure, do your own independent research at{" "}
+            <a href="https://www.gov.uk/income-tax-rates" target="_blank" rel="noopener noreferrer" className="underline">gov.uk/income-tax-rates</a>.
           </p>
         </div>
       </div>

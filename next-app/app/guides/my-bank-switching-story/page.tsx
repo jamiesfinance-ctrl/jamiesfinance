@@ -223,15 +223,15 @@ export default function BankSwitchingStoryPage() {
       </section>
 
       {/* Footer CTA */}
-      <section className="py-16 px-6" style={{ background: "#141414" }}>
+      <section className="py-16 px-6" style={{ background: "var(--card)" }}>
         <div className="max-w-3xl mx-auto text-center">
-          <p className="font-display text-3xl sm:text-4xl text-white mb-4">Want more tips like this?</p>
-          <p className="mb-8" style={{ color: "rgba(255,255,255,0.60)", lineHeight: 1.7 }}>
+          <p className="font-display text-3xl sm:text-4xl mb-4" style={{ color: "var(--foreground)" }}>Want more tips like this?</p>
+          <p className="mb-8" style={{ color: "var(--ink-60)", lineHeight: 1.7 }}>
             I share the best bank offers, money-saving tips, and financial education every week — no spam, ever.
           </p>
           <Link href="/#signup"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-opacity hover:opacity-80"
-            style={{ background: "white", color: "#141414" }}>
+            style={{ background: "var(--foreground)", color: "var(--background)" }}>
             Join the newsletter
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </Link>

@@ -82,11 +82,11 @@ export default function DisclaimerPage() {
           </div>
 
           {/* Capital at Risk */}
-          <div className="rounded-2xl p-6 border" style={{ background: "#fff7ed", borderColor: "#fed7aa" }}>
-            <h2 className="font-display text-xl mb-3" style={{ color: "#9a3412" }}>
+          <div className="rounded-2xl p-6 border" style={{ background: "var(--muted)", borderColor: "var(--border)" }}>
+            <h2 className="font-display text-xl mb-3" style={{ color: "var(--foreground)" }}>
               Capital at Risk Warning
             </h2>
-            <p className="text-sm" style={{ color: "#7c2d12", lineHeight: 1.85 }}>
+            <p className="text-sm" style={{ color: "var(--ink-60)", lineHeight: 1.85 }}>
               When investing, <strong>your capital is at risk</strong>. The value of investments can go down as well as up, and you may get back less than you invest. Past performance is not a reliable indicator of future results. Tax treatment depends on individual circumstances and may be subject to change. This warning applies to all investment-related content on this website, including content about stocks and shares ISAs, index funds, and any other investment vehicles discussed.
             </p>
           </div>

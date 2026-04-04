@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { ForceDarkOnHome } from "@/components/home/force-dark-on-home";
+
 
 const dmSerifDisplay = DM_Serif_Display({
   weight: ["400"],
@@ -39,12 +39,11 @@ export default function RootLayout({
       <body className="overflow-x-hidden antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           storageKey="jf-theme"
           enableSystem={false}
           themes={["light", "dark", "green"]}
         >
-          <ForceDarkOnHome />
           <Navbar />
           <main>{children}</main>
           <Footer />
